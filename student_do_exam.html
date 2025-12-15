@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Làm bài kiểm tra</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background:#eef3f7;
+  margin:0;
+  padding:20px;
+}
+.wrap {
+  max-width:900px;
+  margin:auto;
+  background:#fff;
+  padding:25px;
+  border-radius:10px;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+h1,h2 { text-align:center; color:#0a4a8e; }
+.question {
+  margin:15px 0;
+  padding:15px;
+  background:#f9f9f9;
+  border-left:4px solid #0b74d1;
+}
+.options label {
+  display:block;
+  margin:6px 0;
+  cursor:pointer;
+}
+textarea {
+  width:100%;
+  min-height:120px;
+  margin-top:8px;
+}
+button {
+  background:#0b74d1;
+  color:#fff;
+  padding:12px 20px;
+  border:none;
+  border-radius:8px;
+  font-size:16px;
+  cursor:pointer;
+}
+button:hover { background:#095ba8; }
+.result {
+  margin-top:20px;
+  padding:15px;
+  border-radius:8px;
+}
+.success { background:#e6f8e6; border-left:5px solid #4caf50; }
+.timer {
+  text-align:center;
+  font-weight:bold;
+  margin-bottom:15px;
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+<h1 id="examTitle">Đang tải đề...</h1>
+<div class="timer" id="timer"></div>
+
+<form id="examForm"></form>
+
+<div style="text-align:center;margin-top:20px">
+  <button onclick="submitExam()">📤 Nộp bài</button>
+</div>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+/* =========================
+   CẤU HÌNH
+========================= */
+const examFile = "data/exams/math9_bai1.json"; // 👉 đổi file tại đây
+const studentId = "HS001";
+const studentClass = "9A";
+
+/* =========================
+   BIẾN DÙNG CHUNG
+========================= */
+let examData = null;
+let timerInterval = null;
+let timeLeft = 0;
+
+/* =========================
+   LOAD ĐỀ
+========================= */
+async function loadExam() {
+  try {
+    const res = await fetch(examFile);
+    examData = await res.json();
+
+    document.getElementById("examTitle").textContent = examData.title;
+    timeLeft = (examData.time || 45) * 60;
+
+    renderQuestions();
+    startTimer();
+  } catch (e) {
+    alert("Không tải được đề!");
+  }
+}
+
+/* =========================
+   HIỂN THỊ CÂU HỎI
+========================= */
+function renderQuestions() {
+  const form = document.getElementById("examForm");
+  form.innerHTML = "";
+
+  examData.questions.forEach((q, idx) => {
+    const div = document.createElement("div");
+    div.className = "question";
+
+    let html = `<b>Câu ${idx+1} (${q.point}đ):</b> ${q.content}<br>`;
+
+    if (q.type === "mcq") {
+      html += `<div class="options">`;
+      for (const k in q.options) {
+        html += `
+          <label>
+            <input type="radio" name="q${q.id}" value="${k}">
+            ${k}. ${q.options[k]}
+          </label>`;
+      }
+      html += `</div>`;
+    }
+
+    if (q.type === "essay") {
+      html += `<textarea name="q${q.id}" placeholder="Nhập bài làm..."></textarea>`;
+    }
+
+    div.innerHTML = html;
+    form.appendChild(div);
+  });
+}
+
+/* =========================
+   ĐỒNG HỒ
+========================= */
+function startTimer() {
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    const m = Math.floor(timeLeft / 60);
+    const s = timeLeft % 60;
+    document.getElementById("timer").textContent =
+      `⏱ Thời gian còn lại: ${m}:${s.toString().padStart(2,'0')}`;
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      submitExam(true);
+    }
+  }, 1000);
+}
+
+/* =========================
+   NỘP BÀI & CHẤM TỰ ĐỘNG
+========================= */
+function submitExam(auto=false) {
+  if (!auto && !confirm("Bạn chắc chắn muốn nộp bài?")) return;
+  clearInterval(timerInterval);
+
+  let total = 0;
+  let score = 0;
+  let answers = [];
+
+  examData.questions.forEach(q => {
+    total += q.point;
+
+    if (q.type === "mcq") {
+      const sel = document.querySelector(`input[name=q${q.id}]:checked`);
+      const ans = sel ? sel.value : null;
+      if (ans === q.answer) score += q.point;
+      answers.push({ id:q.id, type:"mcq", answer:ans, correct:q.answer });
+    }
+
+    if (q.type === "essay") {
+      const val = document.querySelector(`textarea[name=q${q.id}]`).value;
+      answers.push({ id:q.id, type:"essay", answer:val });
+    }
+  });
+
+  document.getElementById("result").innerHTML = `
+    <div class="result success">
+      ✅ <b>Nộp bài thành công</b><br>
+      Điểm trắc nghiệm tạm thời: <b>${score.toFixed(2)} / ${total}</b><br>
+      ✍️ Câu tự luận sẽ được AI / giáo viên chấm sau.
+    </div>
+  `;
+
+  // LƯU BÀI (demo localStorage – sau chuyển server)
+  const submission = {
+    studentId,
+    class: studentClass,
+    examCode: examData.code,
+    submittedAt: new Date().toISOString(),
+    scoreAuto: score,
+    answers
+  };
+
+  let subs = JSON.parse(localStorage.getItem("submissions") || "[]");
+  subs.push(submission);
+  localStorage.setItem("submissions", JSON.stringify(subs));
+}
+
+/* ========================= */
+loadExam();
+</script>
+</body>
+</html>
