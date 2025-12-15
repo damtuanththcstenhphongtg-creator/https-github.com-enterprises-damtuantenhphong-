@@ -1,0 +1,210 @@
+/* ---------------------------------------------------
+   STYLE CHUNG CHO TOÀN BỘ HỆ THỐNG
+--------------------------------------------------- */
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #eef2f7;
+}
+
+/* -------------------------
+   BANNER TRÊN CÙNG
+--------------------------*/
+.top-banner {
+    text-align: center;
+    font-size: 34px;
+    font-weight: 900;
+    padding: 22px;
+    background: rgba(255, 255, 255, 0.25);
+    color: #003366;
+    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.55);
+    letter-spacing: 1px;
+    backdrop-filter: blur(4px);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.35);
+}
+
+.brand {
+    color: #ffeb3b;
+    text-shadow: 2px 2px 7px rgba(0,0,0,0.35);
+}
+
+/* -------------------------
+   KHUNG LOGIN
+--------------------------*/
+.login-box {
+    width: 380px;
+    margin: auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.25);
+    margin-top: 25px;
+}
+.login-box h2 {
+    margin-top: 0;
+    text-align: center;
+}
+
+/* nút chọn role */
+.role-select {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.role-select button {
+    width: 48%;
+    padding: 12px;
+    background: #ff9800;
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.18s;
+}
+
+.role-select button.active {
+    background: #e65100;
+    box-shadow: 0 0 8px rgba(0,0,0,0.25);
+    transform: scale(1.03);
+}
+
+/* input login */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #bbb;
+    font-size: 16px;
+   
+}
+input:disabled {
+    background: #f0f0f0;
+}
+
+/* nút đăng nhập */
+.main-login {
+    width: 100%;
+    padding: 12px;
+    background: #4a90e2;
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: bold;
+    transition: 0.15s;
+}
+.main-login:hover {
+    background: #357ac8;
+}
+
+/* error */
+.error {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+    height: 22px;
+    margin-bottom: 5px;
+}
+
+/* footer */
+footer {
+    text-align: center;
+    color: #fff;
+    font-size: 15px;
+    margin-top: 25px;
+    padding-bottom: 20px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+}
+footer .author {
+    font-weight: bold;
+    color: #ffe066;
+}
+
+/* ---------------------------------------------------
+   STYLE DÙNG CHUNG CHO DASHBOARD GIÁO VIÊN / HỌC SINH
+--------------------------------------------------- */
+
+/* Container lớn */
+.wrap {
+    max-width: 950px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+}
+.wrap h1 {
+    text-align: center;
+    color: #0a4a8e;
+}
+
+/* menu dạng lưới */
+.menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.menu .item {
+    padding: 18px;
+    background: #0b74d1;
+    color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+.menu .item:hover {
+    background: #095ba8;
+}
+
+/* nút logout */
+.logout {
+    margin-top: 25px;
+    text-align: center;
+}
+.logout button {
+    padding: 12px 25px;
+    background: #d32f2f;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+}
+.logout button:hover {
+    background: #b71c1c;
+}
+
+/* khung info */
+.info-box {
+    font-size: 18px;
+    background: #e8f2ff;
+    padding: 12px;
+    border-left: 5px solid #0b74d1;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+/* -------------------------
+   RESPONSIVE
+--------------------------*/
+@media (max-width: 480px) {
+    .login-box {
+        width: 92%;
+        padding: 20px;
+    }
+    .top-banner {
+        font-size: 28px;
+    }
+}
