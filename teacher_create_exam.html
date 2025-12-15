@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8">
-<title>📘 Teacher Create Exam</title>
+<title>📘 Hệ thống tạo đề kiểm tra nâng cao</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 <style>
 body{font-family:'Roboto',sans-serif;background:#f4f6f9;margin:0;padding:20px;}
@@ -29,7 +29,7 @@ button:hover{background:#2980b9;}
 </head>
 <body>
 
-<h1>📘 Teacher Create Exam</h1>
+<h1>📘 Hệ thống tạo đề kiểm tra nâng cao</h1>
 
 <div class="card">
 <label>Môn học:</label>
@@ -38,8 +38,6 @@ button:hover{background:#2980b9;}
 <option>Ngữ văn</option>
 <option>Tiếng Anh</option>
 <option>Lịch sử</option>
-<option>Tin học</option>
-<option>Công nghệ</option>
 </select>
 
 <label>Lớp:</label>
@@ -48,23 +46,19 @@ button:hover{background:#2980b9;}
 <option>5</option><option>6</option><option>7</option><option>8</option><option>9</option>
 </select>
 
-<label>Tên file JSON (trong /questions/, ví dụ: tin6_bai8.json):</label>
-<input type="text" id="jsonFileInput" placeholder="ví dụ: tin6_bai8.json">
+<label>Bài muốn tạo (ví dụ: 1,3,5):</label>
+<input type="text" id="lessonInput" placeholder="1,3,5">
 
-<button id="loadFileBtn">📥 Load câu hỏi từ file</button>
+<label>Số đề cần tạo:</label>
+<input type="number" id="numExamsInput" value="1" min="1">
 
-<div id="lessonSelectContainer" style="display:none;">
-<label>Chọn bài muốn tạo:</label>
-<select id="lessonSelect" multiple style="height:100px"></select>
-
-<p>Chọn số câu mỗi loại câu hỏi mỗi bài:</p>
+<div id="questionNumbersContainer">
+<p>Chọn số câu cho mỗi loại câu hỏi mỗi bài:</p>
 <label>MCQ mỗi bài:</label> <input type="number" id="numMCQ" value="2">
 <label>True/False mỗi bài:</label> <input type="number" id="numTF" value="1">
 <label>Short Answer mỗi bài:</label> <input type="number" id="numShort" value="1">
 <label>Essay mỗi bài:</label> <input type="number" id="numEssay" value="1">
-
-<label>Số đề cần tạo:</label>
-<input type="number" id="numExamsInput" value="1" min="1">
+</div>
 
 <div class="btn-group">
 <button id="generateBtn">🚀 Tạo đề</button>
@@ -73,119 +67,81 @@ button:hover{background:#2980b9;}
 <button id="exportJsonBtn">💾 Xuất JSON từng đề</button>
 </div>
 </div>
-</div>
 
 <div id="container"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.3.2/docx.min.js"></script>
-
 <script>
-const subjectSelect = document.getElementById("subjectSelect");
-const gradeSelect = document.getElementById("gradeSelect");
-const jsonFileInput = document.getElementById("jsonFileInput");
-const loadFileBtn = document.getElementById("loadFileBtn");
-const lessonSelectContainer = document.getElementById("lessonSelectContainer");
-const lessonSelect = document.getElementById("lessonSelect");
-const numMCQ = document.getElementById("numMCQ");
-const numTF = document.getElementById("numTF");
-const numShort = document.getElementById("numShort");
-const numEssay = document.getElementById("numEssay");
-const numExamsInput = document.getElementById("numExamsInput");
-const container = document.getElementById("container");
+const subjectSelect=document.getElementById("subjectSelect");
+const gradeSelect=document.getElementById("gradeSelect");
+const lessonInput=document.getElementById("lessonInput");
+const numExamsInput=document.getElementById("numExamsInput");
+const numMCQ=document.getElementById("numMCQ");
+const numTF=document.getElementById("numTF");
+const numShort=document.getElementById("numShort");
+const numEssay=document.getElementById("numEssay");
+const container=document.getElementById("container");
 
-let allQuestions = [];
-let generatedExams = [];
+let generatedExams=[];
 
-// Sinh mã đề
+// Sinh mã đề DE-XXXX
 function generateExamCode(){return "DE-"+Math.floor(1000+Math.random()*9000);}
 
-// Load JSON từ file
-loadFileBtn.onclick = async()=>{
-  const fileName = jsonFileInput.value.trim();
-  if(!fileName){ alert("Nhập tên file JSON!"); return; }
-  try{
-    const res = await fetch("questions/"+fileName);
-    const data = await res.json();
-    allQuestions = [];
-    lessonSelect.innerHTML = "";
-    data.lessons.forEach(lesson=>{
-      const option = document.createElement("option");
-      option.value = lesson.lesson;
-      option.textContent = lesson.lesson;
-      lessonSelect.appendChild(option);
-      lesson.questions.forEach(q=>{
-        allQuestions.push({...q, lesson: lesson.lesson});
-      });
-    });
-    lessonSelectContainer.style.display="block";
-    alert(`Đã load ${allQuestions.length} câu hỏi từ ${fileName}`);
-  }catch(err){
-    alert("Không tìm thấy file hoặc lỗi JSON!");
-    console.error(err);
-    allQuestions=[];
-    lessonSelectContainer.style.display="none";
-  }
-};
-
-// Tạo đề
+// ================== TẠO ĐỀ ==================
 document.getElementById("generateBtn").onclick = ()=>{
-  const selectedLessons = Array.from(lessonSelect.selectedOptions).map(o=>o.value);
-  const numExams = parseInt(numExamsInput.value);
-  if(selectedLessons.length===0){ alert("Chọn ít nhất 1 bài!"); return; }
+  const lessons=lessonInput.value.split(",").map(n=>n.trim()).filter(n=>n!=="");
+  const numExams=parseInt(numExamsInput.value);
+  if(lessons.length===0){ alert("Nhập ít nhất 1 bài!"); return; }
 
   generatedExams=[];
   for(let e=0;e<numExams;e++){
-    const examCode = generateExamCode();
-    const exam = {examCode, subject: subjectSelect.value, grade: gradeSelect.value, questions: []};
+    const examCode=generateExamCode();
+    const exam={examCode,subject:subjectSelect.value,grade:gradeSelect.value,questions:[]};
 
-    selectedLessons.forEach(lesson=>{
-      const lessonQs = allQuestions.filter(q=>q.lesson===lesson);
-      const mcq = lessonQs.filter(q=>q.type==="mcq").slice(0,parseInt(numMCQ.value));
-      const tf = lessonQs.filter(q=>q.type==="truefalse").slice(0,parseInt(numTF.value));
-      const short = lessonQs.filter(q=>q.type==="short").slice(0,parseInt(numShort.value));
-      const essay = lessonQs.filter(q=>q.type==="essay").slice(0,parseInt(numEssay.value));
-      exam.questions.push(...mcq,...tf,...short,...essay);
+    lessons.forEach(lesson=>{
+      for(let i=1;i<=parseInt(numMCQ.value);i++)
+        exam.questions.push({lesson,type:"mcq",content:`(${lesson}) Câu ${i}: Nội dung MCQ`,options:{A:"A",B:"B",C:"C",D:"D"}});
+      for(let i=1;i<=parseInt(numTF.value);i++)
+        exam.questions.push({lesson,type:"truefalse",content:`(${lesson}) Câu ${i}: Nội dung Đúng/Sai`});
+      for(let i=1;i<=parseInt(numShort.value);i++)
+        exam.questions.push({lesson,type:"short",content:`(${lesson}) Câu ${i}: Nội dung trả lời ngắn`});
+      for(let i=1;i<=parseInt(numEssay.value);i++)
+        exam.questions.push({lesson,type:"essay",content:`(${lesson}) Câu ${i}: Nội dung tự luận`});
     });
 
-    // Trộn câu
+    // Trộn ngẫu nhiên câu hỏi
     exam.questions.sort(()=>Math.random()-0.5);
     generatedExams.push(exam);
   }
+
   alert(`Đã tạo ${numExams} đề thành công!`);
 };
 
-// Xem trước + xóa câu
+// ================== XEM TRƯỚC + XÓA CÂU ==================
 document.getElementById("previewBtn").onclick = ()=>{
-  if(generatedExams.length===0){ alert("Chưa tạo đề!"); return; }
   container.innerHTML="";
   generatedExams.forEach(exam=>{
-    const codeDiv = document.createElement("div");
-    codeDiv.className = "code-label";
-    codeDiv.textContent = `Mã đề: ${exam.examCode}`;
+    const codeDiv=document.createElement("div");
+    codeDiv.className="code-label";
+    codeDiv.textContent=`Mã đề: ${exam.examCode}`;
     container.appendChild(codeDiv);
 
-    const div = document.createElement("div");
-    div.innerHTML = `<div class="section-title">${exam.subject} ${exam.grade}</div>`;
-
-    exam.questions.forEach(q=>{
-      const qd = document.createElement("div");
-      qd.className = "question "+q.type;
+    const div=document.createElement("div");
+    div.innerHTML=`<div class="section-title">${exam.subject} ${exam.grade}</div>`;
+    exam.questions.forEach((q,index)=>{
+      const qd=document.createElement("div");
+      qd.className="question "+q.type;
       if(q.type==="mcq") qd.innerHTML=`<b>${q.content}</b><br>A. ${q.options.A}<br>B. ${q.options.B}<br>C. ${q.options.C}<br>D. ${q.options.D}`;
       else if(q.type==="truefalse") qd.innerHTML=`<b>${q.content}</b> (Đúng/Sai)`;
       else if(q.type==="short") qd.innerHTML=`<b>${q.content}</b> (Trả lời ngắn)`;
       else qd.innerHTML=`<b>${q.content}</b><br><i>(Học sinh tự làm)</i>`;
 
-      const removeBtn = document.createElement("button");
+      // Nút xóa câu
+      const removeBtn=document.createElement("button");
       removeBtn.className="remove-btn";
       removeBtn.textContent="Xóa";
-      removeBtn.onclick = (()=>{
-        const ques=q;
-        return ()=>{
-          exam.questions = exam.questions.filter(x=>x!==ques);
-          qd.remove();
-        };
-      })();
+      removeBtn.onclick=()=>{ exam.questions.splice(index,1); qd.remove(); };
       qd.appendChild(removeBtn);
 
       div.appendChild(qd);
@@ -194,21 +150,18 @@ document.getElementById("previewBtn").onclick = ()=>{
   });
 };
 
-// Xuất Word
+// ================== XUẤT WORD TỪNG ĐỀ ==================
 document.getElementById("exportWordBtn").onclick=async()=>{
-  if(generatedExams.length===0){ alert("Chưa tạo đề!"); return; }
   const {Document,Packer,Paragraph,TextRun}=docx;
   for(const exam of generatedExams){
-    const doc = new Document({
+    const doc=new Document({
       sections:[{
         children:[
-          new Paragraph({children:[new TextRun({text:`MÃ ĐỀ: ${exam.examCode}`,bold:true,color:"red",size:48})]}),
-          new Paragraph({children:[new TextRun({text:`${exam.subject} ${exam.grade}`,bold:true,size:56})]}),
+          new Paragraph({children:[new TextRun({text:`MÃ ĐỀ: ${exam.examCode}`,bold:true,color:"red",size:24})]}),
+          new Paragraph({children:[new TextRun({text:`${exam.subject} ${exam.grade}`,bold:true,size:28})]}),
           ...exam.questions.flatMap(q=>{
             let arr=[new Paragraph(q.content)];
-            if(q.type==="mcq" && q.options){
-              Object.keys(q.options).forEach(k=>arr.push(new Paragraph(`${k}. ${q.options[k]}`)));
-            }
+            if(q.type==="mcq") Object.keys(q.options).forEach(k=>arr.push(new Paragraph(`${k}. ${q.options[k]}`)));
             return arr;
           })
         ]
@@ -219,9 +172,8 @@ document.getElementById("exportWordBtn").onclick=async()=>{
   }
 };
 
-// Xuất JSON
+// ================== XUẤT JSON TỪNG ĐỀ ==================
 document.getElementById("exportJsonBtn").onclick=()=>{
-  if(generatedExams.length===0){ alert("Chưa tạo đề!"); return; }
   for(const exam of generatedExams){
     saveAs(new Blob([JSON.stringify(exam,null,2)],{type:"application/json"}),`De_${exam.examCode}.json`);
   }
