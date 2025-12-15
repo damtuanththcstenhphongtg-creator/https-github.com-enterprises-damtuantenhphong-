@@ -1,0 +1,31 @@
+{
+  "title": "ĐỀ KIỂM TRA GIỮA KỲ I",
+  "subject": "Toán 9",
+  "time": 90,
+  "parts": [
+    {
+      "name": "Phần I: Trắc nghiệm nhiều lựa chọn",
+      "code": "P1A",
+      "count": 12,
+      "points": 3
+    },
+    {
+      "name": "Phần II: Đúng – Sai",
+      "code": "P2",
+      "count": 2,
+      "points": 2
+    },
+    {
+      "name": "Phần III: Trả lời ngắn",
+      "code": "P3",
+      "count": 4,
+      "points": 2
+    },
+    {
+      "name": "Phần IV: Tự luận",
+      "code": "P4",
+      "count": 3,
+      "points": 3
+    }
+  ]
+}
