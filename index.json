@@ -1,0 +1,18 @@
+{
+  "exams": [
+    {
+      "id": "math9_bai1",
+      "title": "Toán 9 - Bài 1: Phương trình bậc hai",
+      "subject": "toan",
+      "grade": 9,
+      "file": "math9_bai1.json"
+    },
+    {
+      "id": "ly9_bai1",
+      "title": "Vật lý 9 - Bài 1: Định luật Newton",
+      "subject": "ly",
+      "grade": 9,
+      "file": "ly9_bai1.json"
+    }
+  ]
+}

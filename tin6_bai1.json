@@ -1,0 +1,241 @@
+[
+  {
+    "id": "TH6_B1_C01",
+    "subject": "Tin học 6",
+    "chapter": "Bài 1: Thông tin và dữ liệu",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Phát biểu nào sau đây là đúng?",
+    "options": {
+      "A": "Dữ liệu chỉ có ở trong máy tính.",
+      "B": "Dữ liệu là những giá trị số do con người nghĩ ra.",
+      "C": "Dữ liệu được thể hiện dưới dạng con số, văn bản, hình ảnh, âm thanh.",
+      "D": "Dữ liệu chỉ có thể được hiểu bởi những người có trình độ cao."
+    },
+    "answer": "C"
+  },
+  {
+    "id": "TH6_B1_C02",
+    "subject": "Tin học 6",
+    "chapter": "Bài 1: Thông tin và dữ liệu",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Chúng ta gọi dữ liệu hoặc lệnh được nhập vào máy tính là gì?",
+    "options": {
+      "A": "Thông tin máy tính.",
+      "B": "Thông tin vào.",
+      "C": "Thông tin ra.",
+      "D": "Dữ liệu được lưu trữ."
+    },
+    "answer": "B"
+  },
+  {
+    "id": "TH6_B1_C03",
+    "subject": "Tin học 6",
+    "chapter": "Bài 1: Thông tin và dữ liệu",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Theo em, thông tin nào không phải là thông tin cần xử lí để xếp loại các tổ cuối tuần?",
+    "options": {
+      "A": "Số lượng bạn ăn bán trú.",
+      "B": "Số các bạn bị ghi tên vì đi muộn.",
+      "C": "Số bạn không mặc áo đồng phục.",
+      "D": "Số bạn bị cô giáo nhắc nhở."
+    },
+    "answer": "A"
+  },
+  {
+    "id": "TH6_B1_C04",
+    "subject": "Tin học 6",
+    "chapter": "Bài 1: Thông tin và dữ liệu",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Nghe bản tin dự báo thời tiết “Ngày mai trời có thể nắng”, em sẽ xử lý thông tin và quyết định như thế nào?",
+    "options": {
+      "A": "Mặc đồng phục.",
+      "B": "Đi học mang theo áo mưa.",
+      "C": "Ăn sáng trước khi đến trường.",
+      "D": "Đi học mang theo ô, mũ."
+    },
+    "answer": "D"
+  },
+  {
+    "id": "TH6_B1_C05",
+    "subject": "Tin học 6",
+    "chapter": "Bài 1: Thông tin và dữ liệu",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Thông tin dạng âm thanh là thông tin nào?",
+    "options": {
+      "A": "Tiếng chim hót.",
+      "B": "Đi học mang theo áo mưa.",
+      "C": "Ăn sáng trước khi đến trường.",
+      "D": "Hẹn bạn Hương cùng đi học."
+    },
+    "answer": "A"
+  },
+  {
+    "id": "TH6_B1_C06",
+    "subject": "Tin học 6",
+    "chapter": "Bài 1: Thông tin và dữ liệu",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Mắt thường không thể tiếp nhận những thông tin nào?",
+    "options": {
+      "A": "Rác bẩn vứt ngoài hành lang lớp học.",
+      "B": "Những con vi trùng gây bệnh lị lẫn trong thức ăn bị ôi thiu.",
+      "C": "Đàn kiến đang “tấn công” lọ đường quên đậy nắp.",
+      "D": "Bạn Phương quên không đeo khăn quàng đỏ."
+    },
+    "answer": "B"
+  },
+  {
+    "id": "TH6_B1_C07",
+    "subject": "Tin học 6",
+    "chapter": "Bài 1: Thông tin và dữ liệu",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Trước khi sang đường, con người phải xử lý những thông tin gì?",
+    "options": {
+      "A": "Nghĩ về bài toán hôm qua trên lớp chưa làm được.",
+      "B": "Quan sát xem có phương tiện giao thông đang đến gần không.",
+      "C": "Quan sát xem đèn tín hiệu giao thông đang bật màu gì.",
+      "D": "Kiểm tra lại đồ dùng học tập đã có đủ trong cặp sách chưa."
+    },
+    "answer": "C"
+  },
+  {
+    "id": "TH6_B1_C08",
+    "subject": "Tin học 6",
+    "chapter": "Bài 1: Thông tin và dữ liệu",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Công cụ nào sau đây không phải là vật mang tin?",
+    "options": {
+      "A": "Giấy.",
+      "B": "Thẻ nhớ.",
+      "C": "Đĩa CD, DVD.",
+      "D": "Xô, chậu."
+    },
+    "answer": "D"
+  },
+  {
+    "id": "TH6_B1_C09",
+    "subject": "Tin học 6",
+    "chapter": "Bài 1: Thông tin và dữ liệu",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Thông tin có thể giúp cho con người những gì?",
+    "options": {
+      "A": "Giúp con người đưa ra những lựa chọn tốt, giúp cho hoạt động đạt hiệu quả.",
+      "B": "Hiểu biết về cuộc sống và xã hội xung quanh.",
+      "C": "Biết được các tin tức và sự kiện xảy ra trong xã hội.",
+      "D": "Tất cả các khẳng định trên đều đúng."
+    },
+    "answer": "D"
+  },
+  {
+    "id": "TH6_B1_C10",
+    "subject": "Tin học 6",
+    "chapter": "Bài 1: Thông tin và dữ liệu",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Tờ giấy bạn Khoa dùng để vẽ biểu đồ đóng vai trò là gì?",
+    "options": {
+      "A": "Vật mang tin.",
+      "B": "Thông tin.",
+      "C": "Dữ liệu.",
+      "D": "Tất cả đều đúng."
+    },
+    "answer": "A"
+  },
+  {
+    "id": "TH6_B1_C11",
+    "subject": "Tin học 6",
+    "chapter": "Bài 1: Thông tin và dữ liệu",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Phương án nào sau đây là thông tin?",
+    "options": {
+      "A": "Tệp lưu trữ tài liệu về điều tra dân số.",
+      "B": "Phiếu điều tra dân số.",
+      "C": "Kiến thức về phân bố dân cư.",
+      "D": "Các con số thu thập được thông qua cuộc điều tra dân số."
+    },
+    "answer": "C"
+  },
+  {
+    "id": "TH6_B1_C12",
+    "subject": "Tin học 6",
+    "chapter": "Bài 1: Thông tin và dữ liệu",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Lợi ích của thông tin là gì?",
+    "options": {
+      "A": "Có độ tin cậy cao, không phụ thuộc vào dữ liệu.",
+      "B": "Đem lại hiểu biết và giúp con người có những lựa chọn tốt.",
+      "C": "Có độ tin cậy cao, đem lại hiểu biết cho con người.",
+      "D": "Đem lại hiểu biết cho con người, không phụ thuộc vào dữ liệu."
+    },
+    "answer": "B"
+  },
+  {
+    "id": "TH6_B1_C13",
+    "subject": "Tin học 6",
+    "chapter": "Bài 1: Thông tin và dữ liệu",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Xem bản tin dự báo thời tiết, bạn Khoa kết luận: “Hôm nay, trời có mưa”. Bản tin và kết luận của Khoa là gì?",
+    "options": {
+      "A": "Bản tin là thông tin, kết luận của Khoa là dữ liệu.",
+      "B": "Bản tin dự báo thời tiết là dữ liệu, kết luận của Khoa là thông tin.",
+      "C": "Bản tin và kết luận đều là dữ liệu.",
+      "D": "Những con số trong bản tin dự báo thời tiết là thông tin."
+    },
+    "answer": "B"
+  },
+  {
+    "id": "TH6_B1_C14",
+    "subject": "Tin học 6",
+    "chapter": "Bài 1: Thông tin và dữ liệu",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Phát biểu nào sau đây sai?",
+    "options": {
+      "A": "Sự tiếp nhận thông tin phụ thuộc vào sự hiểu biết của mỗi người.",
+      "B": "Thông tin là những gì có giá trị, dữ liệu là những thứ vô giá trị.",
+      "C": "Thông tin đem lại cho con người sự hiểu biết.",
+      "D": "Thông tin có thể làm thay đổi hành động của con người."
+    },
+    "answer": "B"
+  },
+  {
+    "id": "TH6_B1_C15",
+    "subject": "Tin học 6",
+    "chapter": "Bài 1: Thông tin và dữ liệu",
+    "type": "dung_sai",
+    "level": "thong_hieu",
+    "question": "Một học sinh đang học cách máy tính xử lí thông tin và biết rằng máy tính chỉ hiểu hai kí hiệu 0 và 1. Dựa vào tình huống trên, em hãy cho biết các nhận định sau là đúng hay sai:",
+    "options": {
+      "A": "Máy tính chỉ có thể hiểu thông tin dưới dạng dãy bit gồm các số 0 và 1.",
+      "B": "Máy tính hiểu được cả chữ viết và hình ảnh mà không cần chuyển thành dãy bit.",
+      "C": "Thông tin trong máy tính được biểu diễn bằng mã nhị phân là do máy tính hoạt động theo hai trạng thái điện áp khác nhau.",
+      "D": "Em có thể tạo ra một tệp văn bản mà không qua quá trình mã hoá thành bit."
+    },
+    "answer": {
+      "A": "Đúng",
+      "B": "Sai",
+      "C": "Đúng",
+      "D": "Sai"
+    }
+  },
+  {
+    "id": "TH6_B1_C16",
+    "subject": "Tin học 6",
+    "chapter": "Bài 1: Thông tin và dữ liệu",
+    "type": "tu_luan",
+    "level": "thong_hieu",
+    "question": "Hãy nêu một ví dụ về dữ liệu và thông tin trong thực tế và giải thích sự khác nhau giữa chúng.",
+    "answer": "Ví dụ: Dữ liệu: điểm số các học sinh trong lớp. Thông tin: bảng xếp hạng học sinh giỏi trong lớp dựa trên điểm số. Dữ liệu là các con số chưa được xử lý, thông tin là kết quả đã được phân tích, tổng hợp và có ý nghĩa cho việc ra quyết định."
+  }
+]

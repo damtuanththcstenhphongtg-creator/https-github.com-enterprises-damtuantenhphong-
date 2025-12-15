@@ -1,0 +1,135 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "type": "mcq",
+      "question": "Hệ phương trình {x + y = 3; x + 2y = −5} nhận cặp số nào sau đây là nghiệm?",
+      "options": {
+        "A": "(-11; 8)",
+        "B": "(11; -8)",
+        "C": "(-11; -8)",
+        "D": "(11; 8)"
+      },
+      "correct": "B",
+      "explanation": "Chỉ có cặp số (11; -8) thỏa mãn cả hai phương trình. Các cặp khác không thỏa mãn."
+    },
+    {
+      "id": 2,
+      "type": "mcq",
+      "question": "Cho hệ phương trình {x + y = 5; 2x + y = −3}. Khi giải bằng phương pháp cộng đại số, cách đơn giản nhất là:",
+      "options": {
+        "A": "Cộng từng vế của (1) với (2)",
+        "B": "Trừ từng vế của (1) cho (2)",
+        "C": "Nhân (1) với 2 rồi trừ cho (2)",
+        "D": "Nhân (1) với 2 rồi cộng với (2)"
+      },
+      "correct": "B",
+      "explanation": "Trừ từng vế của (1) cho (2) ta được -x = 8, là phương trình bậc nhất một ẩn."
+    },
+    {
+      "id": 3,
+      "type": "mcq",
+      "question": "Cho hệ phương trình {−2x + 2y = −1; 3x + y = 7}. Khi giải bằng phương pháp thế, hệ thức biểu diễn y theo x là:",
+      "options": {
+        "A": "y = 7 + 3x",
+        "B": "y = 7 - 3x",
+        "C": "y = 3x - 7",
+        "D": "y = -1 + 2x"
+      },
+      "correct": "B",
+      "explanation": "Từ phương trình (2), ta có y = 7 - 3x."
+    },
+    {
+      "id": 4,
+      "type": "mcq",
+      "question": "Cho hệ phương trình {4x + 7y = 1; −x − 5y = 0}. Khi giải bằng phương pháp cộng đại số, cách đơn giản nhất là:",
+      "options": {
+        "A": "Cộng (1) với (2)",
+        "B": "Trừ (1) cho (2)",
+        "C": "Nhân (1) với 5 và (2) với 7 rồi cộng",
+        "D": "Nhân (2) với 4 rồi cộng với (1)"
+      },
+      "correct": "D",
+      "explanation": "Nhân (2) với 4 rồi cộng với (1) ta được -13y = 1."
+    },
+    {
+      "id": 5,
+      "type": "mcq",
+      "question": "Để mở chương trình giải hệ phương trình bậc nhất hai ẩn bằng máy tính cầm tay, ta ấn liên tiếp các phím:",
+      "options": {
+        "A": "Một tổ hợp khác",
+        "B": "Phím đúng để mở chương trình",
+        "C": "Phím sai",
+        "D": "Phím sai khác"
+      },
+      "correct": "B",
+      "explanation": "Ấn liên tiếp các phím theo hướng dẫn để mở chương trình giải hệ phương trình."
+    },
+    {
+      "id": 6,
+      "type": "mcq",
+      "question": "Biết hệ phương trình {ax − 3y = 1; x + by = −5} nhận cặp số (2; -3) là nghiệm. Giá trị của a, b là:",
+      "options": {
+        "A": "a = 4; b = 7/3",
+        "B": "a = -4; b = 7/3",
+        "C": "a = 4; b = -7/3",
+        "D": "a = -4; b = -7/3"
+      },
+      "correct": "B",
+      "explanation": "Thay x = 2, y = -3 vào hệ ta được a = -4, b = 7/3."
+    },
+    {
+      "id": 7,
+      "type": "mcq",
+      "question": "Hệ phương trình {3(x+y)+2(x−y)=6; (x+y)+3(x−y)=4} nhận cặp số nào sau đây là nghiệm?",
+      "options": {
+        "A": "(87; 27)",
+        "B": "(-87; 27)",
+        "C": "(87; -27)",
+        "D": "(-87; -27)"
+      },
+      "correct": "A",
+      "explanation": "Giải hệ ta được nghiệm (87; 27)."
+    },
+    {
+      "id": 8,
+      "type": "mcq",
+      "question": "Cho hệ phương trình {x + y = 2; 2x − 5y = 11}. Khi đó tổng của x và y bằng:",
+      "options": {
+        "A": "-1",
+        "B": "3",
+        "C": "-2",
+        "D": "2"
+      },
+      "correct": "D",
+      "explanation": "Giải hệ ta được nghiệm (3; -1). Khi đó x + y = 2."
+    },
+    {
+      "id": 9,
+      "type": "mcq",
+      "question": "Cho hệ phương trình {x + 3y = 1; 2x − y = −5}. Tổng lập phương của x và y là:",
+      "options": {
+        "A": "-1",
+        "B": "-7",
+        "C": "1",
+        "D": "5"
+      },
+      "correct": "B",
+      "explanation": "Giải hệ ta được nghiệm (x, y) = (-2; 1). Khi đó x^3 + y^3 = -7."
+    },
+    {
+      "id": 10,
+      "type": "mcq",
+      "question": "Cho (x; y) là nghiệm của hệ {3x + 2y = 7; 2x − 5y = −27}. Xét các khẳng định: (i) Hệ có điều kiện xác định x≠0, y≠0. (ii) Hệ có nghiệm là (-1; 5). (iii) Tổng bình phương của x và y lớn hơn 20. Có bao nhiêu khẳng định đúng?",
+      "options": {
+        "A": "0",
+        "B": "1",
+        "C": "2",
+        "D": "3"
+      },
+      "correct": "B",
+      "explanation": "Giải hệ ta được nghiệm (-1; 15). Tổng bình phương = 226 < 20. Chỉ (i) đúng."
+    }
+  ]
+}
+

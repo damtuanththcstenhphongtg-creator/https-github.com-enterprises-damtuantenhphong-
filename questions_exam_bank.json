@@ -1,0 +1,134 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "type": "mcq",
+      "level": "nb",
+      "question": "Trong các phương trình sau, phương trình nào không phải là phương trình bậc nhất hai ẩn?",
+      "options": ["x + 2y = 1", "0x - 0y = 5", "0x - y = 3", "x + 0y = -6"],
+      "answer": "0x - 0y = 5"
+    },
+    {
+      "id": 2,
+      "type": "mcq",
+      "level": "nb",
+      "question": "Hệ số a, b, c của phương trình x + 2y - 1 = 0 là",
+      "options": ["a = 1, b = 1, c = 0", "a = 1, b = 2, c = 1", "a = 1, b = 2, c = -1", "a = 1, b = -2, c = 1"],
+      "answer": "a = 1, b = 2, c = -1"
+    },
+    {
+      "id": 3,
+      "type": "mcq",
+      "level": "nb",
+      "question": "Cặp số nào sau đây là nghiệm của phương trình 2x - y - 1 = 0?",
+      "options": ["(0; 1)", "(1; 0)", "(1; 1)", "(-1; 0)"],
+      "answer": "(1; 1)"
+    },
+    {
+      "id": 4,
+      "type": "mcq",
+      "level": "nb",
+      "question": "Trong các hệ sau, hệ nào không phải là hệ phương trình bậc nhất hai ẩn?",
+      "options": [
+        "{x − y = 2; 2x + y = 1}",
+        "{2x = 0; x + 5y = 15}",
+        "{x² − 4y² = 0; 3x + 2y = 7}",
+        "{2x − y = −5; 3y + 15 = 0}"
+      ],
+      "answer": "{x² − 4y² = 0; 3x + 2y = 7}"
+    },
+    {
+      "id": 5,
+      "type": "mcq",
+      "level": "nb",
+      "question": "Cặp số nào sau đây là nghiệm của hệ {x + y = 0; x + 3y = 4}?",
+      "options": ["(0; 1)", "(2; 2)", "(3; -3)", "(-2; 2)"],
+      "answer": "(-2; 2)"
+    },
+
+    {
+      "id": 6,
+      "type": "mcq",
+      "level": "th",
+      "question": "Tất cả nghiệm của phương trình 2x - 3y = 1 được biểu diễn bởi đường thẳng nào?",
+      "options": ["y = -2x + 1", "y = 2x - 1", "y = (2/3)x - 1/3", "y = (2/3)x + 1/3"],
+      "answer": "y = (2/3)x - 1/3"
+    },
+
+    {
+      "id": 7,
+      "type": "mcq",
+      "level": "th",
+      "question": "Phương trình 0x + 5y = 2 được biểu diễn bởi đường thẳng:",
+      "options": ["y = 2/5", "x = 2 - 5y", "x = 2/5", "y = 2/5 - x"],
+      "answer": "y = 2/5"
+    },
+
+    {
+      "id": 8,
+      "type": "mcq",
+      "level": "th",
+      "question": "Phương trình 3x - 0y = 1 được biểu diễn bởi đồ thị:",
+      "options": ["y = 3x - 1", "x = 1/3", "x = -1/3", "y = 1 - 3x"],
+      "answer": "x = 1/3"
+    },
+
+    {
+      "id": 9,
+      "type": "mcq",
+      "level": "th",
+      "question": "Giá trị y₀ để (1; y₀) là nghiệm phương trình -3x + 2y = 7 là:",
+      "options": ["2", "-2", "5", "-5"],
+      "answer": "5"
+    },
+
+    {
+      "id": 10,
+      "type": "mcq",
+      "level": "vd",
+      "question": "Cho phương trình 3x + (m² + m)y = 6 có nghiệm (-2; 6). Có bao nhiêu giá trị m?",
+      "options": ["0", "1", "2", "3"],
+      "answer": "2"
+    },
+
+    {
+      "id": 11,
+      "type": "tf",
+      "level": "nb",
+      "question": "Phương trình bậc nhất hai ẩn luôn có dạng ax + by = c.",
+      "answer": "Đúng"
+    },
+
+    {
+      "id": 12,
+      "type": "tf",
+      "level": "nb",
+      "question": "Phương trình 0x - 0y = 5 là phương trình bậc nhất hai ẩn.",
+      "answer": "Sai"
+    },
+
+    {
+      "id": 13,
+      "type": "tf",
+      "level": "th",
+      "question": "Mọi nghiệm của phương trình 3x − y = 0 thuộc đường thẳng y = 3x.",
+      "answer": "Đúng"
+    },
+
+    {
+      "id": 14,
+      "type": "essay",
+      "level": "vd",
+      "question": "Giải hệ phương trình: {2x + y = 5; 3x − y = 4}.",
+      "answer": "x = 1, y = 3"
+    },
+
+    {
+      "id": 15,
+      "type": "essay",
+      "level": "vd",
+      "question": "Tìm m để phương trình (m − 1)x + 2y = m có nghiệm (2; 1).",
+      "answer": "m = 2"
+    }
+  ]
+}

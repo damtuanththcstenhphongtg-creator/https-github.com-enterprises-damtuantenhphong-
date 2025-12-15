@@ -1,0 +1,135 @@
+[
+  {
+    "id": "TH6_B4_C01",
+    "subject": "Tin học 6",
+    "chapter": "Bài 4: Mạng máy tính",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Mạng máy tính là gì?",
+    "options": {
+      "A": "Tối thiểu năm máy tính được liên kết với nhau.",
+      "B": "Hai hoặc nhiều máy tính được kết nối với nhau.",
+      "C": "Một số máy tính bàn.",
+      "D": "Tất cả các máy tính trong một phòng hoặc trong một tòa nhà."
+    },
+    "answer": "B"
+  },
+  {
+    "id": "TH6_B4_C02",
+    "subject": "Tin học 6",
+    "chapter": "Bài 4: Mạng máy tính",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Mạng máy tính không cho phép người sử dụng chia sẻ:",
+    "options": {
+      "A": "Máy in",
+      "B": "Máy quét",
+      "C": "Bàn phím và chuột",
+      "D": "Dữ liệu"
+    },
+    "answer": "C"
+  },
+  {
+    "id": "TH6_B4_C03",
+    "subject": "Tin học 6",
+    "chapter": "Bài 4: Mạng máy tính",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Phát biểu nào sau đây là sai?",
+    "options": {
+      "A": "Người sử dụng có thể giao tiếp với nhau trên mạng máy tính.",
+      "B": "Các tài nguyên như máy in có thể được chia sẻ.",
+      "C": "Virus có thể lây lan sang các máy tính khác trong mạng.",
+      "D": "Người sử dụng không thể chia sẻ dữ liệu trên máy tính của mình."
+    },
+    "answer": "D"
+  },
+  {
+    "id": "TH6_B4_C04",
+    "subject": "Tin học 6",
+    "chapter": "Bài 4: Mạng máy tính",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Lợi ích nào sau đây không đúng khi sử dụng mạng máy tính?",
+    "options": {
+      "A": "Giảm chi phí khi dùng chung phần cứng",
+      "B": "Giảm chi phí khi dùng chung phần mềm",
+      "C": "Người sử dụng có quyền kiểm soát độc quyền dữ liệu và ứng dụng của riêng họ",
+      "D": "Cho phép chia sẻ dữ liệu và tăng hiệu quả sử dụng"
+    },
+    "answer": "C"
+  },
+  {
+    "id": "TH6_B4_C05",
+    "subject": "Tin học 6",
+    "chapter": "Bài 4: Mạng máy tính",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Thiết bị nào không phải là thiết bị đầu cuối trong mạng máy tính?",
+    "options": {
+      "A": "Máy in",
+      "B": "Máy tính",
+      "C": "Bộ định tuyến",
+      "D": "Máy quét"
+    },
+    "answer": "C"
+  },
+  {
+    "id": "TH6_B4_C06",
+    "subject": "Tin học 6",
+    "chapter": "Bài 4: Mạng máy tính",
+    "type": "dung_sai",
+    "level": "thong_hieu",
+    "question": "Các nhận định về mạng có dây và mạng không dây là đúng hay sai:",
+    "options": {
+      "A": "Mạng có dây kết nối các máy tính bằng dây dẫn mạng.",
+      "B": "Mạng có dây dễ sửa và lắp đặt hơn mạng không dây.",
+      "C": "Mạng không dây chỉ kết nối máy tính, không kết nối các thiết bị thông minh khác.",
+      "D": "Mạng không dây thuận tiện cho những người di chuyển nhiều."
+    },
+    "answer": {
+      "A": "Đúng",
+      "B": "Sai",
+      "C": "Sai",
+      "D": "Đúng"
+    }
+  },
+  {
+    "id": "TH6_B4_C07",
+    "subject": "Tin học 6",
+    "chapter": "Bài 4: Mạng máy tính",
+    "type": "dung_sai",
+    "level": "thong_hieu",
+    "question": "Đánh giá các nhận định về thành phần của mạng máy tính:",
+    "options": {
+      "A": "Mạng máy tính bao gồm thiết bị đầu cuối, thiết bị kết nối và phần mềm mạng.",
+      "B": "Thiết bị đầu cuối là điểm xuất phát hoặc đích đến trong mạng.",
+      "C": "Máy chủ, switch, modem là thiết bị đầu cuối.",
+      "D": "Phần mềm mạng cho phép trao đổi thông tin giữa các máy tính."
+    },
+    "answer": {
+      "A": "Đúng",
+      "B": "Đúng",
+      "C": "Sai",
+      "D": "Đúng"
+    }
+  },
+  {
+    "id": "TH6_B4_C08",
+    "subject": "Tin học 6",
+    "chapter": "Bài 4: Mạng máy tính",
+    "type": "tu_luan",
+    "level": "thong_hieu",
+    "question": "Hãy nêu các thành phần của mạng máy tính và chức năng của từng thành phần.",
+    "answer": "Mạng máy tính gồm:\n1. Thiết bị đầu cuối: máy tính, máy in, máy quét,... là điểm xuất phát và nhận dữ liệu.\n2. Thiết bị kết nối: switch, modem, bộ định tuyến giúp truyền dữ liệu giữa các thiết bị.\n3. Phần mềm mạng: hỗ trợ trao đổi thông tin, quản lý truy cập và bảo mật dữ liệu."
+  },
+  {
+    "id": "TH6_B4_C09",
+    "subject": "Tin học 6",
+    "chapter": "Bài 4: Mạng máy tính",
+    "type": "tu_luan",
+    "level": "thong_hieu",
+    "question": "So sánh ưu nhược điểm của mạng có dây và mạng không dây.",
+    "answer": "Mạng có dây:\n- Ưu điểm: độ ổn định cao, tốc độ nhanh, ít bị nhiễu.\n- Nhược điểm: khó lắp đặt, hạn chế di chuyển.\nMạng không dây:\n- Ưu điểm: dễ dàng lắp đặt, thuận tiện cho thiết bị di động.\n- Nhược điểm: độ ổn định thấp hơn, dễ bị nhiễu, tốc độ chậm hơn mạng có dây."
+  }
+]

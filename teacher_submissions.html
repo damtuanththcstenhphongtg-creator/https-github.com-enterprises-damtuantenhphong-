@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <title>Danh sách bài nộp</title>
+  <title>Quản lý bài nộp</title>
 </head>
 <body>
   <h2>Danh sách bài nộp</h2>
@@ -13,10 +13,14 @@
   <script>
     document.getElementById("loadSubmissions").addEventListener("click", async () => {
       try {
+        // Đọc file submissions.json từ server
         const res = await fetch("http://localhost:3000/submissions.json");
-        if (!res.ok) throw new Error("Không thể tải submissions.json");
+        if (!res.ok) {
+          throw new Error("Không thể tải submissions.json");
+        }
         const submissions = await res.json();
 
+        // Hiển thị danh sách
         const listDiv = document.getElementById("list");
         listDiv.innerHTML = "";
 

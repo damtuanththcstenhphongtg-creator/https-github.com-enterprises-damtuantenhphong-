@@ -1,0 +1,135 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "type": "mcq",
+      "question": "Để giải bài toán bằng cách lập hệ phương trình, ta thực hiện các bước (1) Lập hệ phương trình và đặt điều kiện thích hợp cho ẩn; (2) Kiểm tra điều kiện của nghiệm; (3) Giải hệ phương trình vừa tìm được; (4) Kết luận theo thứ tự nào?",
+      "options": {
+        "A": "(1), (3), (4), (2)",
+        "B": "(1), (3), (2), (4)",
+        "C": "(3), (2), (1), (4)",
+        "D": "(1), (2), (3), (4)"
+      },
+      "correct": "B",
+      "explanation": "Thứ tự đúng là (1), (3), (2), (4)."
+    },
+    {
+      "id": 2,
+      "type": "mcq",
+      "question": "Khi lập hệ phương trình để giải bài toán, ta thực hiện các bước (1) Biểu diễn các đại lượng chưa biết theo ẩn và các đại lượng đã biết; (2) Đặt điều kiện thích hợp cho ẩn; (3) Lập hệ phương trình biểu thị mối quan hệ; (4) Chọn ẩn số theo thứ tự nào?",
+      "options": {
+        "A": "(4), (1), (2), (3)",
+        "B": "(2), (4), (1), (3)",
+        "C": "(4), (2), (1), (3)",
+        "D": "(2), (4), (3), (1)"
+      },
+      "correct": "C",
+      "explanation": "Thứ tự đúng là (4), (2), (1), (3)."
+    },
+    {
+      "id": 3,
+      "type": "mcq",
+      "question": "Khi giải bài toán bằng cách lập hệ phương trình, kiểm tra điều kiện của nghiệm là gì?",
+      "options": {
+        "A": "Kiểm tra xem trong các nghiệm vừa tìm được, nghiệm nào thỏa mãn điều kiện của ẩn.",
+        "B": "Kiểm tra ít nhất một nghiệm xem có thỏa mãn điều kiện của ẩn.",
+        "C": "Kiểm tra bất kỳ một nghiệm xem có thỏa mãn điều kiện của ẩn.",
+        "D": "Cả A, B, C đều sai."
+      },
+      "correct": "A",
+      "explanation": "Phải kiểm tra tất cả nghiệm xem có thỏa mãn điều kiện của ẩn hay không."
+    },
+    {
+      "id": 4,
+      "type": "mcq",
+      "question": "Một nhóm học sinh mua tổng cộng 15 cốc trà sữa và hồng trà. Giá lần lượt là 25.000 đồng và 22.000 đồng. Tổng số tiền là 363.000 đồng. Điều kiện của hai ẩn x, y là:",
+      "options": {
+        "A": "x,y ∈ N và x ≤ 15",
+        "B": "x,y ∈ N và x ≤ 15, y ≤ 15",
+        "C": "x,y ∈ N và x ≤ y ≤ 15",
+        "D": "x,y ∈ N và x > y ≥ 15"
+      },
+      "correct": "B",
+      "explanation": "Vì tổng số cốc là 15 nên x ≤ 15, y ≤ 15 và x,y ∈ N."
+    },
+    {
+      "id": 5,
+      "type": "mcq",
+      "question": "Một mảnh vườn hình chữ nhật có chu vi 50 m. Khi biểu diễn theo hai ẩn x, y ta được phương trình nào?",
+      "options": {
+        "A": "2x + y = 5",
+        "B": "x - 2y = 25",
+        "C": "x + y = 50",
+        "D": "x + y = 25"
+      },
+      "correct": "D",
+      "explanation": "Nửa chu vi là 25 nên ta có x + y = 25."
+    },
+    {
+      "id": 6,
+      "type": "mcq",
+      "question": "Một đoàn xe vận chuyển hàng: nếu xếp mỗi xe 15 tấn thì còn thừa 5 tấn, nếu xếp mỗi xe 16 tấn thì thừa 3 tấn. Hệ phương trình biểu diễn mối quan hệ giữa x và y là:",
+      "options": {
+        "A": "{15x - y = -5; 16x - y = 3}",
+        "B": "{15x - y = 5; 16x - y = -3}",
+        "C": "{15x - y = 5; 16x - y = 3}",
+        "D": "{15x - y = -5; 16x - y = -3}"
+      },
+      "correct": "A",
+      "explanation": "Ta có 15x = y - 5 và 16x = y + 3."
+    },
+    {
+      "id": 7,
+      "type": "mcq",
+      "question": "Một ô tô đi từ A đến B: tăng vận tốc thêm 15 km/h thì đến sớm hơn 2 giờ; giảm vận tốc 5 km/h thì đến muộn hơn 1 giờ. Khẳng định nào đúng?",
+      "options": {
+        "A": "Từ dữ kiện 1, ta có 2x - 15y = 30",
+        "B": "Từ dữ kiện 2, ta có x - 5y = 5",
+        "C": "Hệ phương trình là {2x - 15y = 30; x - 5y = 5}",
+        "D": "Cả A, B, C đều đúng"
+      },
+      "correct": "B",
+      "explanation": "Từ dữ kiện 2 ta có x - 5y = 5."
+    },
+    {
+      "id": 8,
+      "type": "mcq",
+      "question": "Một sàn phòng hội trường có chu vi 330 m, chiều dài hơn chiều rộng 3 m. Khẳng định nào đúng?",
+      "options": {
+        "A": "x + y = 165",
+        "B": "y - x = 3",
+        "C": "Hệ phương trình là {x + y = 330; x - y = 3}",
+        "D": "Cả A, B, C đều đúng"
+      },
+      "correct": "A",
+      "explanation": "Nửa chu vi là 165 nên ta có x + y = 165."
+    },
+    {
+      "id": 9,
+      "type": "mcq",
+      "question": "Một khu đất hình chữ nhật có chu vi 270 m, chiều dài gấp 5 lần chiều rộng. Có bao nhiêu khẳng định đúng trong (i) x + y = 270; (ii) x = 5y; (iii) {x + y = 270; x = 5y}?",
+      "options": {
+        "A": "0",
+        "B": "1",
+        "C": "2",
+        "D": "3"
+      },
+      "correct": "B",
+      "explanation": "Nửa chu vi là 135 nên chỉ (ii) đúng."
+    },
+    {
+      "id": 10,
+      "type": "mcq",
+      "question": "Một phòng học có 200 ghế xếp thành từng dãy. Nếu thêm 2 dãy và mỗi dãy thêm 1 ghế thì có 242 ghế. Kết luận nào đúng?",
+      "options": {
+        "A": "10 dãy, mỗi dãy 20 ghế",
+        "B": "12 dãy, mỗi dãy 15 ghế",
+        "C": "10 dãy, mỗi dãy 25 ghế",
+        "D": "20 dãy, mỗi dãy 10 ghế"
+      },
+      "correct": "D",
+      "explanation": "Giải hệ ta được x = 20, y = 10."
+    }
+  ]
+}
+

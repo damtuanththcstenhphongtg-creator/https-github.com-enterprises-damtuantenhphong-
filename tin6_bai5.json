@@ -1,0 +1,155 @@
+[
+  {
+    "id": "TH6_B5_C01",
+    "subject": "Tin học 6",
+    "chapter": "Bài 5: Internet và các dịch vụ trên Internet",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Phát biểu nào sau đây đúng?",
+    "options": {
+      "A": "Internet chỉ là mạng kết nối các trang thông tin trên phạm vi toàn cầu.",
+      "B": "Internet là một mạng các máy tính liên kết với nhau trên toàn cầu.",
+      "C": "Internet là mạng truyền hình kết nối các thiết bị nghe nhìn trong phạm vi một quốc gia.",
+      "D": "Internet là mạng kết nối các thiết bị có sử dụng chung nguồn điện."
+    },
+    "answer": "B"
+  },
+  {
+    "id": "TH6_B5_C02",
+    "subject": "Tin học 6",
+    "chapter": "Bài 5: Internet và các dịch vụ trên Internet",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Để kết nối Internet, máy tính phải được cung cấp dịch vụ bởi:",
+    "options": {
+      "A": "Một máy tính khác",
+      "B": "Người quản trị mạng xã hội",
+      "C": "Nhà cung cấp dịch vụ Internet (ISP)",
+      "D": "Người quản trị mạng máy tính"
+    },
+    "answer": "C"
+  },
+  {
+    "id": "TH6_B5_C03",
+    "subject": "Tin học 6",
+    "chapter": "Bài 5: Internet và các dịch vụ trên Internet",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Phát biểu nào sau đây không đúng khi nói về Internet?",
+    "options": {
+      "A": "Một mạng lưới rộng lớn kết nối hàng triệu máy tính trên khắp thế giới",
+      "B": "Một mạng kết nối các hệ thống máy tính và các thiết bị với nhau giúp người dùng xem, tìm kiếm, chia sẻ thông tin",
+      "C": "Một mạng công cộng không thuộc sở hữu hay do bất kì tổ chức/cá nhân nào điều hành",
+      "D": "Một mạng kết nối các máy tính với nhau được tổ chức và giám sát bởi một cơ quan quản lí"
+    },
+    "answer": "D"
+  },
+  {
+    "id": "TH6_B5_C04",
+    "subject": "Tin học 6",
+    "chapter": "Bài 5: Internet và các dịch vụ trên Internet",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Phát biểu nào sau đây không phải là đặc điểm của Internet?",
+    "options": {
+      "A": "Phạm vi hoạt động trên toàn cầu",
+      "B": "Có nhiều dịch vụ đa dạng và phong phú",
+      "C": "Không thuộc quyền sở hữu của ai",
+      "D": "Thông tin chính xác tuyệt đối"
+    },
+    "answer": "D"
+  },
+  {
+    "id": "TH6_B5_C05",
+    "subject": "Tin học 6",
+    "chapter": "Bài 5: Internet và các dịch vụ trên Internet",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Phát biểu nào sau đây không phải là lợi ích của Internet đối với học sinh?",
+    "options": {
+      "A": "Mở rộng giao lưu kết bạn với các bạn nước ngoài",
+      "B": "Tiết kiệm thời gian, cung cấp nhiều tư liệu làm bài tập dự án",
+      "C": "Nâng cao kiến thức bằng cách tham gia các khóa học trực tuyến",
+      "D": "Giải trí bằng cách xem mạng xã hội và chơi điện tử suốt cả ngày"
+    },
+    "answer": "D"
+  },
+  {
+    "id": "TH6_B5_C06",
+    "subject": "Tin học 6",
+    "chapter": "Bài 5: Internet và các dịch vụ trên Internet",
+    "type": "dung_sai",
+    "level": "thong_hieu",
+    "question": "Các nhận định về Internet và thông tin trên mạng:",
+    "options": {
+      "A": "Kho thông tin trên Internet là khổng lồ",
+      "B": "Chúng ta có thể sử dụng bất kỳ thông tin nào trên Internet mà không cần xin phép",
+      "C": "Internet cung cấp môi trường làm việc trực tuyến, giải trí từ xa",
+      "D": "Người dùng có thể tìm kiếm, trao đổi thông tin trên Internet"
+    },
+    "answer": {
+      "A": "Đúng",
+      "B": "Sai",
+      "C": "Đúng",
+      "D": "Đúng"
+    }
+  },
+  {
+    "id": "TH6_B5_C07",
+    "subject": "Tin học 6",
+    "chapter": "Bài 5: Internet và các dịch vụ trên Internet",
+    "type": "dung_sai",
+    "level": "thong_hieu",
+    "question": "Khi sử dụng thông tin trên Internet, các nhận định sau đúng hay sai:",
+    "options": {
+      "A": "Cần lưu ý bản quyền thông tin",
+      "B": "Có thể sao chép toàn bộ nội dung mà không cần ghi nguồn",
+      "C": "Phải tôn trọng các điều khoản sử dụng của trang web",
+      "D": "Thông tin trên Internet luôn chính xác và đáng tin cậy"
+    },
+    "answer": {
+      "A": "Đúng",
+      "B": "Sai",
+      "C": "Đúng",
+      "D": "Sai"
+    }
+  },
+  {
+    "id": "TH6_B5_C08",
+    "subject": "Tin học 6",
+    "chapter": "Bài 5: Internet và các dịch vụ trên Internet",
+    "type": "dung_sai",
+    "level": "thong_hieu",
+    "question": "Đánh giá các nhận định về ứng dụng Internet:",
+    "options": {
+      "A": "Đào tạo qua mạng là một ứng dụng của Internet",
+      "B": "Hội thảo trực tuyến là một ứng dụng của Internet",
+      "C": "Thương mại điện tử là một ứng dụng của Internet",
+      "D": "Internet chỉ dùng để đọc tin tức, không có các ứng dụng khác"
+    },
+    "answer": {
+      "A": "Đúng",
+      "B": "Đúng",
+      "C": "Đúng",
+      "D": "Sai"
+    }
+  },
+  {
+    "id": "TH6_B5_C09",
+    "subject": "Tin học 6",
+    "chapter": "Bài 5: Internet và các dịch vụ trên Internet",
+    "type": "tu_luan",
+    "level": "thong_hieu",
+    "question": "Hãy nêu một số lợi ích của Internet trong học tập và đời sống.",
+    "answer": "Internet giúp:\n1. Tra cứu thông tin nhanh chóng và đa dạng.\n2. Học tập trực tuyến và tham gia các khóa học.\n3. Giao tiếp và trao đổi thông tin với bạn bè, người thân.\n4. Tham gia thương mại điện tử, dịch vụ ngân hàng trực tuyến.\n5. Giải trí lành mạnh như nghe nhạc, xem video."
+  },
+  {
+    "id": "TH6_B5_C10",
+    "subject": "Tin học 6",
+    "chapter": "Bài 5: Internet và các dịch vụ trên Internet",
+    "type": "tu_luan",
+    "level": "thong_hieu",
+    "question": "Em hãy giải thích vì sao cần tuân thủ bản quyền khi sử dụng thông tin trên Internet.",
+    "answer": "Việc tuân thủ bản quyền giúp tôn trọng quyền sở hữu trí tuệ, tránh vi phạm pháp luật, đảm bảo thông tin sử dụng hợp pháp và chính xác. Người dùng phải ghi nguồn, xin phép nếu cần và không sao chép toàn bộ nội dung."
+  }
+]

@@ -1,0 +1,184 @@
+[
+  {
+    "id": "T9-001",
+    "chapter": "Căn bậc hai – căn thức bậc hai",
+    "type": "mcq",
+    "question": "Căn bậc hai của 121 là:",
+    "options": ["9", "10", "11", "12"],
+    "answer": "C"
+  },
+  {
+    "id": "T9-002",
+    "chapter": "Căn bậc hai – căn thức bậc hai",
+    "type": "mcq",
+    "question": "Biểu thức nào sau đây là căn thức bậc hai?",
+    "options": ["3x", "x² + 3", "√(5x)", "2 – x"],
+    "answer": "C"
+  },
+  {
+    "id": "T9-003",
+    "chapter": "Căn bậc hai – căn thức bậc hai",
+    "type": "mcq",
+    "question": "Giá trị của √(49x²) là:",
+    "options": ["7x", "49x", "7|x|", "x + 7"],
+    "answer": "C"
+  },
+  {
+    "id": "T9-004",
+    "chapter": "Căn bậc hai – căn thức bậc hai",
+    "type": "mcq",
+    "question": "Điều kiện xác định của căn thức √(3x – 9) là:",
+    "options": ["x ≥ 0", "x ≥ 3", "x > 3", "x ≤ 3"],
+    "answer": "B"
+  },
+  {
+    "id": "T9-005",
+    "chapter": "Căn bậc hai – căn thức bậc hai",
+    "type": "mcq",
+    "question": "Rút gọn biểu thức √(75) là:",
+    "options": ["5√3", "3√5", "15√5", "25√3"],
+    "answer": "A"
+  },
+
+  {
+    "id": "T9-006",
+    "chapter": "Hàm số bậc nhất",
+    "type": "mcq",
+    "question": "Hàm số bậc nhất có dạng:",
+    "options": ["y = ax² + b", "y = ax + b", "y = a/x", "y = mx"],
+    "answer": "B"
+  },
+  {
+    "id": "T9-007",
+    "chapter": "Hàm số bậc nhất",
+    "type": "mcq",
+    "question": "Đồ thị hàm số y = ax + b là:",
+    "options": ["Đường tròn", "Đường thẳng", "Parabol", "Đường hypebol"],
+    "answer": "B"
+  },
+  {
+    "id": "T9-008",
+    "chapter": "Hàm số bậc nhất",
+    "type": "mcq",
+    "question": "Hàm số y = -3x + 2 có hệ số góc là:",
+    "options": ["-3", "3", "2", "-2"],
+    "answer": "A"
+  },
+  {
+    "id": "T9-009",
+    "chapter": "Hàm số bậc nhất",
+    "type": "mcq",
+    "question": "Đồ thị hàm số y = 2x đi qua điểm nào?",
+    "options": ["(1, 1)", "(2, 1)", "(1, 2)", "(2, 4)"],
+    "answer": "C"
+  },
+  {
+    "id": "T9-010",
+    "chapter": "Hàm số bậc nhất",
+    "type": "mcq",
+    "question": "Đường thẳng y = 0,5x + 1 có tung độ gốc là:",
+    "options": ["0", "1", "0,5", "-1"],
+    "answer": "B"
+  },
+
+  {
+    "id": "T9-011",
+    "chapter": "Hệ hai phương trình",
+    "type": "mcq",
+    "question": "Hệ phương trình bậc nhất hai ẩn có dạng:",
+    "options": ["ax + b = 0", "ax + by = c", "ax² + b = 0", "ax + b/x = 0"],
+    "answer": "B"
+  },
+  {
+    "id": "T9-012",
+    "chapter": "Hệ hai phương trình",
+    "type": "mcq",
+    "question": "Phương pháp thế là:",
+    "options": [
+      "Nhân hai phương trình",
+      "Cộng hai phương trình",
+      "Biến một ẩn theo ẩn còn lại rồi thế vào phương trình kia",
+      "Trừ hai phương trình"
+    ],
+    "answer": "C"
+  },
+  {
+    "id": "T9-013",
+    "chapter": "Hệ hai phương trình",
+    "type": "mcq",
+    "question": "Hệ nào dưới đây vô nghiệm?",
+    "options": [
+      "x + y = 2; 2x + 2y = 4",
+      "x + y = 2; x + y = 3",
+      "2x – y = 1; x + y = 3",
+      "x – y = 1; y = 2"
+    ],
+    "answer": "B"
+  },
+
+  {
+    "id": "T9-014",
+    "chapter": "Đường tròn",
+    "type": "mcq",
+    "question": "Đường tròn là tập hợp các điểm cách tâm một khoảng:",
+    "options": ["Không đổi", "Biến đổi", "Lớn dần", "Nhỏ dần"],
+    "answer": "A"
+  },
+  {
+    "id": "T9-015",
+    "chapter": "Đường tròn",
+    "type": "mcq",
+    "question": "Bán kính là:",
+    "options": [
+      "Đoạn thẳng nối tâm với một điểm bất kỳ trên đường tròn",
+      "Đoạn thẳng nối hai điểm bất kỳ",
+      "Đoạn thẳng đi qua tâm và cắt đường tròn",
+      "Hình chiếu của tâm"
+    ],
+    "answer": "A"
+  },
+
+  {
+    "id": "T9-016",
+    "chapter": "Góc – cung – dây",
+    "type": "mcq",
+    "question": "Trong cùng một đường tròn, cung lớn hơn tương ứng:",
+    "options": ["Dây nhỏ hơn", "Dây lớn hơn", "Dây bằng nhau", "Không xác định"],
+    "answer": "B"
+  },
+
+  {
+    "id": "T9-017",
+    "chapter": "Hệ thức lượng trong tam giác vuông",
+    "type": "mcq",
+    "question": "Trong tam giác vuông, sin của góc nhọn được tính bằng:",
+    "options": ["Kề / huyền", "Đối / kề", "Đối / huyền", "Huyền / đối"],
+    "answer": "C"
+  },
+  {
+    "id": "T9-018",
+    "chapter": "Hệ thức lượng trong tam giác vuông",
+    "type": "mcq",
+    "question": "Định lý Pi-ta-go là:",
+    "options": ["a² + b² = c²", "a² – b² = c²", "2ab = c²", "a + b = c"],
+    "answer": "A"
+  },
+
+  {
+    "id": "T9-019",
+    "chapter": "Biến đổi căn thức",
+    "type": "mcq",
+    "question": "Rút gọn √(20x²) là:",
+    "options": ["2x√5", "5x√2", "4x", "x√20"],
+    "answer": "A"
+  },
+
+  {
+    "id": "T9-020",
+    "chapter": "Biến đổi căn thức",
+    "type": "mcq",
+    "question": "Tính giá trị: √3 × √12 =",
+    "options": ["3√4", "6", "6√2", "3√12"],
+    "answer": "B"
+  }
+]

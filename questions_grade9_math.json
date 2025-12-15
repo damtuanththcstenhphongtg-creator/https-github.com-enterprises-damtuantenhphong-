@@ -1,0 +1,146 @@
+{
+  "subject": "math",
+  "grade": 9,
+  "questions": {
+    "multiple_choice": [
+      {
+        "id": 1,
+        "question": "Phương trình nào sau đây là phương trình bậc nhất hai ẩn?",
+        "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
+        "answer": null
+      },
+      {
+        "id": 2,
+        "question": "Số nghiệm của phương trình ... là",
+        "options": ["A. một nghiệm.", "B. hai nghiệm.", "C. vô nghiệm.", "D. vô số nghiệm."],
+        "answer": null
+      },
+      {
+        "id": 3,
+        "question": "Phương trình nào sau đây là phương trình tích?",
+        "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
+        "answer": null
+      },
+      {
+        "id": 4,
+        "question": "Trong các phương trình sau, phương trình nào không phải là phương trình chứa ẩn ở mẫu?",
+        "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
+        "answer": null
+      },
+      {
+        "id": 5,
+        "question": "Điều kiện xác định của phương trình ... là",
+        "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
+        "answer": null
+      },
+      {
+        "id": 6,
+        "question": "Nghiệm của bất phương trình ... là",
+        "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
+        "answer": null
+      },
+      {
+        "id": 7,
+        "question": "Bất phương trình nào sau đây là bất phương trình bậc nhất một ẩn?",
+        "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
+        "answer": null
+      },
+      {
+        "id": 8,
+        "question": "Bất phương trình nào sau đây không là bất phương trình bậc nhất một ẩn?",
+        "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
+        "answer": null
+      },
+      {
+        "id": 9,
+        "question": "Cho cạnh huyền a và các cạnh góc vuông b, c. Khi đó:",
+        "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
+        "answer": null
+      },
+      {
+        "id": 10,
+        "question": "Cho cot(θ) = 0,75. Tính tan(θ).",
+        "options": ["A. 0,6", "B. 0,75", "C. 0,8", "D. ..."],
+        "answer": null
+      },
+      {
+        "id": 11,
+        "question": "Cho tam giác ABC vuông tại A. Phát biểu nào sau đây là sai?",
+        "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
+        "answer": null
+      },
+      {
+        "id": 12,
+        "question": "Cho tam giác ABC vuông tại A. Phát biểu nào sau đây là sai?",
+        "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
+        "answer": null
+      }
+    ],
+
+    "true_false": [
+      {
+        "id": 13,
+        "question": "Cho phương trình ...",
+        "statements": {
+          "a": "Phương trình trên là phương trình chứa ẩn ở mẫu.",
+          "b": "Điều kiện xác định của phương trình là ...",
+          "c": "Sau khi quy đồng mẫu hai vế và khử mẫu ta được phương trình ...",
+          "d": "Nghiệm của phương trình là ..."
+        },
+        "answers": { "a": null, "b": null, "c": null, "d": null }
+      },
+      {
+        "id": 14,
+        "question": "Một chiếc máy bay bay lên với vận tốc ... Đường bay lên tạo với phương ngang một góc θ.",
+        "statements": {
+          "a": "...",
+          "b": "...",
+          "c": "...",
+          "d": "Độ dài sau khi máy bay bay ... phút là ..."
+        },
+        "answers": { "a": null, "b": null, "c": null, "d": null }
+      }
+    ],
+
+    "short_answer": [
+      {
+        "id": 15,
+        "question": "Giả sử (x,y) là nghiệm của hệ phương trình ... thoả mãn biểu thức M = ... Tính M.",
+        "answer": null
+      },
+      {
+        "id": 16,
+        "question": "Tính tổng các nghiệm của phương trình ...",
+        "answer": null
+      },
+      {
+        "id": 17,
+        "question": "Một cột đèn cao 7m có bóng dài 4m. Tính góc α mà tia sáng mặt trời tạo với mặt đất (làm tròn đến độ).",
+        "answer": null
+      },
+      {
+        "id": 18,
+        "question": "Từ đỉnh tháp quan sát một thuyền cứu hộ, góc hạ là ... Đỉnh tháp cao ... Tính khoảng cách từ chân tháp đến thuyền (làm tròn 0,5m).",
+        "answer": null
+      }
+    ],
+
+    "essay": [
+      {
+        "id": 19,
+        "question": "Hai tổ sản xuất trong 3 ngày và 5 ngày được 1310 sản phẩm. Tổ 1 sản xuất mỗi ngày nhiều hơn tổ 2 là 10 sản phẩm. Tính năng suất mỗi tổ.",
+        "answer": null
+      },
+      {
+        "id": 20,
+        "question": "1) Giải bất phương trình ...  \n2) Tìm m để hệ phương trình ... có nghiệm thoả mãn điều kiện ...",
+        "answer": null
+      },
+      {
+        "id": 21,
+        "question": "Cho tam giác ABC vuông tại A, AB = 6cm, AC = 8cm. Kẻ AH.  \na) Tính góc ... và AH.  \nb) Chứng minh: HE/HF = ...",
+        "answer": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,180 @@
+[
+  {
+    "id": "TH6_B6_C01",
+    "subject": "Tin học 6",
+    "chapter": "Bài 6: Mạng thông tin toàn cầu",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "World Wide Web là gì?",
+    "options": {
+      "A": "Tên khác của Internet",
+      "B": "Một phần mềm máy tính",
+      "C": "Một hệ thống các website trên Internet cho phép người sử dụng xem và chia sẻ thông tin qua các trang web được liên kết với nhau",
+      "D": "Một trò chơi máy tính"
+    },
+    "answer": "C"
+  },
+  {
+    "id": "TH6_B6_C02",
+    "subject": "Tin học 6",
+    "chapter": "Bài 6: Mạng thông tin toàn cầu",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Phát biểu nào đúng về WWW và thư viện?",
+    "options": {
+      "A": "Cả hai đều đóng cửa sau giờ hành chính",
+      "B": "Cả hai đều cung cấp tin tức và thông tin cập nhật từng phút",
+      "C": "Cả hai đều có một thủ thư hoặc chuyên gia chuyên nghiệp luôn túc trực để trả lời các câu hỏi của độc giả",
+      "D": "Cả hai đều tạo môi trường cho người sử dụng có thể đọc được sách báo và tạp chí"
+    },
+    "answer": "D"
+  },
+  {
+    "id": "TH6_B6_C03",
+    "subject": "Tin học 6",
+    "chapter": "Bài 6: Mạng thông tin toàn cầu",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Trong trang web, liên kết (hay siêu liên kết) là gì?",
+    "options": {
+      "A": "Là địa chỉ thư điện tử",
+      "B": "Là địa chỉ của một trang web",
+      "C": "Là nội dung được thể hiện trên trình duyệt",
+      "D": "Là một thành phần trong trang web trỏ đến vị trí khác trên cùng trang web đó hoặc trỏ đến một trang web khác"
+    },
+    "answer": "D"
+  },
+  {
+    "id": "TH6_B6_C04",
+    "subject": "Tin học 6",
+    "chapter": "Bài 6: Mạng thông tin toàn cầu",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Mỗi website bắt buộc phải có:",
+    "options": {
+      "A": "Địa chỉ thư điện tử",
+      "B": "Một địa chỉ truy cập",
+      "C": "Địa chỉ trụ sở của đơn vị sở hữu",
+      "D": "Tên cá nhân hoặc tổ chức sở hữu"
+    },
+    "answer": "B"
+  },
+  {
+    "id": "TH6_B6_C05",
+    "subject": "Tin học 6",
+    "chapter": "Bài 6: Mạng thông tin toàn cầu",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Phần mềm giúp người sử dụng truy cập các trang web trên Internet gọi là gì?",
+    "options": {
+      "A": "Website",
+      "B": "Địa chỉ web",
+      "C": "Trình duyệt web",
+      "D": "Công cụ tìm kiếm"
+    },
+    "answer": "C"
+  },
+  {
+    "id": "TH6_B6_C06",
+    "subject": "Tin học 6",
+    "chapter": "Bài 6: Mạng thông tin toàn cầu",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Trong các tên sau đây, tên nào không phải là tên của trình duyệt web?",
+    "options": {
+      "A": "Mozilla Firefox",
+      "B": "Google Chrome",
+      "C": "Internet Explorer",
+      "D": "Windows Explorer"
+    },
+    "answer": "D"
+  },
+  {
+    "id": "TH6_B6_C07",
+    "subject": "Tin học 6",
+    "chapter": "Bài 6: Mạng thông tin toàn cầu",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Địa chỉ trang web nào sau đây là hợp lệ?",
+    "options": {
+      "A": "www \\ tienphong.vn",
+      "B": "https://nguyennghia@gmail.com",
+      "C": "https \\: www. tienphong.vn",
+      "D": "https://www.tienphong.vn"
+    },
+    "answer": "D"
+  },
+  {
+    "id": "TH6_B6_C08",
+    "subject": "Tin học 6",
+    "chapter": "Bài 6: Mạng thông tin toàn cầu",
+    "type": "dung_sai",
+    "level": "thong_hieu",
+    "question": "Nhận định đúng/sai về thao tác trình duyệt web:",
+    "options": {
+      "A": "Nút ← trên trình duyệt giúp quay lại trang trước đó",
+      "B": "Nút Home trên trình duyệt giúp quay về trang chủ",
+      "C": "Nút Forward giúp đi tới trang tiếp theo",
+      "D": "Nút Reload giúp tắt trình duyệt"
+    },
+    "answer": {
+      "A": "Đúng",
+      "B": "Đúng",
+      "C": "Đúng",
+      "D": "Sai"
+    }
+  },
+  {
+    "id": "TH6_B6_C09",
+    "subject": "Tin học 6",
+    "chapter": "Bài 6: Mạng thông tin toàn cầu",
+    "type": "dung_sai",
+    "level": "thong_hieu",
+    "question": "Nhận định đúng/sai về dữ liệu và thông tin trên website:",
+    "options": {
+      "A": "Loại dữ liệu có thể là văn bản, hình ảnh, âm thanh, video",
+      "B": "Siêu liên kết giúp liên kết đến các trang khác hoặc vị trí khác trong trang",
+      "C": "Trang web luôn đảm bảo dữ liệu chính xác tuyệt đối",
+      "D": "Tên miền '.vn' là ký hiệu quốc gia Việt Nam"
+    },
+    "answer": {
+      "A": "Đúng",
+      "B": "Đúng",
+      "C": "Sai",
+      "D": "Đúng"
+    }
+  },
+  {
+    "id": "TH6_B6_C10",
+    "subject": "Tin học 6",
+    "chapter": "Bài 6: Mạng thông tin toàn cầu",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Website là tập hợp:",
+    "options": {
+      "A": "Các trang Web có liên quan",
+      "B": "Các trang chủ",
+      "C": "Các trình duyệt",
+      "D": "Tất cả các đáp án trên"
+    },
+    "answer": "A"
+  },
+  {
+    "id": "TH6_B6_C11",
+    "subject": "Tin học 6",
+    "chapter": "Bài 6: Mạng thông tin toàn cầu",
+    "type": "tu_luan",
+    "level": "thong_hieu",
+    "question": "Em hãy nêu các bước truy cập một trang web trên trình duyệt và giải thích các bước đó.",
+    "answer": "Các bước truy cập một trang web:\n1. Nháy đúp chuột vào biểu tượng trình duyệt.\n2. Nhập địa chỉ trang web vào ô địa chỉ.\n3. Nhấn Enter để mở trang web.\nGiải thích: Bước 1 mở phần mềm trình duyệt, bước 2 xác định trang web muốn truy cập, bước 3 thực hiện truy cập trang."
+  },
+  {
+    "id": "TH6_B6_C12",
+    "subject": "Tin học 6",
+    "chapter": "Bài 6: Mạng thông tin toàn cầu",
+    "type": "tu_luan",
+    "level": "thong_hieu",
+    "question": "Em hãy giải thích vai trò của trình duyệt web và siêu liên kết trong việc truy cập và tìm kiếm thông tin trên Internet.",
+    "answer": "Trình duyệt web giúp người dùng truy cập, hiển thị và tương tác với các trang web. Siêu liên kết giúp người dùng điều hướng nhanh chóng giữa các trang web hoặc các vị trí khác nhau trong cùng một trang, làm cho việc tìm kiếm thông tin thuận tiện và hiệu quả."
+  }
+]

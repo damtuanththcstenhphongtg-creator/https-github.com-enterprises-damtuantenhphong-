@@ -1,0 +1,150 @@
+[
+  {
+    "id": "TH6_B3_C01",
+    "subject": "Tin học 6",
+    "chapter": "Bài 3: Lưu trữ và xử lý dữ liệu",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Bộ nhớ trong máy tính bao gồm những gì?",
+    "options": {
+      "A": "RAM và ROM",
+      "B": "Ổ cứng và USB",
+      "C": "Màn hình và loa",
+      "D": "Bàn phím và chuột"
+    },
+    "answer": "A"
+  },
+  {
+    "id": "TH6_B3_C02",
+    "subject": "Tin học 6",
+    "chapter": "Bài 3: Lưu trữ và xử lý dữ liệu",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Dữ liệu trong máy tính được biểu diễn bằng hệ thống nào?",
+    "options": {
+      "A": "Hệ thập phân",
+      "B": "Hệ nhị phân",
+      "C": "Hệ thập lục phân",
+      "D": "Hệ bát phân"
+    },
+    "answer": "B"
+  },
+  {
+    "id": "TH6_B3_C03",
+    "subject": "Tin học 6",
+    "chapter": "Bài 3: Lưu trữ và xử lý dữ liệu",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Chức năng của phần mềm là gì?",
+    "options": {
+      "A": "Chỉ lưu trữ dữ liệu",
+      "B": "Chỉ hiển thị dữ liệu",
+      "C": "Giúp máy tính xử lý dữ liệu và thực hiện các tác vụ",
+      "D": "Thay thế phần cứng"
+    },
+    "answer": "C"
+  },
+  {
+    "id": "TH6_B3_C04",
+    "subject": "Tin học 6",
+    "chapter": "Bài 3: Lưu trữ và xử lý dữ liệu",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Thiết bị nào sau đây là thiết bị lưu trữ ngoài?",
+    "options": {
+      "A": "RAM",
+      "B": "ROM",
+      "C": "USB và ổ cứng ngoài",
+      "D": "CPU"
+    },
+    "answer": "C"
+  },
+  {
+    "id": "TH6_B3_C05",
+    "subject": "Tin học 6",
+    "chapter": "Bài 3: Lưu trữ và xử lý dữ liệu",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Khi dữ liệu được nhập vào máy tính qua thiết bị đầu vào, quá trình nào xảy ra tiếp theo?",
+    "options": {
+      "A": "Dữ liệu được xuất ra ngay",
+      "B": "Dữ liệu được xử lý bởi CPU",
+      "C": "Dữ liệu bị xoá",
+      "D": "Dữ liệu được in ra giấy"
+    },
+    "answer": "B"
+  },
+  {
+    "id": "TH6_B3_C06",
+    "subject": "Tin học 6",
+    "chapter": "Bài 3: Lưu trữ và xử lý dữ liệu",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Trong các dữ liệu sau, dữ liệu nào cần xử lý để trở thành thông tin?",
+    "options": {
+      "A": "Dãy số điểm học sinh",
+      "B": "Tên các học sinh",
+      "C": "Ngày sinh các học sinh",
+      "D": "Tất cả các dữ liệu trên"
+    },
+    "answer": "D"
+  },
+  {
+    "id": "TH6_B3_C07",
+    "subject": "Tin học 6",
+    "chapter": "Bài 3: Lưu trữ và xử lý dữ liệu",
+    "type": "dung_sai",
+    "level": "thong_hieu",
+    "question": "Cho biết các nhận định sau về lưu trữ và xử lý dữ liệu là đúng hay sai:",
+    "options": {
+      "A": "CPU thực hiện xử lý dữ liệu từ các thiết bị đầu vào.",
+      "B": "RAM lưu trữ dữ liệu lâu dài và không mất khi tắt máy.",
+      "C": "Ổ cứng lưu trữ dữ liệu lâu dài và giúp thông tin được truy cập sau này.",
+      "D": "Thiết bị đầu ra chỉ nhận dữ liệu từ người dùng."
+    },
+    "answer": {
+      "A": "Đúng",
+      "B": "Sai",
+      "C": "Đúng",
+      "D": "Sai"
+    }
+  },
+  {
+    "id": "TH6_B3_C08",
+    "subject": "Tin học 6",
+    "chapter": "Bài 3: Lưu trữ và xử lý dữ liệu",
+    "type": "dung_sai",
+    "level": "thong_hieu",
+    "question": "Đánh giá các nhận định sau:",
+    "options": {
+      "A": "Dữ liệu phải được mã hóa thành bit để máy tính hiểu.",
+      "B": "Máy tính có thể xử lý dữ liệu mà không cần phần mềm.",
+      "C": "Thông tin được tạo ra sau khi dữ liệu được xử lý và có ý nghĩa.",
+      "D": "USB là thiết bị lưu trữ ngoài, không phải thiết bị đầu vào hay đầu ra."
+    },
+    "answer": {
+      "A": "Đúng",
+      "B": "Sai",
+      "C": "Đúng",
+      "D": "Đúng"
+    }
+  },
+  {
+    "id": "TH6_B3_C09",
+    "subject": "Tin học 6",
+    "chapter": "Bài 3: Lưu trữ và xử lý dữ liệu",
+    "type": "tu_luan",
+    "level": "thong_hieu",
+    "question": "Hãy nêu quá trình xử lý dữ liệu trong máy tính từ khi nhập dữ liệu đến khi xuất thông tin.",
+    "answer": "Quá trình xử lý dữ liệu: \n1. Nhập dữ liệu từ thiết bị đầu vào (bàn phím, chuột, máy quét).\n2. CPU xử lý dữ liệu theo các chương trình đang chạy.\n3. RAM lưu trữ dữ liệu tạm thời để CPU truy cập nhanh.\n4. Dữ liệu được xuất ra dưới dạng thông tin qua thiết bị đầu ra (màn hình, máy in, loa)."
+  },
+  {
+    "id": "TH6_B3_C10",
+    "subject": "Tin học 6",
+    "chapter": "Bài 3: Lưu trữ và xử lý dữ liệu",
+    "type": "tu_luan",
+    "level": "thong_hieu",
+    "question": "So sánh bộ nhớ trong (RAM, ROM) và bộ nhớ ngoài (ổ cứng, USB) về chức năng và vai trò trong lưu trữ dữ liệu.",
+    "answer": "Bộ nhớ trong: RAM lưu trữ dữ liệu tạm thời và giúp CPU xử lý nhanh; ROM chứa chương trình cơ bản không thể thay đổi. \nBộ nhớ ngoài: Ổ cứng, USB lưu trữ dữ liệu lâu dài, giúp truy xuất sau khi tắt máy. Bộ nhớ trong nhanh nhưng tạm thời, bộ nhớ ngoài chậm hơn nhưng lâu dài."
+  }
+]

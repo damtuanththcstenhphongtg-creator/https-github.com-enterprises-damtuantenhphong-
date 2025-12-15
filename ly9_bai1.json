@@ -1,0 +1,21 @@
+{
+  "title": "Vật lý 9 - Bài 1: Chuyển động thẳng đều",
+  "subject": "ly",
+  "grade": "9",
+  "questions": [
+    {
+      "type": "mcq",
+      "question": "Một vật đi chuyển động thẳng đều với vận tốc 5 m/s. Quãng đường đi được sau 10 s là?",
+      "A": "50 m",
+      "B": "15 m",
+      "C": "5 m",
+      "D": "100 m",
+      "answer": "A"
+    },
+    {
+      "type": "essay",
+      "question": "Một ô tô đi từ A đến B 60 km với vận tốc 30 km/h. Tính thời gian đi và viết lời giải chi tiết.",
+      "answer": ""
+    }
+  ]
+}

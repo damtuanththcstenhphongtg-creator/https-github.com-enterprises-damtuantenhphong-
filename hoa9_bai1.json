@@ -1,0 +1,21 @@
+{
+  "title": "Hóa học 9 - Bài 1: Nguyên tử và phân tử",
+  "subject": "hoa",
+  "grade": "9",
+  "questions": [
+    {
+      "type": "mcq",
+      "question": "Nguyên tử là gì?",
+      "A": "Đơn vị cơ bản của nguyên tố hóa học",
+      "B": "Đơn vị cơ bản của phân tử",
+      "C": "Chất tạo ra phản ứng hóa học",
+      "D": "Nguyên tử không tồn tại",
+      "answer": "A"
+    },
+    {
+      "type": "essay",
+      "question": "Viết cấu tạo nguyên tử của nguyên tố Oxi và số nguyên tử, số khối.",
+      "answer": ""
+    }
+  ]
+}

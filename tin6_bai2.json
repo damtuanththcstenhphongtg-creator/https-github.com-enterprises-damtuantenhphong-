@@ -1,0 +1,150 @@
+[
+  {
+    "id": "TH6_B2_C01",
+    "subject": "Tin học 6",
+    "chapter": "Bài 2: Máy tính và các thành phần",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Bộ phận nào sau đây của máy tính chịu trách nhiệm xử lý thông tin?",
+    "options": {
+      "A": "Bộ nhớ RAM",
+      "B": "Bộ xử lý trung tâm (CPU)",
+      "C": "Ổ cứng",
+      "D": "Bàn phím"
+    },
+    "answer": "B"
+  },
+  {
+    "id": "TH6_B2_C02",
+    "subject": "Tin học 6",
+    "chapter": "Bài 2: Máy tính và các thành phần",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Thiết bị nào sau đây được gọi là thiết bị đầu vào?",
+    "options": {
+      "A": "Bàn phím",
+      "B": "Màn hình",
+      "C": "Máy in",
+      "D": "Loa"
+    },
+    "answer": "A"
+  },
+  {
+    "id": "TH6_B2_C03",
+    "subject": "Tin học 6",
+    "chapter": "Bài 2: Máy tính và các thành phần",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Thiết bị nào sau đây là thiết bị xuất dữ liệu?",
+    "options": {
+      "A": "Máy quét",
+      "B": "Bàn phím",
+      "C": "Máy in",
+      "D": "Chuột"
+    },
+    "answer": "C"
+  },
+  {
+    "id": "TH6_B2_C04",
+    "subject": "Tin học 6",
+    "chapter": "Bài 2: Máy tính và các thành phần",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Vai trò của bộ nhớ RAM trong máy tính là gì?",
+    "options": {
+      "A": "Lưu trữ dữ liệu vĩnh viễn",
+      "B": "Lưu trữ tạm thời và cung cấp dữ liệu cho CPU",
+      "C": "In ấn dữ liệu ra giấy",
+      "D": "Kết nối máy tính với Internet"
+    },
+    "answer": "B"
+  },
+  {
+    "id": "TH6_B2_C05",
+    "subject": "Tin học 6",
+    "chapter": "Bài 2: Máy tính và các thành phần",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Máy tính có thể xử lý thông tin nhờ vào các thành phần nào?",
+    "options": {
+      "A": "CPU, RAM, thiết bị đầu vào, thiết bị đầu ra",
+      "B": "Chỉ CPU",
+      "C": "Chỉ RAM và ổ cứng",
+      "D": "Bàn phím và chuột"
+    },
+    "answer": "A"
+  },
+  {
+    "id": "TH6_B2_C06",
+    "subject": "Tin học 6",
+    "chapter": "Bài 2: Máy tính và các thành phần",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Thiết bị nào giúp lưu trữ dữ liệu lâu dài?",
+    "options": {
+      "A": "RAM",
+      "B": "Ổ cứng (HDD/SSD)",
+      "C": "CPU",
+      "D": "Bàn phím"
+    },
+    "answer": "B"
+  },
+  {
+    "id": "TH6_B2_C07",
+    "subject": "Tin học 6",
+    "chapter": "Bài 2: Máy tính và các thành phần",
+    "type": "dung_sai",
+    "level": "thong_hieu",
+    "question": "Đọc các phát biểu sau và cho biết đúng hay sai:",
+    "options": {
+      "A": "CPU là bộ phận trung tâm thực hiện mọi phép tính và điều khiển các thành phần khác của máy tính.",
+      "B": "RAM lưu trữ dữ liệu vĩnh viễn và không mất khi tắt máy.",
+      "C": "Bàn phím và chuột là thiết bị đầu vào.",
+      "D": "Máy in là thiết bị đầu ra."
+    },
+    "answer": {
+      "A": "Đúng",
+      "B": "Sai",
+      "C": "Đúng",
+      "D": "Đúng"
+    }
+  },
+  {
+    "id": "TH6_B2_C08",
+    "subject": "Tin học 6",
+    "chapter": "Bài 2: Máy tính và các thành phần",
+    "type": "dung_sai",
+    "level": "thong_hieu",
+    "question": "Cho biết các nhận định sau về máy tính là đúng hay sai:",
+    "options": {
+      "A": "Máy tính có thể thực hiện các phép toán số học và logic.",
+      "B": "Máy tính chỉ xử lý được dữ liệu số, không xử lý được văn bản và hình ảnh.",
+      "C": "Máy tính cần thiết bị đầu vào để nhận dữ liệu từ người dùng.",
+      "D": "Máy tính không cần bộ nhớ để lưu dữ liệu tạm thời."
+    },
+    "answer": {
+      "A": "Đúng",
+      "B": "Sai",
+      "C": "Đúng",
+      "D": "Sai"
+    }
+  },
+  {
+    "id": "TH6_B2_C09",
+    "subject": "Tin học 6",
+    "chapter": "Bài 2: Máy tính và các thành phần",
+    "type": "tu_luan",
+    "level": "thong_hieu",
+    "question": "Hãy nêu các thành phần chính của một máy tính và vai trò của từng thành phần.",
+    "answer": "Máy tính gồm: \n- CPU: xử lý dữ liệu và điều khiển các thiết bị.\n- RAM: lưu trữ tạm thời dữ liệu và chương trình đang chạy.\n- Ổ cứng (HDD/SSD): lưu trữ dữ liệu lâu dài.\n- Thiết bị đầu vào (bàn phím, chuột, máy quét…): cung cấp dữ liệu cho máy tính.\n- Thiết bị đầu ra (màn hình, máy in, loa…): hiển thị hoặc xuất thông tin cho người dùng."
+  },
+  {
+    "id": "TH6_B2_C10",
+    "subject": "Tin học 6",
+    "chapter": "Bài 2: Máy tính và các thành phần",
+    "type": "tu_luan",
+    "level": "thong_hieu",
+    "question": "Hãy so sánh vai trò của RAM và ổ cứng trong máy tính.",
+    "answer": "RAM lưu trữ dữ liệu tạm thời khi máy tính hoạt động, giúp CPU truy cập nhanh, nhưng dữ liệu mất khi tắt máy. Ổ cứng lưu trữ dữ liệu lâu dài, giữ được dữ liệu ngay cả khi máy tính tắt, nhưng tốc độ truy cập chậm hơn RAM."
+  }
+]

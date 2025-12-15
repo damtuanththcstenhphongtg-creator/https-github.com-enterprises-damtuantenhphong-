@@ -1,0 +1,226 @@
+[
+  {
+    "id": "TH6_B8_C01",
+    "subject": "Tin học 6",
+    "chapter": "Bài 8: Thư điện tử",
+    "type": "trac_nghiem",
+    "question": "Đặc điểm nào sau đây không phải là ưu điểm của thư điện tử?",
+    "options": {
+      "A": "Ít tốn kém",
+      "B": "Có thể gửi kèm tệp",
+      "C": "Gửi và nhận thư nhanh chóng",
+      "D": "Có thể gửi và nhận thư mà không gặp phiền phức gì"
+    },
+    "answer": "D"
+  },
+  {
+    "id": "TH6_B8_C02",
+    "subject": "Tin học 6",
+    "chapter": "Bài 8: Thư điện tử",
+    "type": "trac_nghiem",
+    "question": "Địa chỉ thư điện tử có dạng:",
+    "options": {
+      "A": "Tên đường phố # Viết tắt của tên quốc gia",
+      "B": "Tên đăng nhập @ Địa chỉ máy chủ thư điện tử",
+      "C": "Tên đường phố @ Viết tắt của tên quốc gia",
+      "D": "Tên người sử dụng & Tên máy chủ của thư điện tử"
+    },
+    "answer": "B"
+  },
+  {
+    "id": "TH6_B8_C03",
+    "subject": "Tin học 6",
+    "chapter": "Bài 8: Thư điện tử",
+    "type": "trac_nghiem",
+    "question": "Địa chỉ thư điện tử bắt buộc phải có kí hiệu nào?",
+    "options": {
+      "A": "@",
+      "B": "$",
+      "C": "&",
+      "D": "#"
+    },
+    "answer": "A"
+  },
+  {
+    "id": "TH6_B8_C04",
+    "subject": "Tin học 6",
+    "chapter": "Bài 8: Thư điện tử",
+    "type": "trac_nghiem",
+    "question": "Địa chỉ nào sau đây là địa chỉ thư điện tử?",
+    "options": {
+      "A": "www.nxbgd.vn",
+      "B": "Hongha&hotmail.com",
+      "C": "Quynhanh.432@yahoo.com",
+      "D": "Hoa675439@gf@gmaỉl.com"
+    },
+    "answer": "C"
+  },
+  {
+    "id": "TH6_B8_C05",
+    "subject": "Tin học 6",
+    "chapter": "Bài 8: Thư điện tử",
+    "type": "trac_nghiem",
+    "question": "Khi đăng kí thành công một tài khoản thư điện tử, em cần nhớ gì để đăng nhập lần sau?",
+    "options": {
+      "A": "Tên nhà cung cấp dịch vụ Internet",
+      "B": "Ngày tháng năm sinh đã khai báo",
+      "C": "Địa chỉ thư của những người bạn",
+      "D": "Tên đăng nhập và mật khẩu hộp thư"
+    },
+    "answer": "D"
+  },
+  {
+    "id": "TH6_B8_C06",
+    "subject": "Tin học 6",
+    "chapter": "Bài 8: Thư điện tử",
+    "type": "trac_nghiem",
+    "question": "Khi đặt mật khẩu cho thư điện tử, em nên đặt mật khẩu như thế nào để đảm bảo tính bảo mật?",
+    "options": {
+      "A": "Mật khẩu có ít nhất 5 ký tự, kết hợp chữ hoa, chữ thường, số",
+      "B": "Mật khẩu là dãy số từ 0 đến 9",
+      "C": "Mật khẩu là ngày sinh của mình",
+      "D": "Mật khẩu giống tên địa chỉ thư"
+    },
+    "answer": "A"
+  },
+  {
+    "id": "TH6_B8_C07",
+    "subject": "Tin học 6",
+    "chapter": "Bài 8: Thư điện tử",
+    "type": "trac_nghiem",
+    "question": "Với thư điện tử, phát biểu nào sau đây là sai?",
+    "options": {
+      "A": "Có thể gửi một thư cho nhiều người cùng lúc",
+      "B": "Hai người có thể có địa chỉ thư điện tử giống hệt nhau",
+      "C": "Một người có thể gửi thư cho chính mình ở cùng địa chỉ thư điện tử",
+      "D": "Tệp tin đính kèm theo thư có thể chứa virus"
+    },
+    "answer": "B"
+  },
+  {
+    "id": "TH6_B8_C08",
+    "subject": "Tin học 6",
+    "chapter": "Bài 8: Thư điện tử",
+    "type": "trac_nghiem",
+    "question": "Em cần biết thông tin gì của người muốn gửi thư điện tử?",
+    "options": {
+      "A": "Địa chỉ nơi ở",
+      "B": "Mật khẩu thư",
+      "C": "Địa chỉ thư điện tử",
+      "D": "Loại máy tính đang dùng"
+    },
+    "answer": "C"
+  },
+  {
+    "id": "TH6_B8_C09",
+    "subject": "Tin học 6",
+    "chapter": "Bài 8: Thư điện tử",
+    "type": "trac_nghiem",
+    "question": "Phát biểu nào sau đây đúng về thư điện tử?",
+    "options": {
+      "A": "Trong hộp thư đến chỉ chứa thư của những người quen biết",
+      "B": "Nhìn vào hộp thư điện tử có thể biết thư đã đọc hay chưa",
+      "C": "Người gửi biết người nhận đã đọc thư hay chưa",
+      "D": "Chỉ người nhận mới mở được tệp đính kèm, người gửi không mở được"
+    },
+    "answer": "B"
+  },
+  {
+    "id": "TH6_B8_C10",
+    "subject": "Tin học 6",
+    "chapter": "Bài 8: Thư điện tử",
+    "type": "trac_nghiem",
+    "question": "Em chỉ nên mở thư điện tử được gửi đến từ:",
+    "options": {
+      "A": "Những người em không biết",
+      "B": "Các trang web ngẫu nhiên",
+      "C": "Những người có tên rõ ràng",
+      "D": "Những người em biết và tin tưởng"
+    },
+    "answer": "D"
+  },
+  {
+    "id": "TH6_B8_C11",
+    "subject": "Tin học 6",
+    "chapter": "Bài 8: Thư điện tử",
+    "type": "trac_nghiem",
+    "question": "Khi nghi ngờ thư điện tử nhận được là thư rác, em sẽ xử lý thế nào?",
+    "options": {
+      "A": "Xoá thư khỏi hộp thư",
+      "B": "Mở ra đọc nội dung",
+      "C": "Trả lời lại thư",
+      "D": "Gửi thư đó cho người khác"
+    },
+    "answer": "A"
+  },
+  {
+    "id": "TH6_B8_C12",
+    "subject": "Tin học 6",
+    "chapter": "Bài 8: Thư điện tử",
+    "type": "trac_nghiem",
+    "question": "Để bảo vệ máy tính khỏi virus, em không nhất thiết làm theo lời khuyên nào?",
+    "options": {
+      "A": "Không nhấp vào liên kết trong thư từ người không biết",
+      "B": "Không mở tệp đính kèm từ thư lạ",
+      "C": "Xoá tất cả thư trong hộp thư đến",
+      "D": "Đăng xuất khỏi hộp thư điện tử sau khi dùng xong"
+    },
+    "answer": "C"
+  },
+  {
+    "id": "TH6_B8_C13",
+    "subject": "Tin học 6",
+    "chapter": "Bài 8: Thư điện tử",
+    "type": "trac_nghiem",
+    "question": "Sắp xếp theo thứ tự các thao tác để đăng nhập vào hộp thư điện tử đã có:",
+    "options": {
+      "A": "Gõ tên đăng nhập và mật khẩu",
+      "B": "Truy cập vào trang web cung cấp dịch vụ thư điện tử",
+      "C": "Mở trình duyệt web",
+      "D": "Nháy chuột vào nút Đăng nhập"
+    },
+    "answer": "C-B-D-A"
+  },
+  {
+    "id": "TH6_B8_C14",
+    "subject": "Tin học 6",
+    "chapter": "Bài 8: Thư điện tử",
+    "type": "trac_nghiem",
+    "question": "Ưu điểm của thư điện tử là:",
+    "options": {
+      "A": "Có nhiều dịch vụ miễn phí",
+      "B": "Nhận và gửi nhanh chóng, cùng lúc cho nhiều người",
+      "C": "Có thể gửi kèm tệp",
+      "D": "Đơn giản, dễ sử dụng, dễ quản lý",
+      "E": "Bảo vệ môi trường do không dùng giấy, mực",
+      "F": "Truy cập mọi lúc, mọi nơi",
+      "G": "Tất cả đáp án trên đều đúng"
+    },
+    "answer": "G"
+  },
+  {
+    "id": "TH6_B8_C15",
+    "subject": "Tin học 6",
+    "chapter": "Bài 8: Thư điện tử",
+    "type": "dung_sai",
+    "question": "Đúng ghi Đ, sai ghi S cho các phát biểu sau:",
+    "options": {
+      "a": "Luôn đọc lại thư điện tử trước khi gửi đi",
+      "b": "Cần đăng xuất ra khỏi hộp thư điện tử sau khi sử dụng",
+      "c": "Thư điện tử có dòng tiêu đề mà thư tay không có",
+      "d": "Thời gian gửi thư điện tử rất ngắn, gần như ngay lập tức",
+      "e": "Thư điện tử không thể gửi cho nhiều người cùng lúc",
+      "f": "Cần mở tất cả các tệp đính kèm được gửi cho bạn",
+      "g": "Hộp thư của bạn tuyệt đối riêng tư, không ai có thể xâm phạm"
+    },
+    "answer": {
+      "a": "Đ",
+      "b": "Đ",
+      "c": "Đ",
+      "d": "Đ",
+      "e": "S",
+      "f": "S",
+      "g": "S"
+    }
+  }
+]

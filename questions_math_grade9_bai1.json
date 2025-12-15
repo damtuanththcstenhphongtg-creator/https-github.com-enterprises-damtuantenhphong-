@@ -1,0 +1,135 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "type": "mcq",
+      "question": "Trong các phương trình sau, phương trình nào không phải là phương trình bậc nhất hai ẩn?",
+      "options": {
+        "A": "x + 2y = 1",
+        "B": "0x - 0y = 5",
+        "C": "0x - y = 3",
+        "D": "x + 0y = -6"
+      },
+      "correct": "B",
+      "explanation": "Phương trình 0x - 0y = 5 không phải là phương trình bậc nhất hai ẩn do a, b đồng thời bằng 0."
+    },
+    {
+      "id": 2,
+      "type": "mcq",
+      "question": "Hệ số a, b, c tương ứng của phương trình bậc nhất hai ẩn x + 2y -1 = 0 là",
+      "options": {
+        "A": "a = 1; b = 1; c = 0",
+        "B": "a = 1; b = 2; c = 1",
+        "C": "a = 1; b = 2; c = -1",
+        "D": "a = 1; b = -2; c = 1"
+      },
+      "correct": "B",
+      "explanation": "Phương trình bậc nhất hai ẩn x + 2y - 1 = 0 nên a = 1; b = 2; c = -1."
+    },
+    {
+      "id": 3,
+      "type": "mcq",
+      "question": "Cặp số nào sau đây là nghiệm của phương trình 2x − y − 1 = 0?",
+      "options": {
+        "A": "(0; 1)",
+        "B": "(1; 0)",
+        "C": "(1; 1)",
+        "D": "(-1; 0)"
+      },
+      "correct": "C",
+      "explanation": "Thay x = 1 và y = 1 vào phương trình ta được 2⋅1−1−1=0. Do đó (1; 1) là nghiệm phương trình đã cho."
+    },
+    {
+      "id": 4,
+      "type": "mcq",
+      "question": "Trong các hệ phương trình sau, hệ nào không phải là hệ phương trình bậc nhất hai ẩn?",
+      "options": {
+        "A": "{x − y = 2; 2x + y = 1}",
+        "B": "{2x = 0; x + 5y = 15}",
+        "C": "{x^2 − 4y^2 = 0; 3x + 2y = 7}",
+        "D": "{2x − y = −5; 3y + 15 = 0}"
+      },
+      "correct": "C",
+      "explanation": "Hệ phương trình có chứa số hạng bậc 2 nên không phải là hệ bậc nhất hai ẩn."
+    },
+    {
+      "id": 5,
+      "type": "mcq",
+      "question": "Cho hệ phương trình {x + y = 0; x + 3y = 4}, cặp số nào sau đây là nghiệm của hệ?",
+      "options": {
+        "A": "(0; 1)",
+        "B": "(2; 2)",
+        "C": "(3; -3)",
+        "D": "(-2; 2)"
+      },
+      "correct": "D",
+      "explanation": "Thay x = -2, y = 2 vào cả hai phương trình ta được nghiệm đúng. Do đó (-2; 2) là nghiệm của hệ."
+    },
+    {
+      "id": 6,
+      "type": "mcq",
+      "question": "Tất cả các nghiệm của phương trình 2x - 3y = 1 được biểu diễn bằng đường thẳng nào?",
+      "options": {
+        "A": "y = -2x + 1",
+        "B": "y = 2x - 1",
+        "C": "y = 2/3x - 1/3",
+        "D": "y = 2/3x + 1/3"
+      },
+      "correct": "C",
+      "explanation": "Từ 2x - 3y = 1 suy ra y = 2/3x - 1/3."
+    },
+    {
+      "id": 7,
+      "type": "mcq",
+      "question": "Tất cả các nghiệm của phương trình 0x + 5y = 2 được biểu diễn bởi:",
+      "options": {
+        "A": "y = 2/5",
+        "B": "x = 2 - 5y",
+        "C": "x = 2/5",
+        "D": "y = 2/5 - x"
+      },
+      "correct": "A",
+      "explanation": "Từ 0x + 5y = 2 suy ra y = 2/5."
+    },
+    {
+      "id": 8,
+      "type": "mcq",
+      "question": "Tất cả các nghiệm của phương trình 3x - 0y = 1 được biểu diễn bởi:",
+      "options": {
+        "A": "y = 3x - 1",
+        "B": "x = 1/3",
+        "C": "x = -1/3",
+        "D": "y = 1 - 3x"
+      },
+      "correct": "B",
+      "explanation": "Từ 3x = 1 suy ra x = 1/3."
+    },
+    {
+      "id": 9,
+      "type": "mcq",
+      "question": "Giá trị nào của y0 để cặp số (1; y0) là nghiệm của phương trình −3x + 2y = 7?",
+      "options": {
+        "A": "y0 = 2",
+        "B": "y0 = -2",
+        "C": "y0 = 5",
+        "D": "y0 = -5"
+      },
+      "correct": "C",
+      "explanation": "Thay x = 1 vào phương trình ta được −3⋅1 + 2y0 = 7 ⇒ y0 = 5."
+    },
+    {
+      "id": 10,
+      "type": "mcq",
+      "question": "Cho phương trình 3x + (m^2 + m)y = 6 có nghiệm (-2; 6). Có bao nhiêu giá trị m thỏa mãn?",
+      "options": {
+        "A": "0",
+        "B": "1",
+        "C": "2",
+        "D": "3"
+      },
+      "correct": "C",
+      "explanation": "Thay x = -2, y = 6 vào phương trình ta được m^2 + m = 2 ⇒ m = 1 hoặc m = -2. Có 2 giá trị m thỏa mãn."
+    }
+  ]
+}
+

@@ -1,0 +1,180 @@
+[
+  {
+    "id": "TH6_B7_C01",
+    "subject": "Tin học 6",
+    "chapter": "Bài 7: Tìm kiếm thông tin trên Internet",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Cách nhanh nhất để tìm thông tin trên WWW mà không biết địa chỉ là:",
+    "options": {
+      "A": "Nhờ người khác tìm hộ",
+      "B": "Sử dụng máy tìm kiếm để tìm kiếm với từ khoá",
+      "C": "Di chuyển lần theo đường liên kết của các trang web",
+      "D": "Hỏi địa chỉ người khác rồi ghi ra giấy, sau đó nhập địa chỉ vào thanh địa chỉ"
+    },
+    "answer": "B"
+  },
+  {
+    "id": "TH6_B7_C02",
+    "subject": "Tin học 6",
+    "chapter": "Bài 7: Tìm kiếm thông tin trên Internet",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Máy tìm kiếm là gì?",
+    "options": {
+      "A": "Một động cơ cung cấp sức mạnh cho Internet",
+      "B": "Một chương trình bảo vệ máy tính khỏi virus",
+      "C": "Một chương trình sắp xếp dữ liệu trên máy tính của bạn",
+      "D": "Một website đặc biệt hỗ trợ người sử dụng tìm kiếm thông tin trên Internet"
+    },
+    "answer": "D"
+  },
+  {
+    "id": "TH6_B7_C03",
+    "subject": "Tin học 6",
+    "chapter": "Bài 7: Tìm kiếm thông tin trên Internet",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Từ khoá là gì?",
+    "options": {
+      "A": "Là từ mô tả chiếc chìa khoá",
+      "B": "Là một biểu tượng trong máy tìm kiếm",
+      "C": "Là tập hợp các từ mà máy tìm kiếm quy định trước",
+      "D": "Là một từ hoặc cụm từ liên quan đến nội dung cần tìm kiếm do người sử dụng cung cấp"
+    },
+    "answer": "D"
+  },
+  {
+    "id": "TH6_B7_C04",
+    "subject": "Tin học 6",
+    "chapter": "Bài 7: Tìm kiếm thông tin trên Internet",
+    "type": "trac_nghiem",
+    "level": "nhan_biet",
+    "question": "Tên nào sau đây là tên của máy tìm kiếm?",
+    "options": {
+      "A": "Word",
+      "B": "Google",
+      "C": "Windows Explorer",
+      "D": "Excel"
+    },
+    "answer": "B"
+  },
+  {
+    "id": "TH6_B7_C05",
+    "subject": "Tin học 6",
+    "chapter": "Bài 7: Tìm kiếm thông tin trên Internet",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Để tìm kiếm thông tin về virus Corona, em sử dụng từ khoá nào để thu hẹp phạm vi tìm kiếm nhất?",
+    "options": {
+      "A": "Corona",
+      "B": "Virus Corona",
+      "C": "\"Virus Corona\"",
+      "D": "“Virus”+“Corona”"
+    },
+    "answer": "C"
+  },
+  {
+    "id": "TH6_B7_C06",
+    "subject": "Tin học 6",
+    "chapter": "Bài 7: Tìm kiếm thông tin trên Internet",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Kết quả của việc tìm kiếm bằng máy tìm kiếm là:",
+    "options": {
+      "A": "Danh sách trang chủ của các website có liên quan",
+      "B": "Nội dung của một trang web có chứa từ khoá tìm kiếm",
+      "C": "Danh sách tên tác giả các bài viết có chứa từ khoá tìm kiếm",
+      "D": "Danh sách các liên kết trỏ đến trang web có chứa từ khoá tìm kiếm"
+    },
+    "answer": "D"
+  },
+  {
+    "id": "TH6_B7_C07",
+    "subject": "Tin học 6",
+    "chapter": "Bài 7: Tìm kiếm thông tin trên Internet",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Kết quả tìm kiếm thông tin bằng máy tìm kiếm có thể thể hiện dưới dạng:",
+    "options": {
+      "A": "Video",
+      "B": "Hình ảnh",
+      "C": "Văn bản",
+      "D": "Cả A, B, C"
+    },
+    "answer": "D"
+  },
+  {
+    "id": "TH6_B7_C08",
+    "subject": "Tin học 6",
+    "chapter": "Bài 7: Tìm kiếm thông tin trên Internet",
+    "type": "dung_sai",
+    "level": "thong_hieu",
+    "question": "Nhận định đúng/sai về máy tìm kiếm và từ khóa:",
+    "options": {
+      "A": "Máy tìm kiếm là website đặc biệt hỗ trợ tìm kiếm thông tin trên Internet",
+      "B": "Nhập từ khóa chính xác giúp kết quả tìm kiếm hiệu quả hơn",
+      "C": "Các kết quả tìm kiếm luôn chính xác 100%",
+      "D": "Có thể sử dụng dấu ngoặc kép để thu hẹp phạm vi tìm kiếm"
+    },
+    "answer": {
+      "A": "Đúng",
+      "B": "Đúng",
+      "C": "Sai",
+      "D": "Đúng"
+    }
+  },
+  {
+    "id": "TH6_B7_C09",
+    "subject": "Tin học 6",
+    "chapter": "Bài 7: Tìm kiếm thông tin trên Internet",
+    "type": "dung_sai",
+    "level": "thong_hieu",
+    "question": "Nhận định đúng/sai về trình tự tìm kiếm thông tin:",
+    "options": {
+      "A": "Mở trình duyệt trước",
+      "B": "Truy cập máy tìm kiếm",
+      "C": "Nhập từ khóa và nhấn Enter",
+      "D": "Nháy chuột vào liên kết sau khi kết quả hiện ra"
+    },
+    "answer": {
+      "A": "Đúng",
+      "B": "Đúng",
+      "C": "Đúng",
+      "D": "Đúng"
+    }
+  },
+  {
+    "id": "TH6_B7_C10",
+    "subject": "Tin học 6",
+    "chapter": "Bài 7: Tìm kiếm thông tin trên Internet",
+    "type": "trac_nghiem",
+    "level": "thong_hieu",
+    "question": "Website là gì?",
+    "options": {
+      "A": "Gồm nhiều trang web",
+      "B": "http://www.edu.net.vn",
+      "C": "Một hoặc nhiều trang web liên quan tổ chức dưới nhiều địa chỉ truy cập",
+      "D": "Một hoặc nhiều trang web liên quan tổ chức dưới một địa chỉ truy cập chung"
+    },
+    "answer": "D"
+  },
+  {
+    "id": "TH6_B7_C11",
+    "subject": "Tin học 6",
+    "chapter": "Bài 7: Tìm kiếm thông tin trên Internet",
+    "type": "tu_luan",
+    "level": "thong_hieu",
+    "question": "Em hãy trình bày các bước thực hiện tìm kiếm thông tin bằng máy tìm kiếm và giải thích từng bước.",
+    "answer": "Các bước:\n1. Mở trình duyệt.\n2. Truy cập máy tìm kiếm.\n3. Nhập từ khóa vào ô tìm kiếm.\n4. Nhấn Enter hoặc nháy nút tìm kiếm.\n5. Nháy vào liên kết để truy cập trang web.\nGiải thích: Bước 1 mở phần mềm trình duyệt, bước 2 truy cập công cụ tìm kiếm, bước 3 cung cấp thông tin tìm kiếm, bước 4 thực hiện tìm kiếm, bước 5 xem thông tin."
+  },
+  {
+    "id": "TH6_B7_C12",
+    "subject": "Tin học 6",
+    "chapter": "Bài 7: Tìm kiếm thông tin trên Internet",
+    "type": "tu_luan",
+    "level": "thong_hieu",
+    "question": "Em hãy giải thích vai trò của từ khóa trong việc tìm kiếm thông tin trên Internet.",
+    "answer": "Từ khóa giúp máy tìm kiếm xác định nội dung cần tìm và lọc kết quả phù hợp. Chọn từ khóa chính xác và phù hợp giúp kết quả tìm kiếm nhanh chóng và chính xác hơn. Có thể sử dụng dấu ngoặc kép để thu hẹp phạm vi tìm kiếm."
+  }
+]
