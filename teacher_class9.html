@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý lớp 9A1 - 9A2</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Danh sách học sinh lớp 9A1 - 9A2</h1>
+
+    <a href="teacher_home.html" class="back-btn">⬅ Quay lại</a>
+
+    <h2>Danh sách tài khoản</h2>
+
+    <table border="1" cellpadding="10">
+        <tr>
+            <th>STT</th>
+            <th>Tên đăng nhập</th>
+            <th>Mật khẩu</th>
+        </tr>
+
+        <!-- Danh sách tự sinh -->
+        <script>
+            const students = [
+                {"username": "lau_a_cuong", "password": "123456"},
+                {"username": "lau_a_da", "password": "123456"},
+                {"username": "mua_a_de", "password": "123456"},
+                {"username": "ly_thi_dan", "password": "123456"},
+                {"username": "mua_thi_don", "password": "123456"},
+                {"username": "lau_a_hanh", "password": "123456"},
+                {"username": "mua_a_hanh", "password": "123456"},
+                {"username": "giang_thi_hoa", "password": "123456"},
+                {"username": "lau_thi_hoa", "password": "123456"},
+                {"username": "ly_a_khu", "password": "123456"},
+                {"username": "vang_a_khuong", "password": "123456"},
+                {"username": "ly_thi_lau", "password": "123456"},
+                {"username": "giang_thi_lien", "password": "123456"},
+                {"username": "lau_thi_lu", "password": "123456"},
+                {"username": "mua_thi_may_ly", "password": "123456"},
+                {"username": "vang_a_mua", "password": "123456"},
+                {"username": "ly_thi_nuc", "password": "123456"},
+                {"username": "vang_a_phong", "password": "123456"},
+                {"username": "lau_a_phong", "password": "123456"},
+                {"username": "giang_thi_phuong", "password": "123456"},
+                {"username": "mua_a_sai", "password": "123456"},
+                {"username": "mua_a_senh", "password": "123456"},
+                {"username": "vang_thi_sua", "password": "123456"},
+                {"username": "ly_thi_thach", "password": "123456"},
+                {"username": "vang_a_tuan", "password": "123456"},
+
+                {"username": "lau_a_binh", "password": "123456"},
+                {"username": "mua_a_cong", "password": "123456"},
+                {"username": "lau_a_cuong_2", "password": "123456"},
+                {"username": "lau_thi_do", "password": "123456"},
+                {"username": "mua_thi_ca_dua", "password": "123456"},
+                {"username": "ly_a_dua", "password": "123456"},
+                {"username": "giang_thi_hia", "password": "123456"},
+                {"username": "lau_thi_hoa_2", "password": "123456"},
+                {"username": "mua_van_hung", "password": "123456"},
+                {"username": "lau_a_kha", "password": "123456"},
+                {"username": "mua_thi_lau", "password": "123456"},
+                {"username": "vang_a_manh", "password": "123456"},
+                {"username": "mua_a_minh", "password": "123456"},
+                {"username": "mua_thi_pa_na", "password": "123456"},
+                {"username": "vang_thi_nhung", "password": "123456"},
+                {"username": "mua_chi_phinh", "password": "123456"},
+                {"username": "giang_thi_phuong_2", "password": "123456"},
+                {"username": "lau_a_sai", "password": "123456"},
+                {"username": "mua_thi_senh", "password": "123456"},
+                {"username": "giang_a_son", "password": "123456"},
+                {"username": "mua_a_son", "password": "123456"},
+                {"username": "vang_thi_sua_2", "password": "123456"},
+                {"username": "mua_a_tenh", "password": "123456"},
+                {"username": "mua_thuy_van", "password": "123456"},
+                {"username": "mua_thi_xia", "password": "123456"},
+                {"username": "ly_thi_xinh", "password": "123456"},
+            ];
+
+            let tableHTML = "";
+            students.forEach((s, i) => {
+                tableHTML += `
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td>${s.username}</td>
+                        <td>${s.password}</td>
+                    </tr>
+                `;
+            });
+
+            document.write(tableHTML);
+        </script>
+    </table>
+
+    <br><br>
+
+    <button onclick="downloadJSON()" class="download-btn">📥 Tải file JSON</button>
+
+</div>
+
+<script>
+function downloadJSON() {
+    const data = {
+        "class": "9A1_9A2",
+        "students": students
+    };
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "students_class9.json";
+    a.click();
+}
+</script>
+
+</body>
+</html>

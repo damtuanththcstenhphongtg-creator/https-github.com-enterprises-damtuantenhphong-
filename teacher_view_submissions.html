@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Giáo viên chấm bài</title>
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#f4f6f9;
+  margin:0;
+  padding:20px;
+}
+h1{ text-align:center; }
+.card{
+  background:#fff;
+  padding:15px;
+  margin:15px auto;
+  max-width:900px;
+  border-radius:8px;
+  box-shadow:0 3px 6px rgba(0,0,0,.1);
+}
+.question{
+  border-left:4px solid #3498db;
+  padding:10px;
+  margin:10px 0;
+  background:#fafafa;
+}
+textarea{
+  width:100%;
+  min-height:80px;
+}
+button{
+  padding:6px 12px;
+  margin:5px;
+  cursor:pointer;
+}
+.score{
+  font-weight:bold;
+  color:#27ae60;
+}
+.pending{
+  color:#e67e22;
+}
+</style>
+</head>
+<body>
+
+<h1>📘 Giáo viên chấm bài</h1>
+
+<div id="list"></div>
+
+<script>
+const API = "http://localhost:3000";
+
+/* ===========================
+   LOAD DANH SÁCH BÀI LÀM
+=========================== */
+async function loadSubmissions(){
+  const res = await fetch(`${API}/submissions.json`);
+  const submissions = await res.json();
+  render(submissions);
+}
+
+/* ===========================
+   HIỂN THỊ
+=========================== */
+function render(data){
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+
+  data.forEach((sub, idx)=>{
+    const div = document.createElement("div");
+    div.className="card";
+
+    div.innerHTML = `
+      <h3>👨‍🎓 HS: ${sub.studentId} – Lớp ${sub.class}</h3>
+      <p>📝 Mã đề: ${sub.examCode}</p>
+      <p>⏱ ${new Date(sub.submittedAt).toLocaleString()}</p>
+      <p class="score">Điểm trắc nghiệm: ${sub.scoreAuto || 0}</p>
+    `;
+
+    sub.answers.forEach((a,i)=>{
+      const qDiv = document.createElement("div");
+      qDiv.className="question";
+
+      if(a.type==="mcq"){
+        qDiv.innerHTML = `
+          <b>Câu ${i+1} (Trắc nghiệm)</b><br>
+          HS chọn: ${a.answer || "❌"} | Đáp án: ${a.correct}
+        `;
+      }
+
+      if(a.type==="essay"){
+        qDiv.innerHTML = `
+          <b>Câu ${i+1} (Tự luận)</b><br>
+          <i>Bài làm:</i>
+          <textarea disabled>${a.answer}</textarea>
+          <p class="pending" id="status-${idx}-${i}">
+            ⏳ Chưa chấm
+          </p>
+          <button onclick="aiGrade(${idx},${i})">🤖 AI chấm</button>
+          <input id="score-${idx}-${i}" type="number" min="0" max="10" step="0.25" placeholder="Điểm GV">
+        `;
+      }
+
+      div.appendChild(qDiv);
+    });
+
+    list.appendChild(div);
+  });
+}
+
+/* ===========================
+   AI CHẤM TỰ LUẬN
+=========================== */
+async function aiGrade(subIdx, ansIdx){
+  const res = await fetch(`${API}/submissions.json`);
+  const subs = await res.json();
+  const ans = subs[subIdx].answers[ansIdx];
+
+  const payload = {
+    question: "Câu hỏi tự luận",
+    answer: ans.answer,
+    rubric: "Chấm đúng kiến thức, lập luận rõ ràng",
+    maxPoint: 10
+  };
+
+  const r = await fetch(`${API}/grade-essay`,{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify(payload)
+  });
+
+  const result = await r.json();
+
+  document.getElementById(`status-${subIdx}-${ansIdx}`).innerHTML =
+    `✅ AI: ${result.score}đ – ${result.comment}`;
+
+  document.getElementById(`score-${subIdx}-${ansIdx}`).value =
+    result.score;
+}
+
+loadSubmissions();
+</script>
+</body>
+</html>

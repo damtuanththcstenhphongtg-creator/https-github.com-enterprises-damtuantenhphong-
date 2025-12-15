@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bảng điều khiển giáo viên</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: #eef3f7;
+    margin: 0;
+    padding: 0;
+}
+.wrap {
+    max-width: 950px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+}
+h1 { 
+    text-align: center; 
+    color: #0a4a8e; 
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.item {
+    padding: 18px;
+    background: #0b74d1;
+    color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+.item:hover {
+    background: #095ba8;
+}
+
+.logout {
+    margin-top: 25px;
+    text-align: center;
+}
+.logout button {
+    padding: 12px 25px;
+    background: #d32f2f;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+}
+.logout button:hover {
+    background: #b71c1c;
+}
+
+.info-box {
+    font-size: 18px;
+    background: #e8f2ff;
+    padding: 12px;
+    border-left: 5px solid #0b74d1;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+    <h1>🎓 BẢNG ĐIỀU KHIỂN GIÁO VIÊN</h1>
+
+    <div id="teacherInfo" class="info-box">
+        Đang tải thông tin giáo viên...
+    </div>
+
+    <div class="menu">
+        <a class="item" href="teacher_create_exam.html">📄 Tạo đề kiểm tra</a>
+        <a class="item" href="teacher_assign.html">📝 Giao bài – giao bài tập</a>
+        <a class="item" href="teacher_class_6.html">📚 Quản lý lớp 6</a>
+        <a class="item" href="teacher_class_7.html">📚 Quản lý lớp 7</a>
+        <a class="item" href="teacher_class_8.html">📚 Quản lý lớp 8</a>
+        <a class="item" href="teacher_class_9.html">📚 Quản lý lớp 9</a>
+        <a class="item" href="teacher_submissions.html">📥 Xem bài nộp</a>
+        <a class="item" href="teacher_bank.html">📚 Ngân hàng câu hỏi</a>
+        <!-- Mục mới -->
+        <a class="item" href="teacher_scan.html">📷 Chấm bài bằng điện thoại</a>
+    </div>
+
+    <div class="logout">
+        <button onclick="logout()">Đăng xuất</button>
+    </div>
+</div>
+
+<script>
+// ============================
+// 1. KIỂM TRA ĐĂNG NHẬP
+// ============================
+let teacher = sessionStorage.getItem("teacher") || localStorage.getItem("username");
+let role = localStorage.getItem("role");
+
+if (!teacher || role !== "teacher") {
+    window.location.href = "index.html";
+}
+
+// ============================
+// 2. FORMAT TÊN
+// ============================
+function formatTeacherName(raw) {
+    if (!raw) return "";
+    return raw
+        .replace("gv_", "")
+        .split("_")
+        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(" ");
+}
+
+// ============================
+// 3. HIỂN THỊ THÔNG TIN GIÁO VIÊN
+// ============================
+document.getElementById("teacherInfo").innerHTML =
+    "👩‍🏫 Giáo viên: <b>" + formatTeacherName(teacher) + "</b>";
+
+// ============================
+// 4. ĐĂNG XUẤT
+// ============================
+function logout() {
+    sessionStorage.clear();
+    localStorage.clear();
+    window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>

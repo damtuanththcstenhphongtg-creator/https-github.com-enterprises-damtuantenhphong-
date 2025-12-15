@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Danh sách bài nộp</title>
+</head>
+<body>
+  <h2>Danh sách bài nộp</h2>
+  <button id="loadSubmissions">Tải danh sách</button>
+
+  <div id="list" style="margin-top:20px;"></div>
+
+  <script>
+    document.getElementById("loadSubmissions").addEventListener("click", async () => {
+      try {
+        const res = await fetch("http://localhost:3000/submissions.json");
+        if (!res.ok) throw new Error("Không thể tải submissions.json");
+        const submissions = await res.json();
+
+        const listDiv = document.getElementById("list");
+        listDiv.innerHTML = "";
+
+        submissions.forEach(sub => {
+          const safeName = sub.student.replace(/\s+/g, "_").toLowerCase();
+          const date = sub.date || new Date().toISOString().split("T")[0];
+          const fileName = `${safeName}_${date}.pdf`;
+          const pdfUrl = `http://localhost:3000/submissions/${fileName}`;
+
+          const item = document.createElement("div");
+          item.innerHTML = `
+            <p>
+              👩‍🎓 <strong>${sub.student}</strong> - Ngày: ${date} <br/>
+              <a href="${pdfUrl}" target="_blank">📄 Tải bài làm (PDF)</a>
+            </p>
+          `;
+          listDiv.appendChild(item);
+        });
+      } catch (err) {
+        console.error(err);
+        document.getElementById("list").innerText = "Lỗi khi tải danh sách bài nộp.";
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Giao bài – Giao bài tập</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: #eef3f7;
+    margin: 0;
+    padding: 0;
+}
+.wrap {
+    max-width: 950px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+}
+h1 { text-align: center; color: #0a4a8e; }
+
+label {
+    font-weight: 600;
+    margin-top: 12px;
+    display: block;
+}
+
+select, input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border: 1px solid #c7d7e4;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+button {
+    background: #0b74d1;
+    color: #fff;
+    padding: 14px 22px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px;
+}
+button:hover { background: #095ba8; }
+
+.back-btn {
+    background: #888;
+}
+.back-btn:hover { background: #666; }
+
+.success {
+    background: #e1fbd8;
+    padding: 12px;
+    border-left: 5px solid #4caf50;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+.error {
+    background: #ffe2e2;
+    padding: 12px;
+    border-left: 5px solid #e53935;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+    <button class="back-btn" onclick="window.location.href='teacher_dashboard.html'">← Quay lại</button>
+
+    <h1>📝 GIAO BÀI – GIAO BÀI TẬP</h1>
+
+    <div id="msg"></div>
+
+    <label>Chọn lớp giao bài:</label>
+    <select id="assignClass">
+        <option value="6A">Lớp 6A</option>
+        <option value="6B">Lớp 6B</option>
+        <option value="7A">Lớp 7A</option>
+        <option value="7B">Lớp 7B</option>
+        <option value="8A">Lớp 8A</option>
+        <option value="8B">Lớp 8B</option>
+        <option value="9A">Lớp 9A</option>
+        <option value="9B">Lớp 9B</option>
+    </select>
+
+    <label>Chọn đề kiểm tra:</label>
+    <select id="assignExam">
+        <option value="">Đang tải dữ liệu đề...</option>
+    </select>
+
+    <label>Hạn nộp bài:</label>
+    <input type="datetime-local" id="assignDeadline">
+
+    <button onclick="assignExam()">📤 Giao bài</button>
+
+</div>
+
+<script>
+// Chặn truy cập trái phép
+if (localStorage.getItem("role") !== "teacher") {
+    window.location.href = "index.html";
+}
+
+// Load danh sách đề từ data/exams/index.json
+async function loadExams() {
+    const examSelect = document.getElementById("assignExam");
+    examSelect.innerHTML = `<option value="">Đang tải dữ liệu đề...</option>`;
+
+    try {
+        const res = await fetch("data/exams/index.json");
+        if (!res.ok) throw new Error("Không tải được index.json");
+        const data = await res.json();
+
+        if (!data.exams || data.exams.length === 0) {
+            examSelect.innerHTML = `<option value="">❌ Chưa có đề kiểm tra nào!</option>`;
+            return;
+        }
+
+        examSelect.innerHTML = "";
+        data.exams.forEach(ex => {
+            examSelect.innerHTML += `
+                <option value="${ex.file}">
+                    [${ex.grade}] ${ex.title}
+                </option>
+            `;
+        });
+
+    } catch (e) {
+        examSelect.innerHTML = `<option value="">❌ Lỗi tải đề: ${e.message}</option>`;
+    }
+}
+
+// Giao bài
+function assignExam() {
+    const className = document.getElementById("assignClass").value;
+    const examFile = document.getElementById("assignExam").value;
+    const deadline = document.getElementById("assignDeadline").value;
+    const msgBox = document.getElementById("msg");
+
+    if (!examFile) {
+        msgBox.innerHTML = `<div class="error">⚠️ Vui lòng chọn đề kiểm tra!</div>`;
+        return;
+    }
+    if (!deadline) {
+        msgBox.innerHTML = `<div class="error">⚠️ Vui lòng chọn hạn nộp!</div>`;
+        return;
+    }
+
+    let assignments = JSON.parse(localStorage.getItem("assignments") || "[]");
+
+    assignments.push({
+        class: className,
+        examFile,
+        deadline,
+        assignedAt: new Date().toLocaleString(),
+        teacher: localStorage.getItem("username")
+    });
+
+    localStorage.setItem("assignments", JSON.stringify(assignments));
+
+    msgBox.innerHTML = `<div class="success">✅ Đã giao đề <b>${examFile}</b> cho lớp <b>${className}</b>!</div>`;
+
+    document.getElementById("assignDeadline").value = "";
+}
+
+// Init
+loadExams();
+
+</script>
+
+</body>
+</html>

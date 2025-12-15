@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <title>Danh sách học sinh lớp 8A1_8A2</title>
+    <link rel="stylesheet" href="../style.css" />
+</head>
+
+<body>
+    <div class="container">
+        <h1>Danh sách học sinh – Lớp 8A1_8A2</h1>
+
+        <div class="class-info">
+            <p><strong>Lớp:</strong> 8A1_8A2</p>
+            <p><strong>Tổng số học sinh:</strong> 57</p>
+        </div>
+
+        <table class="student-table">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tài khoản</th>
+                    <th>Mật khẩu</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <!-- LIST STUDENTS -->
+                <script>
+                    const students = [
+                        {"username": "mua_thi_chua", "password": "123456"},
+                        {"username": "mua_a_cong", "password": "123456"},
+                        {"username": "vang_thi_de", "password": "123456"},
+                        {"username": "lau_a_dat", "password": "123456"},
+                        {"username": "mua_thi_dia", "password": "123456"},
+                        {"username": "ly_a_duc", "password": "123456"},
+                        {"username": "mua_a_duc", "password": "123456"},
+                        {"username": "ly_a_khu", "password": "123456"},
+                        {"username": "ly_a_lau", "password": "123456"},
+                        {"username": "giang_thi_may", "password": "123456"},
+                        {"username": "vang_a_manh", "password": "123456"},
+                        {"username": "mua_thi_may", "password": "123456"},
+                        {"username": "giang_thi_mai_nhi", "password": "123456"},
+                        {"username": "lau_thi_nu", "password": "123456"},
+                        {"username": "vang_a_phong", "password": "123456"},
+                        {"username": "lau_thi_si", "password": "123456"},
+                        {"username": "giang_thi_sia", "password": "123456"},
+                        {"username": "vang_a_sinh", "password": "123456"},
+                        {"username": "mua_thai_son", "password": "123456"},
+                        {"username": "ly_a_tac", "password": "123456"},
+                        {"username": "vang_a_thanh", "password": "123456"},
+                        {"username": "vang_a_thai", "password": "123456"},
+                        {"username": "mua_a_truong", "password": "123456"},
+                        {"username": "lau_a_tua", "password": "123456"},
+                        {"username": "lau_thi_venh", "password": "123456"},
+                        {"username": "vang_thi_vi", "password": "123456"},
+                        {"username": "lau_a_vu", "password": "123456"},
+
+                        {"username": "mua_thi_chua_2", "password": "123456"},
+                        {"username": "lau_thi_dinh", "password": "123456"},
+                        {"username": "vang_thi_dinh", "password": "123456"},
+                        {"username": "mua_thi_do", "password": "123456"},
+                        {"username": "lau_ngoc_dung", "password": "123456"},
+                        {"username": "mua_a_duc_2", "password": "123456"},
+                        {"username": "mua_thi_giang", "password": "123456"},
+                        {"username": "lau_a_hanh", "password": "123456"},
+                        {"username": "mua_a_hanh", "password": "123456"},
+                        {"username": "lau_thi_ia", "password": "123456"},
+                        {"username": "mua_a_khua", "password": "123456"},
+                        {"username": "mua_a_lau", "password": "123456"},
+                        {"username": "vang_a_mua", "password": "123456"},
+                        {"username": "vang_thi_nhi", "password": "123456"},
+                        {"username": "ly_thi_hong_nhung", "password": "123456"},
+                        {"username": "lau_a_phenh", "password": "123456"},
+                        {"username": "mua_thi_phuong", "password": "123456"},
+                        {"username": "mua_thi_kim_phuong", "password": "123456"},
+                        {"username": "vang_a_po", "password": "123456"},
+                        {"username": "mua_phong_quan", "password": "123456"},
+                        {"username": "giang_thi_sinh", "password": "123456"},
+                        {"username": "giang_a_so", "password": "123456"},
+                        {"username": "vang_a_sung", "password": "123456"},
+                        {"username": "ly_a_thanh", "password": "123456"},
+                        {"username": "mua_thi_van_thuy", "password": "123456"},
+                        {"username": "giang_a_tria", "password": "123456"},
+                        {"username": "lau_a_tua_2", "password": "123456"}
+                    ];
+
+                    let html = "";
+                    students.forEach((st, i) => {
+                        html += `<tr>
+                            <td>${i + 1}</td>
+                            <td>${st.username}</td>
+                            <td>${st.password}</td>
+                        </tr>`;
+                    });
+                    document.write(html);
+                </script>
+            </tbody>
+        </table>
+
+        <div class="actions">
+            <a href="teacher_assign.html" class="btn">Giao bài kiểm tra</a>
+            <a href="../index.html" class="btn btn-secondary">Quay lại</a>
+        </div>
+    </div>
+</body>
+</html>

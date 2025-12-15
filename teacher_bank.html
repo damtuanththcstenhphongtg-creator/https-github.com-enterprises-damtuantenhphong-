@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<title>Teacher Bank</title>
+<style>
+body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+h1 { color: #333; }
+#questionList { margin-top: 20px; padding: 15px; background: #fff; border-radius: 8px; }
+.question-item { border-bottom: 1px solid #ddd; padding: 10px 0; }
+.options { margin-left: 20px; }
+.options div { margin: 3px 0; }
+select, button { padding: 6px 10px; margin-right: 10px; }
+
+/* Làm nổi bật đáp án đúng */
+.correct-answer {
+  color: green;
+  font-weight: bold;
+  background-color: #e6ffe6;
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+</style>
+</head>
+<body>
+<h1>Teacher Bank – Quản lý câu hỏi</h1>
+
+<label>Chọn file JSON:</label>
+<select id="fileSelector">
+  <option value="">-- Chọn --</option>
+  <option value="data/questions_math_grade9_bai1.json">Toán 9 - Bài 1</option>
+  <option value="data/questions_math_grade9_bai2.json">Toán 9 - Bài 2</option>
+</select>
+<button onclick="loadJSON()">Tải nội dung</button>
+
+<div id="questionList"></div>
+
+<script>
+async function loadJSON() {
+  const file = document.getElementById('fileSelector').value;
+  if (!file) {
+    alert('Bạn chưa chọn file JSON!');
+    return;
+  }
+
+  try {
+    const res = await fetch(file + "?v=" + Date.now()); // tránh cache
+    if (!res.ok) throw new Error('Không thể tải JSON');
+
+    const data = await res.json();
+    renderQuestions(data);
+  } catch (error) {
+    document.getElementById('questionList').innerHTML =
+      `<p style='color:red'>Lỗi tải file: ${error}</p>`;
+  }
+}
+
+function renderQuestions(data) {
+  const ql = document.getElementById('questionList');
+  if (!data || !data.questions || data.questions.length === 0) {
+    ql.innerHTML = '<p>Không có câu hỏi.</p>';
+    return;
+  }
+
+  let html = '';
+  data.questions.forEach((q, i) => {
+    html += `<div class='question-item'>
+      <b>Câu ${i + 1}:</b> ${q.question}<br>
+      <i>Loại:</i> ${q.type}<br>`;
+
+    // Hiển thị riêng cho từng loại câu hỏi
+    if (q.type === "mcq" && q.options) {
+      html += `<div class='options'>`;
+      for (const [key, value] of Object.entries(q.options)) {
+        const isCorrect = (key === q.correct);
+        html += `<div class='${isCorrect ? "correct-answer" : ""}'>
+                   <b>${key}:</b> ${value}
+                 </div>`;
+      }
+      html += `</div>`;
+    } else if (q.type === "tf") {
+      html += `<i>Đáp án:</i> ${q.correct ? "Đúng" : "Sai"}<br>`;
+    } else if (q.type === "essay") {
+      html += `<i>Đáp án:</i> (Tự luận)<br>`;
+    }
+
+    html += `</div>`;
+  });
+
+  ql.innerHTML = html;
+}
+</script>
+</body>
+</html>
+

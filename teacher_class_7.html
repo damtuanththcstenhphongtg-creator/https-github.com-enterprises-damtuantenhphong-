@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Quản lý lớp 7A1 – 7A2</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #eef2f3;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background: #005f99;
+    color: white;
+    padding: 15px;
+    font-size: 24px;
+    text-align: center;
+}
+.container {
+    width: 90%;
+    margin: auto;
+    margin-top: 20px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+th {
+    background: #005f99;
+    color: white;
+}
+button {
+    padding: 6px 12px;
+    border: none;
+    background: #d00000;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+button:hover {
+    background: #9b0000;
+}
+.add-box {
+    background: #fff;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 6px;
+    box-shadow: 0 0 5px #bbb;
+}
+input {
+    padding: 8px;
+    margin: 5px;
+    width: 250px;
+}
+.add-btn {
+    background: #2b9348;
+}
+.add-btn:hover {
+    background: #1a7431;
+}
+.back-btn {
+    background: #6c757d;
+}
+.back-btn:hover {
+    background: #495057;
+}
+</style>
+</head>
+<body>
+
+<header>📘 QUẢN LÝ DANH SÁCH LỚP 7A1 – 7A2</header>
+
+<div class="container">
+
+<h2>Danh sách học sinh</h2>
+
+<table id="studentTable">
+    <tr>
+        <th>STT</th>
+        <th>Tên đăng nhập</th>
+        <th>Mật khẩu</th>
+        <th>Thao tác</th>
+    </tr>
+</table>
+
+<div class="add-box">
+    <h3>➕ Thêm học sinh</h3>
+    <input type="text" id="newUser" placeholder="Tên đăng nhập">
+    <input type="text" id="newPass" placeholder="Mật khẩu">
+    <button class="add-btn" onclick="addStudent()">Thêm</button>
+</div>
+
+<br>
+<button class="back-btn" onclick="window.location.href='teacher_dashboard.html'">⬅ Quay lại</button>
+
+</div>
+
+<script>
+// =============================
+// DỮ LIỆU HỌC SINH LỚP 7A1 – 7A2
+// =============================
+const defaultStudents7 = [
+    {"username": "lau_thi_bia", "password": "123456"},
+    {"username": "vang_a_cho", "password": "123456"},
+    {"username": "vang_a_da", "password": "123456"},
+    {"username": "lau_thi_dua", "password": "123456"},
+    {"username": "mua_a_duc", "password": "123456"},
+    {"username": "vang_thi_giang", "password": "123456"},
+    {"username": "mua_thi_hoa", "password": "123456"},
+    {"username": "vang_thi_hoa", "password": "123456"},
+    {"username": "mua_ngoc_khanh", "password": "123456"},
+    {"username": "mua_a_ma", "password": "123456"},
+    {"username": "mua_thi_mai", "password": "123456"},
+    {"username": "vang_thi_mai", "password": "123456"},
+    {"username": "lau_a_minh", "password": "123456"},
+    {"username": "lau_thi_nenh", "password": "123456"},
+    {"username": "ly_thi_ong", "password": "123456"},
+    {"username": "lau_chi_phuong", "password": "123456"},
+    {"username": "mua_thi_phuong", "password": "123456"},
+    {"username": "mua_hieu_quan", "password": "123456"},
+    {"username": "vang_thi_so", "password": "123456"},
+    {"username": "lau_a_son", "password": "123456"},
+    {"username": "lau_giang_son", "password": "123456"},
+    {"username": "lau_a_vang", "password": "123456"},
+    {"username": "lau_thi_vu", "password": "123456"},
+    {"username": "mua_thi_xuan", "password": "123456"},
+
+    {"username": "lau_a_anh", "password": "123456"},
+    {"username": "mua_thi_bau", "password": "123456"},
+    {"username": "vang_a_de", "password": "123456"},
+    {"username": "lau_thi_thu_dinh", "password": "123456"},
+    {"username": "mua_thi_dua", "password": "123456"},
+    {"username": "vang_a_danh", "password": "123456"},
+    {"username": "vang_thi_kia", "password": "123456"},
+    {"username": "ly_thi_linh", "password": "123456"},
+    {"username": "lau_thi_luong", "password": "123456"},
+    {"username": "lau_a_ly", "password": "123456"},
+    {"username": "vang_thi_my", "password": "123456"},
+    {"username": "ly_a_nam", "password": "123456"},
+    {"username": "lau_thi_nhung", "password": "123456"},
+    {"username": "vang_thi_pa", "password": "123456"},
+    {"username": "giang_a_sai", "password": "123456"},
+    {"username": "lau_a_sai", "password": "123456"},
+    {"username": "vang_thi_sia", "password": "123456"},
+    {"username": "mua_thi_sung", "password": "123456"},
+    {"username": "mua_a_thanh", "password": "123456"},
+    {"username": "vang_a_tu", "password": "123456"},
+    {"username": "giang_cha_tua", "password": "123456"},
+    {"username": "lau_thi_van", "password": "123456"},
+    {"username": "vang_thi_van", "password": "123456"},
+    {"username": "mua_a_vu", "password": "123456"}
+];
+
+// Lấy dữ liệu từ localStorage nếu có
+let students = JSON.parse(localStorage.getItem("students_grade7")) || defaultStudents7;
+
+// =============================
+// HIỂN THỊ DANH SÁCH
+// =============================
+function loadTable(){
+    let table = document.getElementById("studentTable");
+    table.innerHTML = `
+        <tr>
+            <th>STT</th>
+            <th>Tên đăng nhập</th>
+            <th>Mật khẩu</th>
+            <th>Thao tác</th>
+        </tr>
+    `;
+
+    students.forEach((s, i) => {
+        table.innerHTML += `
+            <tr>
+                <td>${i+1}</td>
+                <td>${s.username}</td>
+                <td>${s.password}</td>
+                <td><button onclick="deleteStudent(${i})">Xóa</button></td>
+            </tr>
+        `;
+    });
+}
+
+function saveData(){
+    localStorage.setItem("students_grade7", JSON.stringify(students));
+}
+
+function addStudent(){
+    let user = document.getElementById("newUser").value.trim();
+    let pass = document.getElementById("newPass").value.trim();
+
+    if(user === "" || pass === ""){
+        alert("Vui lòng nhập đầy đủ!");
+        return;
+    }
+
+    students.push({ "username": user, "password": pass });
+    saveData();
+    loadTable();
+
+    document.getElementById("newUser").value = "";
+    document.getElementById("newPass").value = "";
+}
+
+function deleteStudent(index){
+    if(confirm("Bạn chắc chắn muốn xóa học sinh này?")){
+        students.splice(index, 1);
+        saveData();
+        loadTable();
+    }
+}
+
+loadTable();
+</script>
+
+</body>
+</html>

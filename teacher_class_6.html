@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Quản lý lớp 6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: #eef3f7;
+    margin: 0;
+    padding: 0;
+}
+.wrap {
+    max-width: 950px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+}
+h1 { text-align: center; color: #0a4a8e; }
+
+.student-list {
+    margin-top: 20px;
+}
+.student {
+    padding: 12px;
+    margin-bottom: 10px;
+    background: #eaf2ff;
+    border-left: 5px solid #0b74d1;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+.student span {
+    font-size: 17px;
+    font-weight: 600;
+}
+.btn {
+    padding: 8px 14px;
+    background: #0b74d1;
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+}
+.btn:hover {
+    background: #095ba8;
+}
+
+.back {
+    margin-top: 25px;
+    text-align: center;
+}
+.back a {
+    padding: 12px 25px;
+    background: #555;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    text-decoration: none;
+}
+.back a:hover { background: #333; }
+
+.info-box {
+    font-size: 18px;
+    background: #e8f2ff;
+    padding: 12px;
+    border-left: 5px solid #0b74d1;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+    <h1>📚 QUẢN LÝ LỚP 6</h1>
+
+    <div id="teacherInfo" class="info-box">
+        Đang tải thông tin giáo viên...
+    </div>
+
+    <h2>👨‍🎓 Danh sách học sinh lớp 6</h2>
+
+    <div id="list6" class="student-list">
+        Đang tải danh sách học sinh...
+    </div>
+
+    <div class="back">
+        <a href="teacher_dashboard.html">⬅ Quay lại</a>
+    </div>
+</div>
+
+<script>
+// ==========================
+// 1. Kiểm tra đăng nhập
+// ==========================
+const role = localStorage.getItem("role");
+const username = localStorage.getItem("username");
+
+if (!role || role !== "teacher") {
+    window.location.href = "index.html";
+}
+
+// ==========================
+// 2. Hiển thị tên giáo viên
+// ==========================
+async function loadTeacherName() {
+    try {
+        const res = await fetch("data/teachers.json");
+        const data = await res.json();
+
+        if (data[username]) {
+            document.getElementById("teacherInfo").innerHTML =
+                "👩‍🏫 Giáo viên: <b>" + username + "</b> – Quản lý lớp 6";
+        } else {
+            document.getElementById("teacherInfo").innerHTML =
+                "❌ Không tìm thấy dữ liệu giáo viên!";
+        }
+    } catch {
+        document.getElementById("teacherInfo").innerHTML =
+            "❌ Lỗi khi tải dữ liệu giáo viên!";
+    }
+}
+loadTeacherName();
+
+// ==========================
+// 3. Tải danh sách HS lớp 6
+// ==========================
+async function loadClass6() {
+    try {
+        const res = await fetch("data/students_class6.json");
+        const list = await res.json();
+
+        let html = "";
+        list.forEach(s => {
+            html += `
+                <div class="student">
+                    <span>👦 ${s.name} — <i>${s.id}</i></span>
+                    <a class="btn" href="teacher_student_detail.html?id=${s.id}">
+                        Xem chi tiết
+                    </a>
+                </div>
+            `;
+        });
+
+        document.getElementById("list6").innerHTML = html;
+
+    } catch (err) {
+        document.getElementById("list6").innerHTML =
+            "❌ Lỗi khi tải danh sách học sinh!";
+    }
+}
+
+loadClass6();
+</script>
+
+</body>
+</html>

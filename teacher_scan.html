@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Chấm bài bằng điện thoại</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body { font-family: "Segoe UI", sans-serif; background: #eef3f7; text-align: center; }
+.wrap { max-width: 700px; margin: 30px auto; background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.18); }
+h2 { color: #0a4a8e; }
+input, button { margin-top: 15px; padding: 12px; width: 100%; border-radius: 8px; border: 1px solid #ccc; }
+button { background: #0b74d1; color: #fff; border: none; cursor: pointer; font-size: 16px; }
+button:hover { background: #095ba8; }
+#result { margin-top: 15px; font-size: 18px; color: green; white-space: pre-line; }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <h2>📷 Nộp ảnh bài làm để chấm</h2>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="photo" name="photo" accept="image/*" capture="environment">
+        <button type="submit">Gửi ảnh</button>
+    </form>
+    <div id="result"></div>
+</div>
+
+<script>
+document.getElementById("uploadForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  const fileInput = document.getElementById("photo");
+  if (!fileInput.files.length) {
+    alert("Vui lòng chọn hoặc chụp ảnh.");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("photo", fileInput.files[0]);
+
+  try {
+    const res = await fetch("http://localhost:3000/upload", {
+      method: "POST",
+      body: formData
+    });
+    const data = await res.json();
+    document.getElementById("result").innerText =
+      `✅ OCR đã nhận diện:\n${data.text}\n\nĐiểm: ${data.score}\nNhận xét: ${data.feedback}`;
+  } catch (err) {
+    document.getElementById("result").innerText = "❌ Lỗi khi gửi ảnh: " + err;
+  }
+});
+</script>
+</body>
+</html>
