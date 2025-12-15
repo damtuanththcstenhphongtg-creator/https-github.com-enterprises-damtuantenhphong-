@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Nộp bài làm học sinh</title>
+</head>
+<body>
+  <h2>Nộp bài làm</h2>
+  <form id="submitForm">
+    <div>
+      <label>Họ tên học sinh:</label><br />
+      <input type="text" id="student" required />
+    </div>
+    <div style="margin-top:10px;">
+      <label>Bài làm:</label><br />
+      <textarea id="answers" rows="6" cols="50" required></textarea>
+    </div>
+    <div style="margin-top:10px;">
+      <button type="submit">Nộp bài</button>
+    </div>
+  </form>
+
+  <div id="result" style="margin-top:20px;"></div>
+
+  <script>
+    document.getElementById("submitForm").addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const student = document.getElementById("student").value;
+      const answers = document.getElementById("answers").value;
+
+      const submission = {
+        student: student,
+        answers: answers.split("\n"), // mỗi dòng là một câu trả lời
+        date: new Date().toISOString().split("T")[0]
+      };
+
+      try {
+        const res = await fetch("http://localhost:3000/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(submission)
+        });
+
+        const data = await res.json();
+        if (data.status === "ok") {
+          document.getElementById("result").innerHTML = `
+            <p>Bài làm đã được lưu thành PDF:</p>
+            <a href="http://localhost:3000${data.pdfLink}" target="_blank">📄 Tải PDF tại đây</a>
+          `;
+        } else {
+          document.getElementById("result").innerText = "Có lỗi khi nộp bài.";
+        }
+      } catch (err) {
+        console.error(err);
+        document.getElementById("result").innerText = "Không thể kết nối server.";
+      }
+    });
+  </script>
+</body>
+</html>
