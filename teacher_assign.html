@@ -106,77 +106,94 @@ button:hover { background: #095ba8; }
 </div>
 
 <script>
-// Chặn truy cập trái phép
+/* ===============================
+   CHẶN TRUY CẬP TRÁI PHÉP
+================================ */
 if (localStorage.getItem("role") !== "teacher") {
+    alert("Bạn không có quyền truy cập!");
     window.location.href = "index.html";
 }
 
-// Load danh sách đề từ data/exams/index.json
+/* ===============================
+   LOAD DANH SÁCH ĐỀ
+================================ */
 async function loadExams() {
     const examSelect = document.getElementById("assignExam");
-    examSelect.innerHTML = `<option value="">Đang tải dữ liệu đề...</option>`;
+    examSelect.innerHTML = `<option>⏳ Đang tải đề...</option>`;
 
     try {
-        const res = await fetch("data/exams/index.json");
-        if (!res.ok) throw new Error("Không tải được index.json");
-        const data = await res.json();
+        const response = await fetch("./data/exams/index.json", {
+            cache: "no-store"
+        });
 
-        if (!data.exams || data.exams.length === 0) {
-            examSelect.innerHTML = `<option value="">❌ Chưa có đề kiểm tra nào!</option>`;
+        if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+        }
+
+        const json = await response.json();
+
+        if (!json.exams || json.exams.length === 0) {
+            examSelect.innerHTML = `<option>❌ Chưa có đề nào</option>`;
             return;
         }
 
-        examSelect.innerHTML = "";
-        data.exams.forEach(ex => {
-            examSelect.innerHTML += `
-                <option value="${ex.file}">
-                    [${ex.grade}] ${ex.title}
-                </option>
-            `;
+        examSelect.innerHTML = `<option value="">-- Chọn đề --</option>`;
+
+        json.exams.forEach(exam => {
+            const opt = document.createElement("option");
+            opt.value = exam.file;
+            opt.textContent = `[Lớp ${exam.grade}] ${exam.title}`;
+            examSelect.appendChild(opt);
         });
 
-    } catch (e) {
-        examSelect.innerHTML = `<option value="">❌ Lỗi tải đề: ${e.message}</option>`;
+    } catch (err) {
+        console.error("Lỗi load đề:", err);
+        examSelect.innerHTML =
+            `<option>❌ Không tải được đề (index.json)</option>`;
     }
 }
 
-// Giao bài
+/* ===============================
+   GIAO BÀI
+================================ */
 function assignExam() {
     const className = document.getElementById("assignClass").value;
     const examFile = document.getElementById("assignExam").value;
     const deadline = document.getElementById("assignDeadline").value;
-    const msgBox = document.getElementById("msg");
+    const msg = document.getElementById("msg");
 
     if (!examFile) {
-        msgBox.innerHTML = `<div class="error">⚠️ Vui lòng chọn đề kiểm tra!</div>`;
+        msg.innerHTML = `<div class="error">⚠️ Chưa chọn đề!</div>`;
         return;
     }
+
     if (!deadline) {
-        msgBox.innerHTML = `<div class="error">⚠️ Vui lòng chọn hạn nộp!</div>`;
+        msg.innerHTML = `<div class="error">⚠️ Chưa chọn hạn nộp!</div>`;
         return;
     }
 
-    let assignments = JSON.parse(localStorage.getItem("assignments") || "[]");
+    const data = JSON.parse(localStorage.getItem("assignments") || "[]");
 
-    assignments.push({
+    data.push({
         class: className,
         examFile,
         deadline,
-        assignedAt: new Date().toLocaleString(),
-        teacher: localStorage.getItem("username")
+        teacher: localStorage.getItem("username"),
+        assignedAt: new Date().toLocaleString()
     });
 
-    localStorage.setItem("assignments", JSON.stringify(assignments));
+    localStorage.setItem("assignments", JSON.stringify(data));
 
-    msgBox.innerHTML = `<div class="success">✅ Đã giao đề <b>${examFile}</b> cho lớp <b>${className}</b>!</div>`;
+    msg.innerHTML =
+        `<div class="success">✅ Đã giao đề cho lớp <b>${className}</b></div>`;
 
     document.getElementById("assignDeadline").value = "";
 }
 
-// Init
+/* ===============================
+   INIT
+================================ */
 loadExams();
-
 </script>
-
 </body>
 </html>
