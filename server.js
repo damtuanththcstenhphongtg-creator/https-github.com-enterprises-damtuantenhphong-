@@ -1,65 +1,101 @@
 import express from "express";
 import fs from "fs";
+import cors from "cors";
+import dotenv from "dotenv";
 import path from "path";
+import { fileURLToPath } from "url";
+import PDFDocument from "pdfkit";
+import { gradeEssay } from "./grade_essay.js";
 
+dotenv.config();
 const app = express();
-const PORT = 3000;
 
-// =====================
-// STATIC FILES
-// =====================
-app.use(express.static("public"));
+// Fix __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Middleware
+app.use(cors());
 app.use(express.json());
 
-// =====================
-// PATH
-// =====================
-const EXAM_DIR = path.join(process.cwd(), "data", "exams");
-const INDEX_PATH = path.join(EXAM_DIR, "index.json");
+// Public thư mục submissions để tải PDF
+app.use(
+  "/submissions",
+  express.static(path.join(__dirname, "submissions"))
+);
 
-// =====================
-// API: DANH SÁCH ĐỀ
-// =====================
-app.get("/api/exams", (req, res) => {
-    if (!fs.existsSync(INDEX_PATH)) {
-        return res.status(404).json({ error: "Không tìm thấy index.json" });
-    }
+/* ===========================
+   NHẬN BÀI LÀM + TẠO PDF
+=========================== */
+app.post("/submit", async (req, res) => {
+  const submission = req.body;
 
+  // Kiểm tra dữ liệu đầu vào
+  if (!submission.student || !submission.answers) {
+    return res.status(400).json({ error: "Thiếu thông tin học sinh hoặc bài làm" });
+  }
+
+  // Đảm bảo thư mục submissions tồn tại
+  const submissionsDir = path.join(__dirname, "submissions");
+  if (!fs.existsSync(submissionsDir)) {
+    fs.mkdirSync(submissionsDir);
+  }
+
+  // Lưu vào submissions.json
+  let data = [];
+  if (fs.existsSync("submissions.json")) {
     try {
-        const data = JSON.parse(fs.readFileSync(INDEX_PATH, "utf8"));
-        res.json(data);
-    } catch (err) {
-        res.status(500).json({ error: "Lỗi đọc index.json" });
+      data = JSON.parse(fs.readFileSync("submissions.json", "utf8"));
+    } catch (e) {
+      data = [];
     }
+  }
+  data.push(submission);
+  fs.writeFileSync("submissions.json", JSON.stringify(data, null, 2));
+
+  // Tạo tên file PDF
+  const safeName = submission.student.replace(/\s+/g, "_").toLowerCase();
+  const date = submission.date || new Date().toISOString().split("T")[0];
+  const fileName = `${safeName}_${date}.pdf`;
+  const filePath = path.join(submissionsDir, fileName);
+
+  // Tạo PDF
+  const doc = new PDFDocument();
+  doc.pipe(fs.createWriteStream(filePath));
+  doc.fontSize(16).text("BÀI LÀM HỌC SINH", { underline: true });
+  doc.moveDown();
+  doc.fontSize(12).text(`Học sinh: ${submission.student}`);
+  doc.text(`Ngày: ${date}`);
+  doc.moveDown();
+  doc.text("Nội dung bài làm:", { underline: true });
+  doc.moveDown();
+  doc.text(JSON.stringify(submission.answers, null, 2));
+  doc.end();
+
+  res.json({
+    status: "ok",
+    pdfLink: `http://localhost:3000/submissions/${fileName}`
+  });
 });
 
-// =====================
-// API: CHI TIẾT ĐỀ
-// =====================
-app.get("/api/exams/:file", (req, res) => {
-    const file = req.params.file;
+/* ===========================
+   AI CHẤM TỰ LUẬN
+=========================== */
+app.post("/grade-essay", async (req, res) => {
+  try {
+    const { question, answer, rubric, maxPoint } = req.body;
 
-    if (file.includes("..")) {
-        return res.status(400).json({ error: "Tên file không hợp lệ" });
+    if (!question || !answer || !rubric || !maxPoint) {
+      return res.status(400).json({ error: "Thiếu dữ liệu để chấm bài" });
     }
 
-    const examPath = path.join(EXAM_DIR, file);
-
-    if (!fs.existsSync(examPath)) {
-        return res.status(404).json({ error: "Không tìm thấy đề" });
-    }
-
-    try {
-        const exam = JSON.parse(fs.readFileSync(examPath, "utf8"));
-        res.json(exam);
-    } catch (err) {
-        res.status(500).json({ error: "Lỗi đọc file đề" });
-    }
+    const result = await gradeEssay(question, answer, rubric, maxPoint);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
-// =====================
-// START
-// =====================
-app.listen(PORT, () => {
-    console.log("✅ Server running at http://localhost:" + PORT);
-});
+app.listen(3000, () =>
+  console.log("✅ Server chạy tại http://localhost:3000")
+);
