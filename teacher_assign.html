@@ -1,199 +1,71 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<title>Giao bài – Giao bài tập</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-body {
-    font-family: "Segoe UI", sans-serif;
-    background: #eef3f7;
-    margin: 0;
-    padding: 0;
-}
-.wrap {
-    max-width: 950px;
-    margin: 30px auto;
-    background: #fff;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
-}
-h1 { text-align: center; color: #0a4a8e; }
-
-label {
-    font-weight: 600;
-    margin-top: 12px;
-    display: block;
-}
-
-select, input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 6px;
-    border: 1px solid #c7d7e4;
-    border-radius: 8px;
-    font-size: 16px;
-}
-
-button {
-    background: #0b74d1;
-    color: #fff;
-    padding: 14px 22px;
-    margin-top: 20px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 18px;
-}
-button:hover { background: #095ba8; }
-
-.back-btn {
-    background: #888;
-}
-.back-btn:hover { background: #666; }
-
-.success {
-    background: #e1fbd8;
-    padding: 12px;
-    border-left: 5px solid #4caf50;
-    border-radius: 8px;
-    margin-top: 20px;
-}
-.error {
-    background: #ffe2e2;
-    padding: 12px;
-    border-left: 5px solid #e53935;
-    border-radius: 8px;
-    margin-top: 20px;
-}
-</style>
+  <meta charset="UTF-8">
+  <title>Phân công giáo viên</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background-color: #f2f2f2; }
+    input[type="text"] { width: 90%; padding: 5px; }
+    button { padding: 6px 12px; margin-top: 10px; }
+  </style>
 </head>
-
 <body>
+  <h1>Phân công giáo viên cho đề thi</h1>
 
-<div class="wrap">
+  <table id="examTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tiêu đề</th>
+        <th>Môn học</th>
+        <th>Khối</th>
+        <th>File</th>
+        <th>Giáo viên phụ trách</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Dữ liệu sẽ được load bằng JS -->
+    </tbody>
+  </table>
 
-    <button class="back-btn" onclick="window.location.href='teacher_dashboard.html'">← Quay lại</button>
+  <script>
+    // Gọi API từ Node.js server
+    fetch("http://localhost:3000/exams")
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.querySelector("#examTable tbody");
+        data.exams.forEach(exam => {
+          const tr = document.createElement("tr");
 
-    <h1>📝 GIAO BÀI – GIAO BÀI TẬP</h1>
-
-    <div id="msg"></div>
-
-    <label>Chọn lớp giao bài:</label>
-    <select id="assignClass">
-        <option value="6A">Lớp 6A</option>
-        <option value="6B">Lớp 6B</option>
-        <option value="7A">Lớp 7A</option>
-        <option value="7B">Lớp 7B</option>
-        <option value="8A">Lớp 8A</option>
-        <option value="8B">Lớp 8B</option>
-        <option value="9A">Lớp 9A</option>
-        <option value="9B">Lớp 9B</option>
-    </select>
-
-    <label>Chọn đề kiểm tra:</label>
-    <select id="assignExam">
-        <option value="">Đang tải dữ liệu đề...</option>
-    </select>
-
-    <label>Hạn nộp bài:</label>
-    <input type="datetime-local" id="assignDeadline">
-
-    <button onclick="assignExam()">📤 Giao bài</button>
-
-</div>
-
-<script>
-/* ===============================
-   CHẶN TRUY CẬP TRÁI PHÉP
-================================ */
-if (localStorage.getItem("role") !== "teacher") {
-    alert("Bạn không có quyền truy cập!");
-    window.location.href = "index.html";
-}
-
-/* ===============================
-   LOAD DANH SÁCH ĐỀ
-================================ */
-async function loadExams() {
-    const examSelect = document.getElementById("assignExam");
-    examSelect.innerHTML = `<option>⏳ Đang tải đề...</option>`;
-
-    try {
-        const response = await fetch("./data/exams/index.json", {
-            cache: "no-store"
+          tr.innerHTML = `
+            <td>${exam.id}</td>
+            <td>${exam.title}</td>
+            <td>${exam.subject}</td>
+            <td>${exam.grade}</td>
+            <td>${exam.file}</td>
+            <td>
+              <input type="text" placeholder="Nhập tên giáo viên" id="teacher-${exam.id}" />
+              <button onclick="assignTeacher('${exam.id}')">Gán</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
         });
+      });
 
-        if (!response.ok) {
-            throw new Error("HTTP " + response.status);
-        }
-
-        const json = await response.json();
-
-        if (!json.exams || json.exams.length === 0) {
-            examSelect.innerHTML = `<option>❌ Chưa có đề nào</option>`;
-            return;
-        }
-
-        examSelect.innerHTML = `<option value="">-- Chọn đề --</option>`;
-
-        json.exams.forEach(exam => {
-            const opt = document.createElement("option");
-            opt.value = exam.file;
-            opt.textContent = `[Lớp ${exam.grade}] ${exam.title}`;
-            examSelect.appendChild(opt);
-        });
-
-    } catch (err) {
-        console.error("Lỗi load đề:", err);
-        examSelect.innerHTML =
-            `<option>❌ Không tải được đề (index.json)</option>`;
-    }
-}
-
-/* ===============================
-   GIAO BÀI
-================================ */
-function assignExam() {
-    const className = document.getElementById("assignClass").value;
-    const examFile = document.getElementById("assignExam").value;
-    const deadline = document.getElementById("assignDeadline").value;
-    const msg = document.getElementById("msg");
-
-    if (!examFile) {
-        msg.innerHTML = `<div class="error">⚠️ Chưa chọn đề!</div>`;
+    function assignTeacher(examId) {
+      const teacherName = document.getElementById(`teacher-${examId}`).value;
+      if (!teacherName) {
+        alert("Vui lòng nhập tên giáo viên!");
         return;
+      }
+      alert(`Đã gán giáo viên "${teacherName}" cho exam ${examId}`);
+      // Thực tế: gửi POST/PUT tới server Node để lưu
+      // fetch("http://localhost:3000/assign", {method:"POST", body: JSON.stringify({examId, teacherName}), headers:{"Content-Type":"application/json"}})
     }
-
-    if (!deadline) {
-        msg.innerHTML = `<div class="error">⚠️ Chưa chọn hạn nộp!</div>`;
-        return;
-    }
-
-    const data = JSON.parse(localStorage.getItem("assignments") || "[]");
-
-    data.push({
-        class: className,
-        examFile,
-        deadline,
-        teacher: localStorage.getItem("username"),
-        assignedAt: new Date().toLocaleString()
-    });
-
-    localStorage.setItem("assignments", JSON.stringify(data));
-
-    msg.innerHTML =
-        `<div class="success">✅ Đã giao đề cho lớp <b>${className}</b></div>`;
-
-    document.getElementById("assignDeadline").value = "";
-}
-
-/* ===============================
-   INIT
-================================ */
-loadExams();
-</script>
+  </script>
 </body>
 </html>
+
