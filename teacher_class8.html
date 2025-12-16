@@ -4,21 +4,73 @@
 <meta charset="UTF-8">
 <title>Quản lý lớp 8 – Giáo viên</title>
 <style>
-/* giống phần CSS của teacher_class_9.html */
-body { font-family: Arial, sans-serif; background: #eef2f3; margin: 0; padding: 0; }
-header { background: #0077b6; color: white; padding: 15px; font-size: 24px; text-align: center; }
-.container { width: 90%; margin: auto; margin-top: 20px; }
-table { width: 100%; border-collapse: collapse; background: white; }
-th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
-th { background: #0077b6; color: white; }
-button { padding: 6px 12px; border: none; background: #d00000; color: white; border-radius: 4px; cursor: pointer; }
-button:hover { background: #9b0000; }
-.add-box { background: #fff; padding: 15px; margin-top: 20px; border-radius: 6px; box-shadow: 0 0 5px #bbb; }
-input, select { padding: 8px; margin: 5px; width: 250px; }
-.add-btn { background: #2b9348; }
-.add-btn:hover { background: #1a7431; }
-.back-btn { background: #6c757d; }
-.back-btn:hover { background: #495057; }
+body {
+    font-family: Arial, sans-serif;
+    background: #eef2f3;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background: #0077b6;
+    color: white;
+    padding: 15px;
+    font-size: 24px;
+    text-align: center;
+}
+.container {
+    width: 90%;
+    margin: auto;
+    margin-top: 20px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+th {
+    background: #0077b6;
+    color: white;
+}
+button {
+    padding: 6px 12px;
+    border: none;
+    background: #d00000;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+button:hover {
+    background: #9b0000;
+}
+.add-box {
+    background: #fff;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 6px;
+    box-shadow: 0 0 5px #bbb;
+}
+input, select {
+    padding: 8px;
+    margin: 5px;
+    width: 250px;
+}
+.add-btn {
+    background: #2b9348;
+}
+.add-btn:hover {
+    background: #1a7431;
+}
+.back-btn {
+    background: #6c757d;
+}
+.back-btn:hover {
+    background: #495057;
+}
 </style>
 </head>
 <body>
@@ -44,8 +96,8 @@ input, select { padding: 8px; margin: 5px; width: 250px; }
     <input type="text" id="newUser" placeholder="Tên đăng nhập">
     <input type="text" id="newPass" placeholder="Mật khẩu">
     <select id="newClass">
-        <option value="8A1">8A1</option>
-        <option value="8A2">8A2</option>
+        <option value="9A1">9A1</option>
+        <option value="9A2">9A2</option>
     </select>
     <button class="add-btn" onclick="addStudent()">Thêm</button>
 </div>
