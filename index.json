@@ -4,31 +4,31 @@
       "grade": "6",
       "subject": "Tin học",
       "title": "Tin học 6 – Bài 8: Thư điện tử",
-      "file": "data/exams/tin6_bai8.json"
+      "file": "tin6_bai8.json"
     },
     {
       "grade": "6",
       "subject": "Tin học",
       "title": "Tin học 6 – Bài 9: An toàn thông tin trên Internet",
-      "file": "data/exams/tin6_bai9.json"
+      "file": "tin6_bai9.json"
     },
     {
       "grade": "7",
       "subject": "Tin học",
       "title": "Tin học 7 – An toàn thông tin",
-      "file": "data/exams/tin7_bai9.json"
+      "file": "tin7_bai9.json"
     },
     {
       "grade": "8",
       "subject": "Tin học",
       "title": "Tin học 8 – Kiểm tra giữa kỳ II",
-      "file": "data/exams/tin8_gk2.json"
+      "file": "tin8_gk2.json"
     },
     {
       "grade": "9",
       "subject": "Tin học",
       "title": "Tin học 9 – Kiểm tra cuối kỳ II",
-      "file": "data/exams/tin9_ck2.json"
+      "file": "tin9_ck2.json"
     }
   ]
 }
