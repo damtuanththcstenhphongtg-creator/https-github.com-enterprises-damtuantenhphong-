@@ -1,68 +1,65 @@
 import express from "express";
 import fs from "fs";
 import path from "path";
-import cors from "cors";
 
 const app = express();
 const PORT = 3000;
 
-// =======================
-// MIDDLEWARE
-// =======================
-app.use(cors());
-app.use(express.json());
+// =====================
+// STATIC FILES
+// =====================
 app.use(express.static("public"));
+app.use(express.json());
 
-// =======================
-// PATH CỐ ĐỊNH
-// =======================
+// =====================
+// PATH
+// =====================
 const EXAM_DIR = path.join(process.cwd(), "data", "exams");
-const INDEX_FILE = path.join(EXAM_DIR, "index.json");
+const INDEX_PATH = path.join(EXAM_DIR, "index.json");
 
-// =======================
-// API: LẤY DANH SÁCH ĐỀ
-// =======================
+// =====================
+// API: DANH SÁCH ĐỀ
+// =====================
 app.get("/api/exams", (req, res) => {
-    try {
-        if (!fs.existsSync(INDEX_FILE)) {
-            return res.status(404).json({ error: "Không tìm thấy index.json" });
-        }
+    if (!fs.existsSync(INDEX_PATH)) {
+        return res.status(404).json({ error: "Không tìm thấy index.json" });
+    }
 
-        const data = JSON.parse(fs.readFileSync(INDEX_FILE, "utf-8"));
+    try {
+        const data = JSON.parse(fs.readFileSync(INDEX_PATH, "utf8"));
         res.json(data);
     } catch (err) {
         res.status(500).json({ error: "Lỗi đọc index.json" });
     }
 });
 
-// =======================
-// API: LẤY 1 ĐỀ CỤ THỂ
-// =======================
+// =====================
+// API: CHI TIẾT ĐỀ
+// =====================
 app.get("/api/exams/:file", (req, res) => {
-    const fileName = req.params.file;
+    const file = req.params.file;
 
-    // 🔒 CHỐNG TRUY CẬP LINH TINH
-    if (fileName.includes("..")) {
-        return res.status(400).json({ error: "File không hợp lệ" });
+    if (file.includes("..")) {
+        return res.status(400).json({ error: "Tên file không hợp lệ" });
     }
 
-    const examPath = path.join(EXAM_DIR, fileName);
+    const examPath = path.join(EXAM_DIR, file);
 
     if (!fs.existsSync(examPath)) {
         return res.status(404).json({ error: "Không tìm thấy đề" });
     }
 
     try {
-        const examData = JSON.parse(fs.readFileSync(examPath, "utf-8"));
-        res.json(examData);
+        const exam = JSON.parse(fs.readFileSync(examPath, "utf8"));
+        res.json(exam);
     } catch (err) {
         res.status(500).json({ error: "Lỗi đọc file đề" });
     }
 });
 
-// =======================
-// START SERVER
-// =======================
+// =====================
+// START
+// =====================
 app.listen(PORT, () => {
-    console.log(`✅ Server đang chạy: http://localhost:${PORT}`);
+    console.log("✅ Server running at http://localhost:" + PORT);
 });
