@@ -1,53 +1,18 @@
 {
   "exams": [
     {
-      "grade": "6A",
-      "subject": "Toán",
-      "title": "Đề kiểm tra Toán giữa kỳ lớp 6A",
-      "file": "exam_math_6a.json"
+      "id": "math9_bai1",
+      "title": "Toán 9 - Bài 1: Phương trình bậc hai",
+      "subject": "toan",
+      "grade": 9,
+      "file": "math9_bai1.json"
     },
     {
-      "grade": "6B",
-      "subject": "Ngữ văn",
-      "title": "Đề kiểm tra Ngữ văn cuối kỳ lớp 6B",
-      "file": "exam_literature_6b.json"
-    },
-    {
-      "grade": "7A",
-      "subject": "Tiếng Anh",
-      "title": "Đề kiểm tra Tiếng Anh giữa kỳ lớp 7A",
-      "file": "exam_english_7a.json"
-    },
-    {
-      "grade": "7B",
-      "subject": "Lịch sử",
-      "title": "Đề kiểm tra Lịch sử cuối kỳ lớp 7B",
-      "file": "exam_history_7b.json"
-    },
-    {
-      "grade": "8A",
-      "subject": "Toán",
-      "title": "Đề kiểm tra Toán học kỳ 1 lớp 8A",
-      "file": "exam_math_8a.json"
-    },
-    {
-      "grade": "8B",
-      "subject": "Vật lý",
-      "title": "Đề kiểm tra Vật lý học kỳ 2 lớp 8B",
-      "file": "exam_physics_8b.json"
-    },
-    {
-      "grade": "9A",
-      "subject": "Ngữ văn",
-      "title": "Đề kiểm tra Ngữ văn học kỳ 1 lớp 9A",
-      "file": "exam_literature_9a.json"
-    },
-    {
-      "grade": "9B",
-      "subject": "Hóa học",
-      "title": "Đề kiểm tra Hóa học cuối kỳ lớp 9B",
-      "file": "exam_chemistry_9b.json"
+      "id": "ly9_bai1",
+      "title": "Vật lý 9 - Bài 1: Định luật Newton",
+      "subject": "ly",
+      "grade": 9,
+      "file": "ly9_bai1.json"
     }
   ]
 }
-
