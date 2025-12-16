@@ -1,44 +1,51 @@
 import express from "express";
-import multer from "multer";
 import fs from "fs";
-import path from "path";
 import cors from "cors";
-import Tesseract from "tesseract.js";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Cấu hình lưu file upload
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const dir = path.join(process.cwd(), "uploads");
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir);
-    cb(null, dir);
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  }
-});
-const upload = multer({ storage });
+// ===============================
+// PUBLIC FILE (HTML, JS)
+// ===============================
+app.use(express.static("public"));
 
-// Route nhận ảnh và OCR
-app.post("/upload", upload.single("photo"), async (req, res) => {
-  if (!req.file) return res.status(400).json({ error: "Không có file" });
+// ===============================
+// API LOAD ĐỀ
+// ===============================
+app.get("/api/exams", (req, res) => {
+    const indexPath = "./data/exams/index.json";
 
-  try {
-    const result = await Tesseract.recognize(req.file.path, "vie+eng");
-    const text = result.data.text.trim();
+    if (!fs.existsSync(indexPath)) {
+        return res.json([]);
+    }
 
-    // Ví dụ chấm điểm đơn giản: đếm số từ
-    const wordCount = text.split(/\s+/).length;
-    const score = Math.min(10, Math.round(wordCount / 20)); // cứ 20 từ ~ 1 điểm
-    const feedback = score > 5 ? "Bài làm khá đầy đủ" : "Bài làm còn sơ sài";
-
-    res.json({ status: "ok", text, score, feedback });
-  } catch (err) {
-    res.status(500).json({ error: "OCR lỗi: " + err.message });
-  }
+    const data = JSON.parse(fs.readFileSync(indexPath));
+    res.json(data.exams || []);
 });
 
-app.listen(3000, () => console.log("✅ Server chạy tại http://localhost:3000"));
+// ===============================
+// API GIAO BÀI
+// ===============================
+app.post("/api/assign", (req, res) => {
+    const assignFile = "./data/assignments.json";
+    const newAssign = req.body;
+
+    let assigns = [];
+    if (fs.existsSync(assignFile)) {
+        assigns = JSON.parse(fs.readFileSync(assignFile));
+    }
+
+    assigns.push({
+        ...newAssign,
+        assignedAt: new Date().toISOString()
+    });
+
+    fs.writeFileSync(assignFile, JSON.stringify(assigns, null, 2));
+    res.json({ success: true });
+});
+
+app.listen(3000, () =>
+    console.log("✅ Server chạy http://localhost:3000")
+);
