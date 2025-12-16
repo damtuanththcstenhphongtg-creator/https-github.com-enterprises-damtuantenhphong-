@@ -1,7 +1,3 @@
-// ===============================
-// SERVER.JS – WEB ĐỘNG GIAO & NỘP BÀI
-// ===============================
-
 import express from "express";
 import fs from "fs";
 import path from "path";
@@ -10,128 +6,63 @@ import cors from "cors";
 const app = express();
 const PORT = 3000;
 
-// ===============================
+// =======================
 // MIDDLEWARE
-// ===============================
+// =======================
 app.use(cors());
 app.use(express.json());
-
-// Public folder (HTML, CSS, JS)
 app.use(express.static("public"));
 
-// ===============================
-// ĐƯỜNG DẪN GỐC
-// ===============================
-const DATA_DIR = path.join(process.cwd(), "data");
-const EXAM_DIR = path.join(DATA_DIR, "exams");
-const SUBMIT_DIR = path.join(DATA_DIR, "submissions");
+// =======================
+// PATH CỐ ĐỊNH
+// =======================
+const EXAM_DIR = path.join(process.cwd(), "data", "exams");
+const INDEX_FILE = path.join(EXAM_DIR, "index.json");
 
-// Tạo thư mục nếu chưa có
-[DATA_DIR, EXAM_DIR, SUBMIT_DIR].forEach(dir => {
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-});
-
-// ===============================
-// API 1️⃣ LOAD DANH SÁCH ĐỀ
-// ===============================
+// =======================
+// API: LẤY DANH SÁCH ĐỀ
+// =======================
 app.get("/api/exams", (req, res) => {
-    const indexPath = path.join(EXAM_DIR, "index.json");
-
-    if (!fs.existsSync(indexPath)) {
-        console.warn("⚠️ Không tìm thấy index.json");
-        return res.json([]);
-    }
-
     try {
-        const raw = fs.readFileSync(indexPath, "utf-8");
-        const json = JSON.parse(raw);
+        if (!fs.existsSync(INDEX_FILE)) {
+            return res.status(404).json({ error: "Không tìm thấy index.json" });
+        }
 
-        // Hỗ trợ 2 cấu trúc
-        if (Array.isArray(json)) return res.json(json);
-        if (Array.isArray(json.exams)) return res.json(json.exams);
-
-        res.json([]);
+        const data = JSON.parse(fs.readFileSync(INDEX_FILE, "utf-8"));
+        res.json(data);
     } catch (err) {
-        console.error("❌ Lỗi đọc index.json:", err);
-        res.status(500).json([]);
+        res.status(500).json({ error: "Lỗi đọc index.json" });
     }
 });
 
-// ===============================
-// API 2️⃣ LOAD NỘI DUNG 1 ĐỀ
-// ===============================
+// =======================
+// API: LẤY 1 ĐỀ CỤ THỂ
+// =======================
 app.get("/api/exams/:file", (req, res) => {
-    const examFile = req.params.file;
-    const examPath = path.join(EXAM_DIR, examFile);
+    const fileName = req.params.file;
+
+    // 🔒 CHỐNG TRUY CẬP LINH TINH
+    if (fileName.includes("..")) {
+        return res.status(400).json({ error: "File không hợp lệ" });
+    }
+
+    const examPath = path.join(EXAM_DIR, fileName);
 
     if (!fs.existsSync(examPath)) {
         return res.status(404).json({ error: "Không tìm thấy đề" });
     }
 
     try {
-        const raw = fs.readFileSync(examPath, "utf-8");
-        const json = JSON.parse(raw);
-        res.json(json);
+        const examData = JSON.parse(fs.readFileSync(examPath, "utf-8"));
+        res.json(examData);
     } catch (err) {
-        console.error("❌ Lỗi đọc đề:", err);
-        res.status(500).json({ error: "Lỗi đọc đề" });
+        res.status(500).json({ error: "Lỗi đọc file đề" });
     }
 });
 
-// ===============================
-// API 3️⃣ GIAO BÀI (LƯU)
-// ===============================
-app.post("/api/assign", (req, res) => {
-    const assignment = req.body;
-    const filePath = path.join(DATA_DIR, "assignments.json");
-
-    let assignments = [];
-    if (fs.existsSync(filePath)) {
-        assignments = JSON.parse(fs.readFileSync(filePath, "utf-8"));
-    }
-
-    assignments.push({
-        ...assignment,
-        assignedAt: new Date().toISOString()
-    });
-
-    fs.writeFileSync(filePath, JSON.stringify(assignments, null, 2));
-    res.json({ success: true });
-});
-
-// ===============================
-// API 4️⃣ HỌC SINH XEM BÀI ĐƯỢC GIAO
-// ===============================
-app.get("/api/assignments/:className", (req, res) => {
-    const filePath = path.join(DATA_DIR, "assignments.json");
-
-    if (!fs.existsSync(filePath)) return res.json([]);
-
-    const assignments = JSON.parse(fs.readFileSync(filePath, "utf-8"));
-    const classAssignments = assignments.filter(
-        a => a.class === req.params.className
-    );
-
-    res.json(classAssignments);
-});
-
-// ===============================
-// API 5️⃣ HỌC SINH NỘP BÀI
-// ===============================
-app.post("/api/submit", (req, res) => {
-    const submission = req.body;
-    const fileName = `submit_${Date.now()}.json`;
-    const savePath = path.join(SUBMIT_DIR, fileName);
-
-    submission.submittedAt = new Date().toISOString();
-
-    fs.writeFileSync(savePath, JSON.stringify(submission, null, 2));
-    res.json({ success: true });
-});
-
-// ===============================
-// SERVER START
-// ===============================
+// =======================
+// START SERVER
+// =======================
 app.listen(PORT, () => {
     console.log(`✅ Server đang chạy: http://localhost:${PORT}`);
 });
