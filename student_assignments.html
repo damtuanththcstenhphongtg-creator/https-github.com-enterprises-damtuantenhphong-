@@ -1,0 +1,139 @@
+!DOCTYPE html
+html lang=vi
+head
+meta charset=UTF-8
+titleBài tập được giaotitle
+meta name=viewport content=width=device-width, initial-scale=1.0
+
+style
+body {
+    font-family Segoe UI, sans-serif;
+    background #eef3f7;
+    margin 0;
+}
+.wrap {
+    max-width 900px;
+    margin 30px auto;
+    background white;
+    padding 25px;
+    border-radius 12px;
+    box-shadow 0 4px 14px rgba(0,0,0,0.18);
+}
+h1 {
+    text-align center;
+    color #0a4a8e;
+}
+.assignment {
+    border-left 6px solid #0b74d1;
+    background #f7fbff;
+    padding 15px;
+    margin 15px 0;
+    border-radius 8px;
+}
+.assignment.overdue {
+    border-color #e53935;
+    background #fff0f0;
+}
+.assignment h3 {
+    margin 0 0 8px;
+}
+.meta {
+    font-size 14px;
+    color #555;
+}
+button {
+    margin-top 10px;
+    padding 10px 16px;
+    border none;
+    background #0b74d1;
+    color white;
+    border-radius 8px;
+    cursor pointer;
+}
+buttonhover {
+    background #095ba8;
+}
+.empty {
+    background #fffbe6;
+    padding 15px;
+    border-left 5px solid #fbc02d;
+    border-radius 8px;
+}
+.back-btn {
+    background #888;
+}
+.back-btnhover {
+    background #666;
+}
+style
+head
+
+body
+
+div class=wrap
+
+button class=back-btn onclick=location.href='student_dashboard.html'← Quay lạibutton
+
+h1📥 BÀI TẬP ĐƯỢC GIAOh1
+
+div id=listdiv
+
+div
+
+script
+ ===============================
+ KIỂM TRA ĐĂNG NHẬP
+ ===============================
+if (localStorage.getItem(role) !== student) {
+    location.href = index.html;
+}
+
+const studentClass = localStorage.getItem(class);
+const listDiv = document.getElementById(list);
+const assignments = JSON.parse(localStorage.getItem(assignments)  []);
+
+ ===============================
+ HIỂN THỊ BÀI
+ ===============================
+const myAssignments = assignments.filter(a = a.class === studentClass);
+
+if (myAssignments.length === 0) {
+    listDiv.innerHTML = `
+        div class=empty
+            📭 Hiện tại lớp b${studentClass}b chưa có bài tập nào.
+        div
+    `;
+} else {
+    myAssignments.forEach(a = {
+        const isOverdue = new Date(a.deadline)  new Date();
+
+        listDiv.innerHTML += `
+            div class=assignment ${isOverdue  overdue  }
+                h3📘 ${a.examFile}h3
+                div class=meta
+                    👨‍🏫 GV ${a.teacher  Không rõ}br
+                    ⏰ Hạn nộp b${new Date(a.deadline).toLocaleString()}bbr
+                    📅 Giao lúc ${a.assignedAt}
+                div
+
+                ${
+                    isOverdue
+                     `p style=colorred;font-weightbold⛔ Đã quá hạnp`
+                     `button onclick=startExam('${a.examFile}')✏️ Làm bàibutton`
+                }
+            div
+        `;
+    });
+}
+
+ ===============================
+ VÀO LÀM BÀI
+ ===============================
+function startExam(file) {
+    localStorage.setItem(current_exam, file);
+    location.href = quiz_template.html;
+}
+script
+
+body
+html
