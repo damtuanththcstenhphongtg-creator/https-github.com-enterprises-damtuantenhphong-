@@ -2,169 +2,196 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Danh sách học sinh – Khối 9</title>
-<link rel="stylesheet" href="style.css">
+<title>Quản lý lớp 9 – Giáo viên</title>
 
 <style>
-body { font-family: "Segoe UI"; background:#eef2f3; margin:0; }
-.container {
-    width: 90%; margin:auto; margin-top:25px;
-    background:#fff; padding:20px;
-    border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.2);
+body {
+    font-family: Arial, sans-serif;
+    background: #eef2f3;
+    margin: 0;
 }
-h1 { text-align:center; color:#003366; }
-.class-title {
-    font-size:22px; font-weight:bold; color:#444;
-    margin-top:30px; margin-bottom:10px;
+header {
+    background: #0077b6;
+    color: white;
+    padding: 15px;
+    font-size: 24px;
+    text-align: center;
+}
+.container {
+    width: 90%;
+    margin: 20px auto;
 }
 table {
-    width:100%; border-collapse: collapse; margin-bottom:25px;
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
 }
-table th, table td {
-    border:1px solid #ccc; padding:10px; text-align:left;
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
 }
-th { background:#4a90e2; color:white; }
-.search-box {
-    margin-bottom:15px;
+th {
+    background: #0077b6;
+    color: white;
 }
-input[type='text'] {
-    width:280px; padding:10px; border-radius:6px; border:1px solid #999;
+button {
+    padding: 6px 12px;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.delete-btn {
+    background: #d00000;
+}
+.delete-btn:hover {
+    background: #9b0000;
+}
+.add-btn {
+    background: #2b9348;
+}
+.add-btn:hover {
+    background: #1a7431;
 }
 .back-btn {
-    display:inline-block; padding:10px 18px; background:#4a90e2;
-    color:white; text-decoration:none; border-radius:6px; font-weight:bold;
+    background: #6c757d;
+}
+.add-box {
+    background: white;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 6px;
+    box-shadow: 0 0 5px #bbb;
+}
+input, select {
+    padding: 8px;
+    margin: 5px;
+    width: 220px;
 }
 </style>
-
 </head>
+
 <body>
 
+<header>📘 QUẢN LÝ DANH SÁCH LỚP 9A1 – 9A2</header>
+
 <div class="container">
-    <h1>Danh sách học sinh – Khối 9</h1>
 
-    <!-- Search -->
-    <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Tìm học sinh..." onkeyup="searchStudent()">
-    </div>
+<h2>Danh sách học sinh</h2>
 
-    <!-- 9A1 -->
-    <div class="class-title">Lớp 9A1</div>
-    <table id="table9A1">
-        <tr><th>STT</th><th>Tên đăng nhập</th><th>Mật khẩu</th></tr>
-    </table>
+<table id="studentTable"></table>
 
-    <!-- 9A2 -->
-    <div class="class-title">Lớp 9A2</div>
-    <table id="table9A2">
-        <tr><th>STT</th><th>Tên đăng nhập</th><th>Mật khẩu</th></tr>
-    </table>
-
+<div class="add-box">
+    <h3>➕ Thêm học sinh</h3>
+    <input type="text" id="newUser" placeholder="Tên đăng nhập">
+    <input type="text" id="newPass" placeholder="Mật khẩu">
+    <select id="newClass">
+        <option value="9A1">9A1</option>
+        <option value="9A2">9A2</option>
+    </select>
     <br>
-    <a href="teacher_dashboard.html" class="back-btn">⬅ Quay lại</a>
+    <button class="add-btn" onclick="addStudent()">Thêm học sinh</button>
 </div>
 
+<br>
+<button class="back-btn" onclick="location.href='teacher_dashboard.html'">⬅ Quay lại</button>
+
+</div>
 
 <script>
-// =====================================
-// DỮ LIỆU HỌC SINH LỚP 9A1 & 9A2
-// =====================================
-const data_9 = {
-    "9A1": [
-        {"username": "lau_a_cuong", "password": "123456"},
-        {"username": "lau_a_da", "password": "123456"},
-        {"username": "mua_a_de", "password": "123456"},
-        {"username": "ly_thi_dan", "password": "123456"},
-        {"username": "mua_thi_don", "password": "123456"},
-        {"username": "lau_a_hanh", "password": "123456"},
-        {"username": "mua_a_hanh", "password": "123456"},
-        {"username": "giang_thi_hoa", "password": "123456"},
-        {"username": "lau_thi_hoa", "password": "123456"},
-        {"username": "ly_a_khu", "password": "123456"},
-        {"username": "vang_a_khuong", "password": "123456"},
-        {"username": "ly_thi_lau", "password": "123456"},
-        {"username": "giang_thi_lien", "password": "123456"},
-        {"username": "lau_thi_lu", "password": "123456"},
-        {"username": "mua_thi_may_ly", "password": "123456"},
-        {"username": "vang_a_mua", "password": "123456"},
-        {"username": "ly_thi_nuc", "password": "123456"},
-        {"username": "vang_a_phong", "password": "123456"},
-        {"username": "lau_a_phong", "password": "123456"},
-        {"username": "giang_thi_phuong", "password": "123456"},
-        {"username": "mua_a_sai", "password": "123456"},
-        {"username": "mua_a_senh", "password": "123456"},
-        {"username": "vang_thi_sua", "password": "123456"},
-        {"username": "ly_thi_thach", "password": "123456"},
-        {"username": "vang_a_tuan", "password": "123456"}
-    ],
+// ===============================
+// DANH SÁCH MẶC ĐỊNH
+// ===============================
+const defaultStudents = [
+    { username: "lau_a_cuong", password: "123456", class: "9A1" },
+    { username: "lau_a_da", password: "123456", class: "9A1" },
+    { username: "mua_a_de", password: "123456", class: "9A1" },
+    { username: "vang_a_tuan", password: "123456", class: "9A1" },
 
-    "9A2": [
-        {"username": "lau_a_binh", "password": "123456"},
-        {"username": "mua_a_cong", "password": "123456"},
-        {"username": "lau_a_cuong", "password": "123456"},
-        {"username": "lau_thi_do", "password": "123456"},
-        {"username": "mua_thi_ca_dua", "password": "123456"},
-        {"username": "ly_a_dua", "password": "123456"},
-        {"username": "giang_thi_hia", "password": "123456"},
-        {"username": "lau_thi_hoa", "password": "123456"},
-        {"username": "mua_van_hung", "password": "123456"},
-        {"username": "lau_a_kha", "password": "123456"},
-        {"username": "mua_thi_lau", "password": "123456"},
-        {"username": "vang_a_manh", "password": "123456"},
-        {"username": "mua_a_minh", "password": "123456"},
-        {"username": "mua_thi_pa_na", "password": "123456"},
-        {"username": "vang_thi_nhung", "password": "123456"},
-        {"username": "mua_chi_phinh", "password": "123456"},
-        {"username": "giang_thi_phuong", "password": "123456"},
-        {"username": "lau_a_sai", "password": "123456"},
-        {"username": "mua_thi_senh", "password": "123456"},
-        {"username": "giang_a_son", "password": "123456"},
-        {"username": "mua_a_son", "password": "123456"},
-        {"username": "vang_thi_sua", "password": "123456"},
-        {"username": "mua_a_tenh", "password": "123456"},
-        {"username": "mua_thuy_van", "password": "123456"},
-        {"username": "mua_thi_xia", "password": "123456"},
-        {"username": "ly_thi_xinh", "password": "123456"}
-    ]
-};
+    { username: "lau_a_binh", password: "123456", class: "9A2" },
+    { username: "mua_a_cong", password: "123456", class: "9A2" },
+    { username: "giang_a_son", password: "123456", class: "9A2" }
+];
 
+// Lấy dữ liệu từ localStorage
+let students = JSON.parse(localStorage.getItem("students_grade9"));
+if (!students) {
+    students = defaultStudents;
+    saveData();
+}
 
-// =====================================
-// HIỂN THỊ BẢNG DỮ LIỆU
-// =====================================
-function loadTable(className, tableID){
-    let table = document.getElementById(tableID);
-    let list = data_9[className];
+// ===============================
+// HIỂN THỊ BẢNG
+// ===============================
+function loadTable() {
+    const table = document.getElementById("studentTable");
+    table.innerHTML = `
+        <tr>
+            <th>STT</th>
+            <th>Tên đăng nhập</th>
+            <th>Mật khẩu</th>
+            <th>Lớp</th>
+            <th>Thao tác</th>
+        </tr>
+    `;
 
-    list.forEach((stu, index) => {
-        let row = document.createElement("tr");
-        row.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${stu.username}</td>
-            <td>${stu.password}</td>
+    students.forEach((s, i) => {
+        table.innerHTML += `
+            <tr>
+                <td>${i + 1}</td>
+                <td>${s.username}</td>
+                <td>${s.password}</td>
+                <td>${s.class}</td>
+                <td>
+                    <button class="delete-btn" onclick="deleteStudent(${i})">Xóa</button>
+                </td>
+            </tr>
         `;
-        table.appendChild(row);
     });
 }
 
-loadTable("9A1", "table9A1");
-loadTable("9A2", "table9A2");
-
-
-// =====================================
-// TÌM KIẾM TRONG 2 BẢNG
-// =====================================
-function searchStudent(){
-    let keyword = document.getElementById("searchInput").value.toLowerCase();
-    let tables = ["table9A1", "table9A2"];
-
-    tables.forEach(id => {
-        let rows = document.getElementById(id).getElementsByTagName("tr");
-        for(let i=1; i<rows.length; i++){
-            let text = rows[i].innerText.toLowerCase();
-            rows[i].style.display = text.includes(keyword) ? "" : "none";
-        }
-    });
+function saveData() {
+    localStorage.setItem("students_grade9", JSON.stringify(students));
 }
+
+// ===============================
+// THÊM HỌC SINH
+// ===============================
+function addStudent() {
+    const user = newUser.value.trim();
+    const pass = newPass.value.trim();
+    const cls = newClass.value;
+
+    if (!user || !pass) {
+        alert("Vui lòng nhập đầy đủ thông tin!");
+        return;
+    }
+
+    if (students.some(s => s.username === user)) {
+        alert("Tên đăng nhập đã tồn tại!");
+        return;
+    }
+
+    students.push({ username: user, password: pass, class: cls });
+    saveData();
+    loadTable();
+
+    newUser.value = "";
+    newPass.value = "";
+}
+
+// ===============================
+// XOÁ HỌC SINH
+// ===============================
+function deleteStudent(index) {
+    if (confirm("Bạn chắc chắn muốn xoá học sinh này?")) {
+        students.splice(index, 1);
+        saveData();
+        loadTable();
+    }
+}
+
+loadTable();
 </script>
 
 </body>
