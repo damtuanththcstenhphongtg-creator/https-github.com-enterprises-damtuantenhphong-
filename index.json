@@ -1,18 +1,33 @@
-{
-  "exams": [
-    {
-      "id": "math9_bai1",
-      "title": "Toán 9 - Bài 1: Phương trình bậc hai",
-      "subject": "toan",
-      "grade": 9,
-      "file": "math9_bai1.json"
-    },
-    {
-      "id": "ly9_bai1",
-      "title": "Vật lý 9 - Bài 1: Định luật Newton",
-      "subject": "ly",
-      "grade": 9,
-      "file": "ly9_bai1.json"
+// index.js
+const express = require("express");
+const fs = require("fs");
+const path = require("path");
+
+const app = express();
+const PORT = 3000;
+
+// Route trả về danh sách exams từ file JSON
+app.get("/exams", (req, res) => {
+  const filePath = path.join(__dirname, "exams.json"); // file JSON bạn đã đưa
+  fs.readFile(filePath, "utf8", (err, data) => {
+    if (err) {
+      return res.status(500).json({ error: "Không đọc được file JSON" });
     }
-  ]
-}
+    try {
+      const exams = JSON.parse(data);
+      res.json(exams);
+    } catch (parseErr) {
+      res.status(500).json({ error: "Lỗi parse JSON" });
+    }
+  });
+});
+
+// Route mặc định
+app.get("/", (req, res) => {
+  res.send("Server Node.js đang chạy. Truy cập /exams để xem dữ liệu.");
+});
+
+app.listen(PORT, () => {
+  console.log(`Server chạy tại http://localhost:${PORT}`);
+});
+
