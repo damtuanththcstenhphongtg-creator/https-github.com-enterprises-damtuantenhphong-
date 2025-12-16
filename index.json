@@ -1,53 +1,34 @@
 {
   "exams": [
     {
-      "grade": "6A",
-      "subject": "Toán",
-      "title": "Đề kiểm tra Toán giữa kỳ lớp 6A",
-      "file": "exam_math_6a.json"
+      "grade": "6",
+      "subject": "Tin học",
+      "title": "Tin học 6 – Bài 8: Thư điện tử",
+      "file": "data/exams/tin6_bai8.json"
     },
     {
-      "grade": "6B",
-      "subject": "Ngữ văn",
-      "title": "Đề kiểm tra Ngữ văn cuối kỳ lớp 6B",
-      "file": "exam_literature_6b.json"
+      "grade": "6",
+      "subject": "Tin học",
+      "title": "Tin học 6 – Bài 9: An toàn thông tin trên Internet",
+      "file": "data/exams/tin6_bai9.json"
     },
     {
-      "grade": "7A",
-      "subject": "Tiếng Anh",
-      "title": "Đề kiểm tra Tiếng Anh giữa kỳ lớp 7A",
-      "file": "exam_english_7a.json"
+      "grade": "7",
+      "subject": "Tin học",
+      "title": "Tin học 7 – An toàn thông tin",
+      "file": "data/exams/tin7_bai9.json"
     },
     {
-      "grade": "7B",
-      "subject": "Lịch sử",
-      "title": "Đề kiểm tra Lịch sử cuối kỳ lớp 7B",
-      "file": "exam_history_7b.json"
+      "grade": "8",
+      "subject": "Tin học",
+      "title": "Tin học 8 – Kiểm tra giữa kỳ II",
+      "file": "data/exams/tin8_gk2.json"
     },
     {
-      "grade": "8A",
-      "subject": "Toán",
-      "title": "Đề kiểm tra Toán học kỳ 1 lớp 8A",
-      "file": "exam_math_8a.json"
-    },
-    {
-      "grade": "8B",
-      "subject": "Vật lý",
-      "title": "Đề kiểm tra Vật lý học kỳ 2 lớp 8B",
-      "file": "exam_physics_8b.json"
-    },
-    {
-      "grade": "9A",
-      "subject": "Ngữ văn",
-      "title": "Đề kiểm tra Ngữ văn học kỳ 1 lớp 9A",
-      "file": "exam_literature_9a.json"
-    },
-    {
-      "grade": "9B",
-      "subject": "Hóa học",
-      "title": "Đề kiểm tra Hóa học cuối kỳ lớp 9B",
-      "file": "exam_chemistry_9b.json"
+      "grade": "9",
+      "subject": "Tin học",
+      "title": "Tin học 9 – Kiểm tra cuối kỳ II",
+      "file": "data/exams/tin9_ck2.json"
     }
   ]
 }
-
