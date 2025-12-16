@@ -1,258 +1,333 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="utf-8">
-<title>Tạo đề kiểm tra</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Tạo đề kiểm tra (phiên bản nâng cao)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-  body {
-    font-family: 'Roboto', sans-serif;
-    background: #f4f6f9;
-    margin: 0;
-    padding: 20px;
-  }
-  h1 {
-    text-align: center;
-    color: #2c3e50;
-  }
-  .card {
-    background: #fff;
-    border-radius: 8px;
-    padding: 20px;
-    margin: 15px auto;
-    max-width: 800px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  }
-  label {
-    display: block;
-    margin: 10px 0 5px;
-    font-weight: bold;
-  }
-  select, input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-  }
-  .btn-group {
-    text-align: center;
-    margin-top: 20px;
-  }
-  button {
-    background: #3498db;
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    margin: 5px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  button:hover {
-    background: #2980b9;
-  }
-  #container {
-    margin-top: 20px;
-    padding: 15px;
-    background: #ecf0f1;
-    border-radius: 8px;
-    border: 1px solid #bdc3c7;
-  }
-  .question {
-    margin-bottom: 15px;
-    padding: 10px;
-    background: #fff;
-    border-left: 4px solid #3498db;
-  }
-  .section-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: #2c3e50;
-  }
+body{font-family:Arial,Helvetica,sans-serif;background:#f0f3f7;margin:0;padding:20px}
+.container{max-width:1000px;margin:0 auto;background:#fff;padding:18px;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.08)}
+h2{margin-top:0}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.controls > div{background:#fafafa;padding:10px;border-radius:6px;border:1px solid #eee}
+label{display:block;font-weight:600;margin-bottom:6px}
+input[type=file],select,input[type=number]{width:100%;padding:8px;border-radius:6px;border:1px solid #ccc}
+button{padding:10px 14px;border-radius:6px;border:0;background:#1976d2;color:#fff;cursor:pointer}
+button.secondary{background:#6c757d}
+#previewExam{white-space:pre-wrap;background:#fbfbfb;padding:12px;border-radius:6px;border:1px solid #e6e6e6;margin-top:12px;min-height:160px}
+.info{font-size:13px;color:#444;margin-top:8px}
+.bad{color:#b00020;font-weight:700}
+.good{color:#0a8a3a;font-weight:700}
+.small{font-size:13px;color:#666}
 </style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/docx.min.js"></script>
 </head>
 <body>
-<h1>📘 Tạo đề kiểm tra</h1>
+<div class="container">
+  <h2>📝 Teacher – Tạo đề kiểm tra (hỗ trợ nhiều định dạng JSON)</h2>
 
-<div class="card">
-  <label>Môn học:</label>
-  <select id="subjectSelect">
-    <option>Toán</option>
-    <option>Ngữ văn</option>
-    <option>Tiếng Anh</option>
-    <option>Lịch sử</option>
-  </select>
+  <div class="controls">
+    <div>
+      <label>1) Chọn file JSON (upload)</label>
+      <input type="file" id="jsonFile" accept=".json">
+      <div id="loadResult" class="info small"></div>
+      <div class="small" style="margin-top:8px">Hỗ trợ: mảng câu hỏi gốc, object có key "questions", object theo bài, hoặc mảng câu có field "lesson".</div>
+    </div>
 
-  <label>Lớp:</label>
-  <select id="gradeSelect">
-    <option>6</option>
-    <option>7</option>
-    <option>8</option>
-    <option>9</option>
-  </select>
+    <div>
+      <label>2) Cấu hình tạo đề</label>
+      <label>Chọn Bài:</label>
+      <select id="lessonSelect"></select>
 
-  <label>Bài học:</label>
-  <select id="lessonSelect" multiple>
-    <option>Bài 1</option>
-    <option>Bài 2</option>
-    <option>Bài 3</option>
-    <option>Bài 4</option>
-  </select>
+      <label>Số câu muốn lấy:</label>
+      <input type="number" id="numQuestions" value="10" min="1">
 
-  <label>Loại đề:</label>
-  <select id="examType">
-    <option value="mcq">Hoàn toàn trắc nghiệm</option>
-    <option value="mix">Trắc nghiệm + Tự luận</option>
-    <option value="essay">Hoàn toàn tự luận</option>
-  </select>
+      <label>Tùy chọn:</label>
+      <label><input type="checkbox" id="shuffleQuestions" checked> Đảo thứ tự câu</label><br>
+      <label><input type="checkbox" id="shuffleOptions" checked> Đảo phương án A/B/C/D</label><br>
 
-  <label>Số câu mỗi bài:</label>
-  <input type="number" id="numEachInput" min="1" value="5">
-
-  <label>Số đề cần tạo:</label>
-  <input type="number" id="numExamsInput" min="1" value="1">
-
-  <div class="btn-group">
-    <button id="generateBtn">🚀 Tạo đề</button>
-    <button id="previewBtn">👀 Xem trước</button>
-    <button id="exportWordBtn">📄 Xuất Word</button>
-    <button id="exportJsonBtn">💾 Xuất JSON</button>
+      <div style="margin-top:8px">
+        <button id="btnGenerate">🎲 Tạo đề</button>
+        <button id="btnExport" class="secondary">📥 Xuất Word (.docx)</button>
+      </div>
+    </div>
   </div>
+
+  <h3>📄 Xem trước đề</h3>
+  <div id="previewExam">Chưa có đề. Tải file JSON rồi nhấn "Tạo đề".</div>
+
+  <div id="debug" class="info"></div>
 </div>
 
-<div id="container"></div>
-
-<!-- Thư viện -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.3.2/docx.min.js"></script>
-
 <script>
-let generatedExams = [];
+function $(id){return document.getElementById(id)}
+function isObject(v){ return v && typeof v === 'object' && !Array.isArray(v); }
 
-/* ================== TẠO ĐỀ ================== */
-function generateExams() {
-  const subject = subjectSelect.value;
-  const grade = gradeSelect.value;
-  const lessons = Array.from(lessonSelect.selectedOptions).map(o => o.value);
-  const numEach = parseInt(numEachInput.value);
-  const numExams = parseInt(numExamsInput.value);
-  const examType = examTypeSelect.value;
+// =============================
+// ⭐ AUTO-FIX & CHUẨN HÓA MỘT CÂU HỎI
+// =============================
+function normalizeQuestion(q) {
+  if (!q || typeof q !== 'object') return null;
 
-  generatedExams = [];
-
-  for (let i = 0; i < numExams; i++) {
-    let exam = {
-      subject, grade, examType,
-      questions: []
-    };
-
-    lessons.forEach(lesson => {
-      for (let j = 1; j <= numEach; j++) {
-
-        if (examType !== "essay") {
-          exam.questions.push({
-            type: "mcq",
-            content: `(${lesson}) Câu ${j}: Nội dung trắc nghiệm`,
-            options: {
-              A: "Phương án A",
-              B: "Phương án B",
-              C: "Phương án C",
-              D: "Phương án D"
-            }
-          });
-        }
-
-        if (examType !== "mcq") {
-          exam.questions.push({
-            type: "essay",
-            content: `(${lesson}) Câu ${j}: Nội dung tự luận`
-          });
-        }
-      }
-    });
-
-    generatedExams.push(exam);
+  // === Auto-fix lỗi ===
+  if (q.answer && typeof q.answer === "string") {
+    q.answer = q.answer.replace(".", "").trim().toUpperCase();
   }
 
-  alert("Đã tạo đề thành công!");
-}
+  if (q.question && typeof q.question === "string") {
+    q.question = q.question
+      .replace(/^(Câu\s*\d+[:.)-]*)/i, "")
+      .replace(/^\d+[.)-]\s*/, "")
+      .trim();
+  }
 
-/* ================== XEM TRƯỚC ================== */
-function previewExams() {
-  container.innerHTML = "";
-  generatedExams.forEach((exam, idx) => {
-    const div = document.createElement("div");
-    div.innerHTML = `<div class="section-title">Đề ${idx+1} – ${exam.subject} ${exam.grade}</div>`;
-    exam.questions.forEach(q => {
-      const qd = document.createElement("div");
-      qd.className = "question";
-      if (q.type === "mcq") {
-        qd.innerHTML = `<b>${q.content}</b><br>
-          A. ${q.options.A}<br>
-          B. ${q.options.B}<br>
-          C. ${q.options.C}<br>
-          D. ${q.options.D}`;
-      } else {
-        qd.innerHTML = `<b>${q.content}</b><br><i>(Học sinh tự làm)</i>`;
-      }
-      div.appendChild(qd);
+  ["A","B","C","D"].forEach(k => { if (!q[k]) q[k] = ""; });
+
+  if (q.options && typeof q.options === "object") {
+    ["A","B","C","D"].forEach(k => {
+      if (!q.options[k] && !q.options[k.toLowerCase()]) q.options[k] = "";
     });
-    container.appendChild(div);
-  });
+  }
+
+  // === Bắt đầu normalize ===
+  const out = {};
+  out.id = q.id || q.no || q.index || null;
+  out.question = q.question || q.text || q.prompt || "";
+
+  // options
+  let opts = { A: "", B: "", C: "", D: "" };
+  if (q.options && Array.isArray(q.options)) {
+    for (let i = 0; i < Math.min(q.options.length, 4); i++) {
+      opts["ABCD"[i]] = String(q.options[i]);
+    }
+  } else if (isObject(q.options)) {
+    for (const k of Object.keys(q.options)) {
+      const K = k.toUpperCase();
+      if ("ABCD".includes(K)) opts[K] = String(q.options[k]);
+    }
+  } else {
+    ["A","B","C","D"].forEach(k => {
+      if (q[k] !== undefined) opts[k] = String(q[k]);
+    });
+  }
+  out.options = opts;
+
+  // answer
+  let ans = q.answer || q.correct || q.key || q.answerKey;
+  if (typeof ans === 'number') {
+    ans = "ABCD"[ans];
+  } else if (typeof ans === 'string') {
+    ans = ans.trim().toUpperCase();
+    if (/^[0-9]+$/.test(ans)) ans = "ABCD"[parseInt(ans)];
+  }
+  out.answer = ans || "";
+
+  out.raw = q;
+  return out;
 }
 
-/* ================== XUẤT WORD ================== */
-async function exportWord() {
+// =============================
+// ⭐ CHUẨN HOÁ NGÂN HÀNG CÂU HỎI
+// =============================
+function normalizeQuestionBank(raw) {
+  if (Array.isArray(raw)) {
+    const haveLessonField = raw.every(q => q && (q.lesson || q.chapter || q.bai));
+    if (haveLessonField) {
+      const out = {};
+      raw.forEach(q => {
+        const lesson = q.lesson || q.chapter || q.bai || 'Bài mặc định';
+        if (!out[lesson]) out[lesson] = { questions: [] };
+        out[lesson].questions.push(normalizeQuestion(q));
+      });
+      return out;
+    } else {
+      return { "Bài 1": { questions: raw.map(q => normalizeQuestion(q)) } };
+    }
+  }
+
+  if (isObject(raw)) {
+    if (raw.questions && Array.isArray(raw.questions)) {
+      return { "Bài 1": { questions: raw.questions.map(q => normalizeQuestion(q)) } };
+    }
+
+    const keys = Object.keys(raw);
+    const out = {};
+    let found = false;
+
+    for (const k of keys) {
+      const v = raw[k];
+      if (Array.isArray(v)) {
+        out[k] = { questions: v.map(q => normalizeQuestion(q)) };
+        found = true;
+      } else if (v && v.questions && Array.isArray(v.questions)) {
+        out[k] = { questions: v.questions.map(q => normalizeQuestion(q)) };
+        found = true;
+      }
+    }
+    if (found) return out;
+
+    if (raw.data && Array.isArray(raw.data.questions)) {
+      return { "Bài 1": { questions: raw.data.questions.map(q => normalizeQuestion(q)) } };
+    }
+  }
+
+  return null;
+}
+
+// =============================
+// ⭐ XỬ LÝ TẢI FILE JSON
+// =============================
+$('jsonFile').addEventListener('change', evt => {
+  const f = evt.target.files && evt.target.files[0];
+  if (!f) return;
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const raw = JSON.parse(e.target.result);
+      const norm = normalizeQuestionBank(raw);
+      if (!norm) {
+        $('loadResult').innerHTML =
+          `<span class="bad">Không nhận dạng được JSON.</span>`;
+        return;
+      }
+
+      window.questionBank = norm;
+
+      // cập nhật select
+      const lessonSelect = $('lessonSelect');
+      lessonSelect.innerHTML = "";
+      const lessons = Object.keys(norm);
+      lessons.forEach(name => {
+        const opt = document.createElement("option");
+        opt.value = name;
+        opt.textContent = `${name} — (${norm[name].questions.length} câu)`;
+        lessonSelect.appendChild(opt);
+      });
+
+      $('loadResult').innerHTML =
+        `<span class="good">Đã load ${lessons.length} bài — tổng ${
+          lessons.reduce((s, k) => s + norm[k].questions.length, 0)
+        } câu.</span>`;
+
+      // ========== KIỂM TRA LỖI =============
+      let warn = [];
+      lessons.forEach(lesson => {
+        norm[lesson].questions.forEach((q, i) => {
+          if (!q.question.trim()) warn.push(`• ${lesson} – Câu ${i+1}: thiếu nội dung`);
+          if (!q.options.A && !q.options.B && !q.options.C && !q.options.D)
+            warn.push(`• ${lesson} – Câu ${i+1}: thiếu phương án`);
+          if (!q.answer) warn.push(`• ${lesson} – Câu ${i+1}: thiếu đáp án`);
+        });
+      });
+
+      if (warn.length)
+        $('debug').innerHTML = `<div class="bad">⚠ JSON có ${warn.length} lỗi:</div>${warn.join("<br>")}`;
+      else
+        $('debug').innerHTML = `<div class="good">✔ JSON hợp lệ.</div>`;
+
+      window.normalizedQuestionBank = norm;
+
+    } catch (err) {
+      $('loadResult').innerHTML = `<span class="bad">Lỗi JSON: ${err.message}</span>`;
+    }
+  };
+  reader.readAsText(f);
+});
+
+// =============================
+// ⭐ TẠO ĐỀ
+// =============================
+$('btnGenerate').addEventListener('click', () => {
+  if (!window.normalizedQuestionBank) {
+    alert("Chưa tải JSON"); return;
+  }
+
+  const lesson = $('lessonSelect').value;
+  const n = parseInt($('numQuestions').value);
+  const shuffleQ = $('shuffleQuestions').checked;
+  const shuffleOpt = $('shuffleOptions').checked;
+
+  const pool = window.normalizedQuestionBank[lesson].questions;
+  let arr = pool.slice();
+  if (shuffleQ) arr.sort(() => Math.random() - 0.5);
+  arr = arr.slice(0, n);
+
+  const exam = { lesson, items: [] };
+  let text = `ĐỀ KIỂM TRA — ${lesson}\n\n`;
+
+  arr.forEach((q, idx) => {
+    let opts = {...q.options};
+    let correct = q.answer;
+
+    if (shuffleOpt) {
+      const labels = ["A","B","C","D"];
+      const order = labels.sort(() => Math.random()-0.5);
+      const newOpts = {};
+      let newCorrect = "";
+
+      order.forEach((orig, pos) => {
+        const newLbl = labels[pos];
+        newOpts[newLbl] = opts[orig];
+        if (orig === correct) newCorrect = newLbl;
+      });
+
+      opts = newOpts;
+      correct = newCorrect || correct;
+    }
+
+    exam.items.push({ no: idx+1, question: q.question, options: opts, answer: correct });
+
+    text += `${idx+1}. ${q.question}\n`;
+    text += `   A. ${opts.A}\n`;
+    text += `   B. ${opts.B}\n`;
+    text += `   C. ${opts.C}\n`;
+    text += `   D. ${opts.D}\n\n`;
+  });
+
+  $('previewExam').textContent = text;
+  window.currentExam = exam;
+});
+
+// =============================
+// ⭐ XUẤT WORD
+// =============================
+$('btnExport').addEventListener('click', async ()=>{
+  if (!window.currentExam) { alert("Chưa có đề"); return; }
+
   const { Document, Packer, Paragraph, TextRun } = docx;
+  const children = [];
 
-  const doc = new Document({
-    sections: generatedExams.map((exam, idx) => ({
-      children: [
-        new Paragraph({
-          children: [new TextRun({ text: `ĐỀ ${idx+1} – ${exam.subject} ${exam.grade}`, bold:true, size:28 })]
-        }),
-        ...exam.questions.flatMap(q => {
-          let arr = [new Paragraph(q.content)];
-          if (q.type === "mcq") {
-            Object.keys(q.options).forEach(k => {
-              arr.push(new Paragraph(`${k}. ${q.options[k]}`));
-            });
-          } else {
-            arr.push(new Paragraph(" "));
-            arr.push(new Paragraph(" "));
-          }
-          return arr;
-        })
-      ]
-    }))
+  children.push(new Paragraph({
+    children: [ new TextRun({ text:`ĐỀ KIỂM TRA — ${window.currentExam.lesson}`, bold:true, size:28 }) ],
+    spacing:{ after:300 }
+  }));
+
+  window.currentExam.items.forEach(item=>{
+    children.push(new Paragraph({
+      children:[ new TextRun(`${item.no}. ${item.question}`) ]
+    }));
+    ["A","B","C","D"].forEach(lbl=>{
+      children.push(new Paragraph({ children:[ new TextRun(`   ${lbl}. ${item.options[lbl]}`) ] }));
+    });
+    children.push(new Paragraph(""));
   });
 
+  children.push(new Paragraph({
+    children:[ new TextRun({ text:"\n\nBẢNG ĐÁP ÁN", bold:true, size:24 }) ],
+    spacing:{ before:300 }
+  }));
+
+  window.currentExam.items.forEach(item=>{
+    children.push(new Paragraph(`Câu ${item.no}: ${item.answer}`));
+  });
+
+  const doc = new Document({ sections:[{ children }] });
   const blob = await Packer.toBlob(doc);
-  saveAs(blob, "De_Kiem_Tra.docx");
-}
-
-/* ================== XUẤT JSON ================== */
-function exportJson() {
-  saveAs(
-    new Blob([JSON.stringify(generatedExams, null, 2)], { type:"application/json" }),
-    "De_Kiem_Tra.json"
-  );
-}
-
-/* ================== GÁN NÚT ================== */
-const examTypeSelect = document.getElementById("examType");
-const subjectSelect = document.getElementById("subjectSelect");
-const gradeSelect = document.getElementById("gradeSelect");
-const lessonSelect = document.getElementById("lessonSelect");
-const numEachInput = document.getElementById("numEachInput");
-const numExamsInput = document.getElementById("numExamsInput");
-const container = document.getElementById("container");
-
-generateBtn.onclick = generateExams;
-previewBtn.onclick = previewExams;
-exportWordBtn.onclick = exportWord;
-exportJsonBtn.onclick = exportJson;
+  saveAs(blob, `De_${window.currentExam.lesson.replace(/\s+/g,"_")}.docx`);
+});
 </script>
 </body>
 </html>
