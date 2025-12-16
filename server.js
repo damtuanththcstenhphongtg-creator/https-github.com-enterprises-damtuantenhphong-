@@ -1,101 +1,76 @@
-import express from "express";
-import fs from "fs";
-import cors from "cors";
-import dotenv from "dotenv";
-import path from "path";
-import { fileURLToPath } from "url";
-import PDFDocument from "pdfkit";
-import { gradeEssay } from "./grade_essay.js";
+/ index.js
+const express = require("express");
+const fs = require("fs");
+const path = require("path");
 
-dotenv.config();
 const app = express();
+const PORT = 3000;
 
-// Fix __dirname
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Middleware
-app.use(cors());
+// Middleware để parse JSON từ body request (nếu cần POST/PUT)
 app.use(express.json());
 
-// Public thư mục submissions để tải PDF
-app.use(
-  "/submissions",
-  express.static(path.join(__dirname, "submissions"))
-);
+// Đọc dữ liệu exams từ file
+function getExams() {
+  const filePath = path.join(__dirname, "exams.json");
+  const data = fs.readFileSync(filePath, "utf8");
+  return JSON.parse(data);
+}
 
-/* ===========================
-   NHẬN BÀI LÀM + TẠO PDF
-=========================== */
-app.post("/submit", async (req, res) => {
-  const submission = req.body;
-
-  // Kiểm tra dữ liệu đầu vào
-  if (!submission.student || !submission.answers) {
-    return res.status(400).json({ error: "Thiếu thông tin học sinh hoặc bài làm" });
-  }
-
-  // Đảm bảo thư mục submissions tồn tại
-  const submissionsDir = path.join(__dirname, "submissions");
-  if (!fs.existsSync(submissionsDir)) {
-    fs.mkdirSync(submissionsDir);
-  }
-
-  // Lưu vào submissions.json
-  let data = [];
-  if (fs.existsSync("submissions.json")) {
-    try {
-      data = JSON.parse(fs.readFileSync("submissions.json", "utf8"));
-    } catch (e) {
-      data = [];
-    }
-  }
-  data.push(submission);
-  fs.writeFileSync("submissions.json", JSON.stringify(data, null, 2));
-
-  // Tạo tên file PDF
-  const safeName = submission.student.replace(/\s+/g, "_").toLowerCase();
-  const date = submission.date || new Date().toISOString().split("T")[0];
-  const fileName = `${safeName}_${date}.pdf`;
-  const filePath = path.join(submissionsDir, fileName);
-
-  // Tạo PDF
-  const doc = new PDFDocument();
-  doc.pipe(fs.createWriteStream(filePath));
-  doc.fontSize(16).text("BÀI LÀM HỌC SINH", { underline: true });
-  doc.moveDown();
-  doc.fontSize(12).text(`Học sinh: ${submission.student}`);
-  doc.text(`Ngày: ${date}`);
-  doc.moveDown();
-  doc.text("Nội dung bài làm:", { underline: true });
-  doc.moveDown();
-  doc.text(JSON.stringify(submission.answers, null, 2));
-  doc.end();
-
-  res.json({
-    status: "ok",
-    pdfLink: `http://localhost:3000/submissions/${fileName}`
-  });
+// API: Lấy toàn bộ danh sách exams
+app.get("/exams", (req, res) => {
+  const exams = getExams();
+  res.json(exams);
 });
 
-/* ===========================
-   AI CHẤM TỰ LUẬN
-=========================== */
-app.post("/grade-essay", async (req, res) => {
-  try {
-    const { question, answer, rubric, maxPoint } = req.body;
-
-    if (!question || !answer || !rubric || !maxPoint) {
-      return res.status(400).json({ error: "Thiếu dữ liệu để chấm bài" });
-    }
-
-    const result = await gradeEssay(question, answer, rubric, maxPoint);
-    res.json(result);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+// API: Lấy chi tiết exam theo id
+app.get("/exams/:id", (req, res) => {
+  const exams = getExams();
+  const exam = exams.exams.find(e => e.id === req.params.id);
+  if (!exam) {
+    return res.status(404).json({ error: "Không tìm thấy exam" });
   }
+  res.json(exam);
 });
 
-app.listen(3000, () =>
-  console.log("✅ Server chạy tại http://localhost:3000")
-);
+// API: Thêm exam mới
+app.post("/exams", (req, res) => {
+  const exams = getExams();
+  const newExam = req.body;
+  exams.exams.push(newExam);
+
+  fs.writeFileSync(
+    path.join(__dirname, "exams.json"),
+    JSON.stringify(exams, null, 2),
+    "utf8"
+  );
+
+  res.status(201).json(newExam);
+});
+
+// API: Xóa exam theo id
+app.delete("/exams/:id", (req, res) => {
+  const exams = getExams();
+  const filtered = exams.exams.filter(e => e.id !== req.params.id);
+
+  if (filtered.length === exams.exams.length) {
+    return res.status(404).json({ error: "Không tìm thấy exam để xóa" });
+  }
+
+  fs.writeFileSync(
+    path.join(__dirname, "exams.json"),
+    JSON.stringify({ exams: filtered }, null, 2),
+    "utf8"
+  );
+
+  res.json({ message: "Đã xóa thành công" });
+});
+
+// Route mặc định
+app.get("/", (req, res) => {
+  res.send("Server Node.js đang chạy. Truy cập /exams để xem dữ liệu.");
+});
+
+app.listen(PORT, () => {
+  console.log(`Server chạy tại http://localhost:${PORT}`);
+});
+
