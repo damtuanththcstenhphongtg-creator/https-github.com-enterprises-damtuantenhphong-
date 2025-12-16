@@ -1,0 +1,45 @@
+<button onclick="submitExam()">📤 Nộp bài</button>
+<div id="submitMsg"></div>
+
+<script>
+async function submitExam() {
+    if (!confirm("Bạn chắc chắn muốn nộp bài?")) return;
+
+    const payload = {
+        username: localStorage.getItem("username"),
+        class: localStorage.getItem("class"),
+        examFile: localStorage.getItem("current_exam"),
+        answers: collectAnswers()
+    };
+
+    try {
+        const res = await fetch("http://localhost:3000/api/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error(data.error || "Nộp bài thất bại");
+        }
+
+        document.getElementById("submitMsg").innerHTML = `
+            <div style="color:green;font-weight:bold">
+                ✅ Nộp bài thành công!
+            </div>
+        `;
+
+        // Khoá bài
+        document.querySelectorAll("input, button").forEach(e => e.disabled = true);
+
+    } catch (err) {
+        document.getElementById("submitMsg").innerHTML = `
+            <div style="color:red">
+                ❌ ${err.message}
+            </div>
+        `;
+    }
+}
+</script>
