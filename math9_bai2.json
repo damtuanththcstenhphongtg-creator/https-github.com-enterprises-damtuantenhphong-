@@ -1,0 +1,21 @@
+{
+  "title": "Toán 9 - Bài 2: Hệ phương trình bậc nhất hai ẩn",
+  "subject": "toan",
+  "grade": "9",
+  "questions": [
+    {
+      "type": "mcq",
+      "question": "Giải hệ phương trình: x + y = 5, x - y = 1",
+      "A": "x=3, y=2",
+      "B": "x=2, y=3",
+      "C": "x=1, y=4",
+      "D": "x=0, y=5",
+      "answer": "A"
+    },
+    {
+      "type": "essay",
+      "question": "Giải và trình bày cách giải hệ phương trình: 2x + 3y = 12, x - y = 1.",
+      "answer": ""
+    }
+  ]
+}
