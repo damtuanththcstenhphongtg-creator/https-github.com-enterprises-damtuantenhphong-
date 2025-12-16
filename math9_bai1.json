@@ -1,0 +1,26 @@
+{
+  "code": "MATH9_B1",
+  "duration": 45,
+  "questions": [
+    {
+      "id": 1,
+      "type": "mcq",
+      "content": "Nghiệm của x² - 5x + 6 = 0 là:",
+      "options": {
+        "A": "x=2 hoặc x=3",
+        "B": "x=1",
+        "C": "x=0",
+        "D": "Vô nghiệm"
+      },
+      "answer": "A",
+      "point": 0.5
+    },
+    {
+      "id": 2,
+      "type": "essay",
+      "content": "Trình bày cách giải phương trình bậc hai.",
+      "rubric": "Nêu công thức nghiệm (1đ), trình bày các bước (1đ)",
+      "point": 2
+    }
+  ]
+}
