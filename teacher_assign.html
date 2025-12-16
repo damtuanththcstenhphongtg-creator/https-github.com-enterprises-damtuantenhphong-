@@ -2,8 +2,9 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Giao bài – Giáo viên</title>
+<title>Giao bài – Giao bài tập</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body {
     font-family: "Segoe UI", sans-serif;
@@ -12,22 +13,21 @@ body {
     padding: 0;
 }
 .wrap {
-    max-width: 900px;
+    max-width: 950px;
     margin: 30px auto;
     background: #fff;
     padding: 25px;
     border-radius: 12px;
     box-shadow: 0 4px 14px rgba(0,0,0,0.18);
 }
-h1 {
-    text-align: center;
-    color: #0a4a8e;
-}
+h1 { text-align: center; color: #0a4a8e; }
+
 label {
     font-weight: 600;
-    margin-top: 15px;
+    margin-top: 12px;
     display: block;
 }
+
 select, input {
     width: 100%;
     padding: 10px;
@@ -36,6 +36,7 @@ select, input {
     border-radius: 8px;
     font-size: 16px;
 }
+
 button {
     background: #0b74d1;
     color: #fff;
@@ -47,10 +48,12 @@ button {
     font-size: 18px;
 }
 button:hover { background: #095ba8; }
+
 .back-btn {
     background: #888;
 }
 .back-btn:hover { background: #666; }
+
 .success {
     background: #e1fbd8;
     padding: 12px;
@@ -67,14 +70,18 @@ button:hover { background: #095ba8; }
 }
 </style>
 </head>
+
 <body>
+
 <div class="wrap">
-    <button class="back-btn" onclick="window.location.href='teacher_dashboard.html'">
-        ⬅ Quay lại
-    </button>
-    <h1>📝 GIAO BÀI KIỂM TRA</h1>
+
+    <button class="back-btn" onclick="window.location.href='teacher_dashboard.html'">← Quay lại</button>
+
+    <h1>📝 GIAO BÀI – GIAO BÀI TẬP</h1>
+
     <div id="msg"></div>
-    <label>Chọn lớp giao bài</label>
+
+    <label>Chọn lớp giao bài:</label>
     <select id="assignClass">
         <option value="6A">Lớp 6A</option>
         <option value="6B">Lớp 6B</option>
@@ -85,81 +92,107 @@ button:hover { background: #095ba8; }
         <option value="9A">Lớp 9A</option>
         <option value="9B">Lớp 9B</option>
     </select>
-    <label>Chọn đề kiểm tra</label>
+
+    <label>Chọn đề kiểm tra:</label>
     <select id="assignExam">
-        <option>Đang tải danh sách đề...</option>
+        <option value="">Đang tải dữ liệu đề...</option>
     </select>
-    <label>Hạn nộp bài</label>
+
+    <label>Hạn nộp bài:</label>
     <input type="datetime-local" id="assignDeadline">
+
     <button onclick="assignExam()">📤 Giao bài</button>
+
 </div>
+
 <script>
-// ===============================
-// KIỂM TRA QUYỀN GIÁO VIÊN
-// ===============================
+/* ===============================
+   CHẶN TRUY CẬP TRÁI PHÉP
+================================ */
 if (localStorage.getItem("role") !== "teacher") {
+    alert("Bạn không có quyền truy cập!");
     window.location.href = "index.html";
 }
-// ===============================
-// LOAD DANH SÁCH ĐỀ TỪ SERVER
-// ===============================
+
+/* ===============================
+   LOAD DANH SÁCH ĐỀ
+================================ */
 async function loadExams() {
     const examSelect = document.getElementById("assignExam");
-    examSelect.innerHTML = `<option>Đang tải danh sách đề...</option>`;
+    examSelect.innerHTML = `<option>⏳ Đang tải đề...</option>`;
+
     try {
-        const res = await fetch("/api/exams");
-        if (!res.ok) throw new Error("Không tải được danh sách đề");
-        const data = await res.json();
-        if (!data.exams || data.exams.length === 0) {
+        const response = await fetch("./data/exams/index.json", {
+            cache: "no-store"
+        });
+
+        if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+        }
+
+        const json = await response.json();
+
+        if (!json.exams || json.exams.length === 0) {
             examSelect.innerHTML = `<option>❌ Chưa có đề nào</option>`;
             return;
         }
-        examSelect.innerHTML = `<option value="">-- Chọn đề kiểm tra --</option>`;
-        data.exams.forEach(ex => {
-            examSelect.innerHTML += `
-                <option value="${ex.file}">
-                    [Lớp ${ex.grade}] ${ex.title}
-                </option>
-            `;
+
+        examSelect.innerHTML = `<option value="">-- Chọn đề --</option>`;
+
+        json.exams.forEach(exam => {
+            const opt = document.createElement("option");
+            opt.value = exam.file;
+            opt.textContent = `[Lớp ${exam.grade}] ${exam.title}`;
+            examSelect.appendChild(opt);
         });
+
     } catch (err) {
-        examSelect.innerHTML = `<option>❌ ${err.message}</option>`;
+        console.error("Lỗi load đề:", err);
+        examSelect.innerHTML =
+            `<option>❌ Không tải được đề (index.json)</option>`;
     }
 }
-// ===============================
-// GIAO BÀI
-// ===============================
+
+/* ===============================
+   GIAO BÀI
+================================ */
 function assignExam() {
     const className = document.getElementById("assignClass").value;
     const examFile = document.getElementById("assignExam").value;
     const deadline = document.getElementById("assignDeadline").value;
-    const msgBox = document.getElementById("msg");
+    const msg = document.getElementById("msg");
+
     if (!examFile) {
-        msgBox.innerHTML = `<div class="error">⚠️ Vui lòng chọn đề kiểm tra</div>`;
+        msg.innerHTML = `<div class="error">⚠️ Chưa chọn đề!</div>`;
         return;
     }
+
     if (!deadline) {
-        msgBox.innerHTML = `<div class="error">⚠️ Vui lòng chọn hạn nộp</div>`;
+        msg.innerHTML = `<div class="error">⚠️ Chưa chọn hạn nộp!</div>`;
         return;
     }
-    let assignments = JSON.parse(localStorage.getItem("assignments") || "[]");
-    assignments.push({
+
+    const data = JSON.parse(localStorage.getItem("assignments") || "[]");
+
+    data.push({
         class: className,
-        examFile: examFile,
-        deadline: deadline,
-        assignedAt: new Date().toLocaleString("vi-VN"),
-        teacher: localStorage.getItem("username")
+        examFile,
+        deadline,
+        teacher: localStorage.getItem("username"),
+        assignedAt: new Date().toLocaleString()
     });
-    localStorage.setItem("assignments", JSON.stringify(assignments));
-    msgBox.innerHTML = `
-        <div class="success">
-            ✅ Đã giao đề <b>${examFile}</b> cho lớp <b>${className}</b><br>
-            ⏰ Hạn nộp: <b>${deadline}</b>
-        </div>
-    `;
+
+    localStorage.setItem("assignments", JSON.stringify(data));
+
+    msg.innerHTML =
+        `<div class="success">✅ Đã giao đề cho lớp <b>${className}</b></div>`;
+
     document.getElementById("assignDeadline").value = "";
 }
-// INIT
+
+/* ===============================
+   INIT
+================================ */
 loadExams();
 </script>
 </body>
