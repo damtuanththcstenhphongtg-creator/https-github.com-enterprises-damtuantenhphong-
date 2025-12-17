@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Giao bài nâng cao</title>
+<title>Giao bài nâng cao – Load từ máy</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Thư viện xuất Word client-side -->
@@ -10,81 +10,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.3.0/docx.min.js"></script>
 
 <style>
-body {
-    font-family: "Segoe UI", sans-serif;
-    background: #eef3f7;
-    margin: 0;
-    padding: 0;
-}
-.wrap {
-    max-width: 1000px;
-    margin: 30px auto;
-    background: #fff;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.18);
-}
-h1 { text-align: center; color: #0a4a8e; }
-
-label {
-    font-weight: 600;
-    margin-top: 12px;
-    display: block;
-}
-
-select, input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 6px;
-    border: 1px solid #c7d7e4;
-    border-radius: 8px;
-    font-size: 16px;
-}
-
-button {
-    background: #0b74d1;
-    color: #fff;
-    padding: 12px 20px;
-    margin-top: 15px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-}
-button:hover { background: #095ba8; }
-
-.back-btn { background: #888; }
-.back-btn:hover { background: #666; }
-
-.success {
-    background: #e1fbd8;
-    padding: 12px;
-    border-left: 5px solid #4caf50;
-    border-radius: 8px;
-    margin-top: 15px;
-}
-.error {
-    background: #ffe2e2;
-    padding: 12px;
-    border-left: 5px solid #e53935;
-    border-radius: 8px;
-    margin-top: 15px;
-}
-
-#assignedList {
-    margin-top: 30px;
-}
-#assignedList table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-}
-#assignedList th, #assignedList td {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: center;
-}
-#assignedList th { background-color: #3498db; color: #fff; }
+body { font-family: "Segoe UI", sans-serif; background: #eef3f7; margin:0; padding:0; }
+.wrap { max-width:1000px; margin:30px auto; background:#fff; padding:25px; border-radius:12px; box-shadow:0 4px 14px rgba(0,0,0,0.18); }
+h1 { text-align:center; color:#0a4a8e; }
+label { font-weight:600; margin-top:12px; display:block; }
+select,input { width:100%; padding:10px; margin-top:6px; border:1px solid #c7d7e4; border-radius:8px; font-size:16px; }
+button { background:#0b74d1; color:#fff; padding:12px 20px; margin-top:15px; border:none; border-radius:8px; cursor:pointer; font-size:16px; }
+button:hover { background:#095ba8; }
+.back-btn { background:#888; }
+.back-btn:hover { background:#666; }
+.success { background:#e1fbd8; padding:12px; border-left:5px solid #4caf50; border-radius:8px; margin-top:15px; }
+.error { background:#ffe2e2; padding:12px; border-left:5px solid #e53935; border-radius:8px; margin-top:15px; }
+#assignedList { margin-top:30px; }
+#assignedList table { width:100%; border-collapse:collapse; margin-top:10px; }
+#assignedList th,#assignedList td { border:1px solid #ccc; padding:8px; text-align:center; }
+#assignedList th { background-color:#3498db; color:#fff; }
 tr:nth-child(even){background:#f9f9f9;}
 </style>
 </head>
@@ -94,9 +34,12 @@ tr:nth-child(even){background:#f9f9f9;}
 
     <button class="back-btn" onclick="window.location.href='teacher_dashboard.html'">← Quay lại</button>
 
-    <h1>📝 GIAO BÀI NÂNG CAO</h1>
+    <h1>📝 GIAO BÀI NÂNG CAO (TỪ MÁY)</h1>
 
     <div id="msg"></div>
+
+    <label>Chọn file đề kiểm tra (JSON):</label>
+    <input type="file" id="fileExam" accept=".json">
 
     <label>Chọn lớp giao bài:</label>
     <select id="assignClass">
@@ -108,11 +51,6 @@ tr:nth-child(even){background:#f9f9f9;}
         <option value="8B">Lớp 8B</option>
         <option value="9A">Lớp 9A</option>
         <option value="9B">Lớp 9B</option>
-    </select>
-
-    <label>Chọn đề kiểm tra:</label>
-    <select id="assignExam">
-        <option value="">⏳ Đang tải dữ liệu đề...</option>
     </select>
 
     <label>Hạn nộp bài:</label>
@@ -142,6 +80,9 @@ tr:nth-child(even){background:#f9f9f9;}
 </div>
 
 <script>
+let exams = [];
+let currentExam = null;
+
 /* ===============================
    CHẶN TRUY CẬP TRÁI PHÉP
 ================================ */
@@ -150,94 +91,78 @@ if (localStorage.getItem("role") !== "teacher") {
     window.location.href = "index.html";
 }
 
-let exams = [];
-
 /* ===============================
-   LOAD ĐỀ TỪ SERVER
+   LOAD ĐỀ TỪ FILE JSON TỪ MÁY
 ================================ */
-async function loadExams() {
-    const examSelect = document.getElementById("assignExam");
-    examSelect.innerHTML = `<option>⏳ Đang tải đề...</option>`;
-    try {
-        const res = await fetch("/exams");
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        exams = await res.json();
+document.getElementById("fileExam").addEventListener("change", function(event){
+    const file = event.target.files[0];
+    if(!file) return;
 
-        if (exams.length === 0) {
-            examSelect.innerHTML = `<option>❌ Chưa có đề nào</option>`;
-            return;
+    const reader = new FileReader();
+    reader.onload = function(e){
+        try{
+            const json = JSON.parse(e.target.result);
+            exams = [json]; // chỉ load 1 đề tại 1 lần
+            currentExam = exams[0];
+
+            document.getElementById("msg").innerHTML = `<div class="success">✅ Đã tải đề: ${currentExam.title}</div>`;
+        } catch(err){
+            console.error(err);
+            document.getElementById("msg").innerHTML = `<div class="error">❌ File không hợp lệ!</div>`;
         }
-
-        examSelect.innerHTML = `<option value="">-- Chọn đề --</option>`;
-        exams.forEach(exam => {
-            const opt = document.createElement("option");
-            opt.value = exam.id;
-            opt.textContent = `[Lớp ${exam.grade || ""}] ${exam.title || ""}`;
-            examSelect.appendChild(opt);
-        });
-    } catch(err) {
-        console.error(err);
-        examSelect.innerHTML = `<option>❌ Không tải được dữ liệu từ server</option>`;
-    }
-}
+    };
+    reader.readAsText(file);
+});
 
 /* ===============================
-   GIAO BÀI LÊN SERVER
+   GIAO BÀI
 ================================ */
-async function assignExam() {
+function assignExam(){
     const className = document.getElementById("assignClass").value;
-    const examId = document.getElementById("assignExam").value;
     const deadline = document.getElementById("assignDeadline").value;
     const msg = document.getElementById("msg");
-
-    if (!examId) { msg.innerHTML = `<div class="error">⚠️ Chưa chọn đề!</div>`; return; }
-    if (!deadline) { msg.innerHTML = `<div class="error">⚠️ Chưa chọn hạn nộp!</div>`; return; }
+    if(!currentExam){ msg.innerHTML = `<div class="error">⚠️ Chưa chọn đề!</div>`; return; }
+    if(!deadline){ msg.innerHTML = `<div class="error">⚠️ Chưa chọn hạn nộp!</div>`; return; }
 
     const teacherName = localStorage.getItem("username") || "Giáo viên";
+    const assignments = JSON.parse(localStorage.getItem("assignments") || "[]");
 
-    try {
-        // Gọi PUT lên server Node.js
-        const res = await fetch(`/assign/${examId}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ teacherName, assignedClass: className, deadline })
-        });
-        const result = await res.json();
-        if (!res.ok) { throw new Error(result.error || "Lỗi giao bài"); }
+    assignments.push({
+        examId: currentExam.id,
+        examTitle: currentExam.title,
+        class: className,
+        teacher: teacherName,
+        deadline,
+        assignedAt: new Date().toLocaleString()
+    });
 
-        msg.innerHTML = `<div class="success">✅ Đã giao đề cho lớp <b>${className}</b></div>`;
-        document.getElementById("assignDeadline").value = "";
-        document.getElementById("assignExam").value = "";
+    localStorage.setItem("assignments", JSON.stringify(assignments));
+    msg.innerHTML = `<div class="success">✅ Đã giao đề cho lớp <b>${className}</b></div>`;
+    document.getElementById("assignDeadline").value = "";
+    document.getElementById("fileExam").value = "";
 
-        loadAssigned(); // refresh danh sách bài đã giao
-    } catch(err) {
-        console.error(err);
-        msg.innerHTML = `<div class="error">❌ ${err.message}</div>`;
-    }
+    loadAssigned();
 }
 
 /* ===============================
    HIỂN THỊ DANH SÁCH BÀI ĐÃ GIAO
 ================================ */
-function loadAssigned() {
+function loadAssigned(){
     const tbody = document.getElementById("assignedBody");
     const assignments = JSON.parse(localStorage.getItem("assignments") || "[]");
-
-    if (assignments.length === 0) {
+    if(assignments.length === 0){
         tbody.innerHTML = `<tr><td colspan="6">Chưa có bài nào được giao</td></tr>`;
         return;
     }
-
     tbody.innerHTML = "";
-    assignments.forEach(a => {
-        const exam = exams.find(e => e.id == a.examId);
+    assignments.forEach(a=>{
         const tr = document.createElement("tr");
         tr.innerHTML = `
             <td>${a.class}</td>
-            <td>${exam ? exam.title : a.examId}</td>
+            <td>${a.examTitle}</td>
             <td>${a.deadline}</td>
             <td>${a.teacher}</td>
-            <td>${a.assignedAt || new Date().toLocaleString()}</td>
+            <td>${a.assignedAt}</td>
             <td><button onclick='exportWord(${JSON.stringify(a)})'>📄 Xuất Word</button></td>
         `;
         tbody.appendChild(tr);
@@ -245,21 +170,21 @@ function loadAssigned() {
 }
 
 /* ===============================
-   XUẤT WORD BÀI ĐÃ GIAO
+   XUẤT WORD
 ================================ */
-async function exportWord(assignment) {
+async function exportWord(assignment){
     const { Document, Packer, Paragraph, TextRun } = docx;
 
     const doc = new Document({
-        sections: [{
-            properties: {},
-            children: [
-                new Paragraph({ children: [new TextRun({ text: "ĐỀ KIỂM TRA", bold: true, size: 32 })] }),
-                new Paragraph({ children: [new TextRun({ text: `Lớp: ${assignment.class}` })] }),
-                new Paragraph({ children: [new TextRun({ text: `Giáo viên: ${assignment.teacher}` })] }),
-                new Paragraph({ children: [new TextRun({ text: `Hạn nộp: ${assignment.deadline}` })] }),
-                new Paragraph({ children: [new TextRun({ text: "-------------------------" })] }),
-                new Paragraph({ children: [new TextRun({ text: "Nội dung đề: (chi tiết đề kiểm tra)" })] })
+        sections:[{
+            properties:{},
+            children:[
+                new Paragraph({ children:[new TextRun({ text:"ĐỀ KIỂM TRA", bold:true, size:32 })] }),
+                new Paragraph({ children:[new TextRun({ text:`Lớp: ${assignment.class}` })] }),
+                new Paragraph({ children:[new TextRun({ text:`Giáo viên: ${assignment.teacher}` })] }),
+                new Paragraph({ children:[new TextRun({ text:`Hạn nộp: ${assignment.deadline}` })] }),
+                new Paragraph({ children:[new TextRun({ text:"-------------------------" })] }),
+                new Paragraph({ children:[new TextRun({ text:`Nội dung đề: ${assignment.examTitle}` })] })
             ]
         }]
     });
@@ -271,7 +196,6 @@ async function exportWord(assignment) {
 /* ===============================
    INIT
 ================================ */
-loadExams();
 loadAssigned();
 </script>
 </body>
