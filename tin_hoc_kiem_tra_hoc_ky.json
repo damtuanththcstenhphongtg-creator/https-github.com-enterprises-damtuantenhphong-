@@ -1,0 +1,40 @@
+{
+  "id": "101",
+  "title": "Tin học – Kiểm tra học kỳ 8A",
+  "subject": "Tin học",
+  "grade": "8A",
+  "file": "tin_hoc_hoc_ky_8A.docx",
+  "teacher": "",
+  "questions": [
+    {
+      "type": "trac_nghiem",
+      "question": "Hàm SUM trong Excel dùng để làm gì?",
+      "options": [
+        "Cộng các giá trị trong một phạm vi",
+        "Tìm giá trị lớn nhất",
+        "Tìm giá trị nhỏ nhất",
+        "Trừ các giá trị trong một phạm vi"
+      ],
+      "answer": "Cộng các giá trị trong một phạm vi"
+    },
+    {
+      "type": "trac_nghiem",
+      "question": "Trong lập trình Scratch, khối lệnh nào để lặp lại một hành động nhiều lần?",
+      "options": [
+        "if…else",
+        "repeat",
+        "wait",
+        "say"
+      ],
+      "answer": "repeat"
+    },
+    {
+      "type": "tu_luan",
+      "question": "Hãy viết một công thức Excel tính tổng các ô từ A1 đến A10."
+    },
+    {
+      "type": "tu_luan",
+      "question": "Mô tả sự khác nhau giữa biến và hằng trong lập trình."
+    }
+  ]
+}
