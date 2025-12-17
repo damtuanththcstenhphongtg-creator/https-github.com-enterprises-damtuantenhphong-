@@ -4,16 +4,20 @@
   <meta charset="UTF-8">
   <title>Phân công giáo viên</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-    th { background-color: #f2f2f2; }
-    input[type="text"] { width: 90%; padding: 5px; }
-    button { padding: 6px 12px; margin-top: 10px; }
+    body { font-family: Arial, sans-serif; margin: 20px; background:#f4f6f9; }
+    h1 { text-align:center; color:#2c3e50; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; background:#fff; box-shadow:0 4px 8px rgba(0,0,0,0.1);}
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+    th { background-color: #3498db; color:#fff; }
+    tr:nth-child(even){background:#f9f9f9;}
+    input[type="text"] { width: 80%; padding: 5px; }
+    button { padding: 6px 12px; margin-top: 5px; border:none; border-radius:4px; cursor:pointer; }
+    .btn-assign { background:#2ecc71; color:#fff; }
+    .btn-download { background:#e67e22; color:#fff; }
   </style>
 </head>
 <body>
-  <h1>Phân công giáo viên cho đề thi</h1>
+  <h1>📋 Phân công giáo viên cho đề thi</h1>
 
   <table id="examTable">
     <thead>
@@ -45,25 +49,51 @@
             <td>${exam.title}</td>
             <td>${exam.subject}</td>
             <td>${exam.grade}</td>
-            <td>${exam.file}</td>
             <td>
-              <input type="text" placeholder="Nhập tên giáo viên" id="teacher-${exam.id}" />
-              <button onclick="assignTeacher('${exam.id}')">Gán</button>
+              <button class="btn-download" onclick="downloadFile('${exam.file}')">📄 Tải xuống</button>
+            </td>
+            <td>
+              <input type="text" placeholder="Nhập tên giáo viên" id="teacher-${exam.id}" value="${exam.teacher || ''}" />
+              <button class="btn-assign" onclick="assignTeacher('${exam.id}')">Gán</button>
             </td>
           `;
           tbody.appendChild(tr);
         });
+      })
+      .catch(err => {
+        alert("❌ Lỗi khi tải dữ liệu: " + err.message);
       });
 
+    // Hàm tải file
+    function downloadFile(fileName){
+      // Giả sử fileName là đường dẫn hoặc tên file
+      alert("Đang tải file: " + fileName);
+      // Thực tế: window.location.href = `/files/${fileName}`;
+    }
+
+    // Hàm gán giáo viên
     function assignTeacher(examId) {
       const teacherName = document.getElementById(`teacher-${examId}`).value;
       if (!teacherName) {
-        alert("Vui lòng nhập tên giáo viên!");
+        alert("⚠️ Vui lòng nhập tên giáo viên!");
         return;
       }
-      alert(`Đã gán giáo viên "${teacherName}" cho exam ${examId}`);
+      // Cập nhật ngay trong bảng
+      alert(`✅ Đã gán giáo viên "${teacherName}" cho đề thi ${examId}`);
+
       // Thực tế: gửi POST/PUT tới server Node để lưu
-      // fetch("http://localhost:3000/assign", {method:"POST", body: JSON.stringify({examId, teacherName}), headers:{"Content-Type":"application/json"}})
+      /*
+      fetch("http://localhost:3000/assign", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({examId, teacherName})
+      })
+      .then(res => res.json())
+      .then(result => {
+        alert("Đã lưu thành công!");
+      })
+      .catch(err => alert("Lỗi khi lưu: " + err.message));
+      */
     }
   </script>
 </body>
