@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Giáo viên – Xem bài nộp</title>
+<style>
+body{font-family:"Segoe UI",sans-serif;margin:20px;background:#eef3f7;}
+h1{text-align:center;color:#0a4a8e;}
+table{width:100%;border-collapse:collapse;margin-top:20px;}
+th,td{border:1px solid #ccc;padding:8px;text-align:center;}
+th{background:#3498db;color:#fff;}
+tr:nth-child(even){background:#f9f9f9;}
+button{padding:6px 12px;border:none;border-radius:4px;background:#0b74d1;color:#fff;cursor:pointer;}
+button:hover{background:#095ba8;}
+</style>
+</head>
+<body>
+
+<h1>📄 Xem bài nộp</h1>
+
+<table>
+<thead>
+<tr>
+<th>Học sinh</th>
+<th>Lớp</th>
+<th>Đề</th>
+<th>Ngày nộp</th>
+<th>File</th>
+</tr>
+</thead>
+<tbody id="submissionBody">
+<tr><td colspan="5">Đang tải dữ liệu...</td></tr>
+</tbody>
+</table>
+
+<script>
+if(localStorage.getItem("role")!=="teacher"){ alert("Bạn không có quyền truy cập!"); window.location.href="index.html"; }
+
+async function loadSubmissions(){
+    const tbody = document.getElementById("submissionBody");
+    try{
+        const res = await fetch("/submissions");
+        const subs = await res.json();
+        if(subs.length===0){ tbody.innerHTML=`<tr><td colspan="5">Chưa có bài nộp nào</td></tr>`; return; }
+        tbody.innerHTML="";
+        subs.forEach(s=>{
+            tbody.innerHTML+=`
+                <tr>
+                    <td>${s.student}</td>
+                    <td>${s.class}</td>
+                    <td>${s.examId}</td>
+                    <td>${s.submittedAt}</td>
+                    <td><a href="/uploads/${s.file}" download><button>📄 Tải</button></a></td>
+                </tr>
+            `;
+        });
+    }catch(err){
+        console.error(err);
+        tbody.innerHTML=`<tr><td colspan="5">❌ Lỗi tải dữ liệu</td></tr>`;
+    }
+}
+
+loadSubmissions();
+</script>
+
+</body>
+</html>
