@@ -2,96 +2,102 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
+const multer = require("multer");
 
 const app = express();
 const PORT = 3000;
 
 // Middleware
-app.use(express.json());
 app.use(cors());
-app.use(express.static(path.join(__dirname, "public"))); // phục vụ file tĩnh
+app.use(express.json());
+app.use(express.static("public")); // Cho phép truy cập file static
+app.use("/uploads", express.static("uploads")); // Truy cập file đã upload
 
-// ----------------------------
-// Hàm đọc/ghi file JSON
-// ----------------------------
-function readJSON(file) {
-  const filePath = path.join(__dirname, file);
+// Cấu hình multer để upload file
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, "uploads/"),
+  filename: (req, file, cb) => cb(null, Date.now() + "_" + file.originalname)
+});
+const upload = multer({ storage });
+
+// Đọc/Writing exams
+function readJSON(fileName) {
+  const filePath = path.join(__dirname, fileName);
   if (!fs.existsSync(filePath)) return [];
-  const data = fs.readFileSync(filePath, "utf8");
-  return JSON.parse(data);
+  return JSON.parse(fs.readFileSync(filePath, "utf8"));
+}
+function writeJSON(fileName, data) {
+  fs.writeFileSync(path.join(__dirname, fileName), JSON.stringify(data, null, 2), "utf8");
 }
 
-function writeJSON(file, data) {
-  const filePath = path.join(__dirname, file);
-  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), "utf8");
-}
-
-// ----------------------------
+// ===============================
 // API: Lấy danh sách đề
-// ----------------------------
+// ===============================
 app.get("/exams", (req, res) => {
   const exams = readJSON("exams.json");
-  res.json(exams.exams || []);
+  res.json(exams);
 });
 
-// ----------------------------
+// ===============================
+// API: Thêm đề mới (upload file)
+// ===============================
+app.post("/exams", upload.single("file"), (req, res) => {
+  const exams = readJSON("exams.json");
+  const { id, title, subject, grade } = req.body;
+
+  if (!id || !title || !req.file) return res.status(400).json({ error: "Thiếu dữ liệu" });
+
+  const newExam = {
+    id,
+    title,
+    subject: subject || "",
+    grade: grade || "",
+    file: req.file.filename
+  };
+  exams.push(newExam);
+  writeJSON("exams.json", exams);
+  res.status(201).json(newExam);
+});
+
+// ===============================
+// API: Giao bài (giáo viên upload file + lưu assignments)
+// ===============================
+app.post("/assign", upload.single("file"), (req, res) => {
+  const assignments = readJSON("assignments.json");
+  const { className, examId, deadline, teacher } = req.body;
+
+  if (!examId || !className || !deadline || !teacher || !req.file)
+    return res.status(400).json({ error: "Thiếu dữ liệu giao bài" });
+
+  const exam = readJSON("exams.json").find(e => e.id == examId);
+  if (!exam) return res.status(404).json({ error: "Không tìm thấy đề" });
+
+  const assignment = {
+    examId,
+    examTitle: exam.title,
+    class: className,
+    teacher,
+    deadline,
+    file: req.file.filename,
+    assignedAt: new Date().toLocaleString()
+  };
+
+  assignments.push(assignment);
+  writeJSON("assignments.json", assignments);
+  res.status(201).json(assignment);
+});
+
+// ===============================
 // API: Lấy danh sách bài đã giao
-// ----------------------------
+// ===============================
 app.get("/assignments", (req, res) => {
   const assignments = readJSON("assignments.json");
   res.json(assignments);
 });
 
-// ----------------------------
-// API: Giao bài (PUT)
-// ----------------------------
-app.put("/assign/:id", (req, res) => {
-  const examId = req.params.id;
-  const { teacherName, assignedClass, deadline } = req.body;
-
-  if (!teacherName || !assignedClass || !deadline) {
-    return res.status(400).json({ error: "Thiếu thông tin bắt buộc" });
-  }
-
-  const exams = readJSON("exams.json");
-  const exam = exams.exams.find(e => String(e.id) === String(examId));
-  if (!exam) return res.status(404).json({ error: "Không tìm thấy đề" });
-
-  // Lưu vào assignments.json
-  const assignments = readJSON("assignments.json");
-  const newAssignment = {
-    examId,
-    class: assignedClass,
-    teacher: teacherName,
-    deadline,
-    assignedAt: new Date().toISOString()
-  };
-  assignments.push(newAssignment);
-  writeJSON("assignments.json", assignments);
-
-  res.json({ message: "Đã giao bài thành công", assignment: newAssignment });
-});
-
-// ----------------------------
-// API: Lấy chi tiết exam
-// ----------------------------
-app.get("/exams/:id", (req, res) => {
-  const exams = readJSON("exams.json");
-  const exam = exams.exams.find(e => String(e.id) === req.params.id);
-  if (!exam) return res.status(404).json({ error: "Không tìm thấy đề" });
-  res.json(exam);
-});
-
-// ----------------------------
-// Serve file đề
-// ----------------------------
-app.use("/files", express.static(path.join(__dirname, "public/files")));
-
-// ----------------------------
-app.get("/", (req, res) => {
-  res.send("Server Node.js đang chạy. Truy cập /exams hoặc /assignments");
-});
-
+// ===============================
+// Server
+// ===============================
 app.listen(PORT, () => {
   console.log(`✅ Server chạy tại http://localhost:${PORT}`);
 });
