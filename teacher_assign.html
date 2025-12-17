@@ -47,7 +47,7 @@
         alert("Không có file để tải");
         return;
       }
-      // Giả sử file lưu trong public/files/
+      // Giả sử file lưu trong thư mục public/files/ của server
       window.location.href = `/files/${fileName}`;
     }
 
@@ -83,11 +83,11 @@
     async function loadExams() {
       try {
         const res = await fetch("/exams");
-        const exams = await res.json(); // trả về mảng
+        const exams = await res.json(); // server trả về mảng
         const tbody = document.querySelector("#examTable tbody");
         tbody.innerHTML = "";
 
-        if (exams.length === 0) {
+        if (!exams || exams.length === 0) {
           tbody.innerHTML = `<tr><td colspan="6">Không có đề thi</td></tr>`;
           return;
         }
@@ -120,3 +120,4 @@
   </script>
 </body>
 </html>
+
