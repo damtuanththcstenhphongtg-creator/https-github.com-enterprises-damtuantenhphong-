@@ -1,61 +1,86 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <title>Nộp bài làm học sinh</title>
+<meta charset="UTF-8">
+<title>Nộp bài học sinh</title>
+<style>
+body{font-family:"Segoe UI",sans-serif;margin:20px;background:#eef3f7;}
+h1{text-align:center;color:#0a4a8e;}
+label{display:block;margin-top:10px;font-weight:600;}
+input,select{width:100%;padding:8px;margin-top:5px;border-radius:6px;border:1px solid #ccc;}
+button{margin-top:15px;padding:10px 18px;background:#0b74d1;color:#fff;border:none;border-radius:6px;cursor:pointer;}
+button:hover{background:#095ba8;}
+.success{background:#e1fbd8;padding:12px;border-left:5px solid #4caf50;margin-top:10px;border-radius:6px;}
+.error{background:#ffe2e2;padding:12px;border-left:5px solid #e53935;margin-top:10px;border-radius:6px;}
+</style>
 </head>
 <body>
-  <h2>Nộp bài làm</h2>
-  <form id="submitForm">
-    <div>
-      <label>Họ tên học sinh:</label><br />
-      <input type="text" id="student" required />
-    </div>
-    <div style="margin-top:10px;">
-      <label>Bài làm:</label><br />
-      <textarea id="answers" rows="6" cols="50" required></textarea>
-    </div>
-    <div style="margin-top:10px;">
-      <button type="submit">Nộp bài</button>
-    </div>
-  </form>
 
-  <div id="result" style="margin-top:20px;"></div>
+<h1>📤 Nộp bài học sinh</h1>
 
-  <script>
-    document.getElementById("submitForm").addEventListener("submit", async function(e) {
-      e.preventDefault();
+<div id="msg"></div>
 
-      const student = document.getElementById("student").value;
-      const answers = document.getElementById("answers").value;
+<label>Chọn lớp:</label>
+<select id="classSelect"></select>
 
-      const submission = {
-        student: student,
-        answers: answers.split("\n"), // mỗi dòng là một câu trả lời
-        date: new Date().toISOString().split("T")[0]
-      };
+<label>Chọn đề:</label>
+<select id="examSelect"></select>
 
-      try {
-        const res = await fetch("http://localhost:3000/submit", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(submission)
-        });
+<label>Chọn file nộp:</label>
+<input type="file" id="fileInput">
 
-        const data = await res.json();
-        if (data.status === "ok") {
-          document.getElementById("result").innerHTML = `
-            <p>Bài làm đã được lưu thành PDF:</p>
-            <a href="http://localhost:3000${data.pdfLink}" target="_blank">📄 Tải PDF tại đây</a>
-          `;
-        } else {
-          document.getElementById("result").innerText = "Có lỗi khi nộp bài.";
-        }
-      } catch (err) {
-        console.error(err);
-        document.getElementById("result").innerText = "Không thể kết nối server.";
-      }
+<button onclick="submitExam()">Nộp bài</button>
+
+<script>
+if(localStorage.getItem("role")!=="student"){ alert("Bạn không có quyền truy cập!"); window.location.href="index.html"; }
+
+async function loadAssignments(){
+    const cls = document.getElementById("classSelect");
+    const exam = document.getElementById("examSelect");
+    cls.innerHTML=""; exam.innerHTML="";
+    const res = await fetch("/assignments");
+    const assignments = await res.json();
+    const classes = [...new Set(assignments.map(a=>a.class))];
+    classes.forEach(c=>cls.innerHTML+=`<option value="${c}">${c}</option>`);
+    updateExams();
+}
+
+async function updateExams(){
+    const cls = document.getElementById("classSelect").value;
+    const exam = document.getElementById("examSelect");
+    exam.innerHTML="";
+    const res = await fetch("/assignments");
+    const assignments = await res.json();
+    assignments.filter(a=>a.class===cls).forEach(a=>{
+        exam.innerHTML+=`<option value="${a.examId}">${a.examTitle}</option>`;
     });
-  </script>
+}
+
+document.getElementById("classSelect").addEventListener("change",updateExams);
+
+async function submitExam(){
+    const student = localStorage.getItem("username")||"Học sinh";
+    const className = document.getElementById("classSelect").value;
+    const examId = document.getElementById("examSelect").value;
+    const fileInput = document.getElementById("fileInput");
+    const msg = document.getElementById("msg");
+
+    if(!fileInput.files.length){ msg.innerHTML=`<div class="error">⚠️ Chưa chọn file!</div>`; return; }
+
+    const formData = new FormData();
+    formData.append("student",student);
+    formData.append("className",className);
+    formData.append("examId",examId);
+    formData.append("file",fileInput.files[0]);
+
+    const res = await fetch("/submit",{method:"POST",body:formData});
+    const result = await res.json();
+    if(res.ok){ msg.innerHTML=`<div class="success">✅ ${result.message}</div>`; fileInput.value=""; }
+    else{ msg.innerHTML=`<div class="error">❌ ${result.error}</div>`; }
+}
+
+loadAssignments();
+</script>
+
 </body>
 </html>
