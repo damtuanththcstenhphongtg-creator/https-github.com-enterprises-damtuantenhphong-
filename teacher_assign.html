@@ -2,6 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Phân công giáo viên</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; background:#f4f6f9; }
@@ -14,6 +15,10 @@
     button { padding: 6px 12px; margin-top: 5px; border:none; border-radius:4px; cursor:pointer; }
     .btn-assign { background:#2ecc71; color:#fff; }
     .btn-download { background:#e67e22; color:#fff; }
+    @media (max-width: 768px){
+      table, th, td { font-size: 14px; }
+      input[type="text"] { width: 70%; }
+    }
   </style>
 </head>
 <body>
@@ -36,66 +41,82 @@
   </table>
 
   <script>
-    // Gọi API từ Node.js server
-    fetch("http://localhost:3000/exams")
-      .then(res => res.json())
-      .then(data => {
-        const tbody = document.querySelector("#examTable tbody");
-        data.exams.forEach(exam => {
-          const tr = document.createElement("tr");
+    // Hàm tải file
+    function downloadFile(fileName){
+      if (!fileName) {
+        alert("Không có file để tải");
+        return;
+      }
+      // Giả sử file lưu trong public/files/
+      window.location.href = `/files/${fileName}`;
+    }
 
+    // Hàm gán giáo viên
+    async function assignTeacher(examId) {
+      const input = document.getElementById(`teacher-${examId}`);
+      const teacherName = input.value.trim();
+      if (!teacherName) {
+        alert("⚠️ Vui lòng nhập tên giáo viên!");
+        return;
+      }
+
+      try {
+        const res = await fetch(`/assign/${examId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ teacherName })
+        });
+        const result = await res.json();
+
+        if (res.ok) {
+          alert(`✅ Đã gán giáo viên "${teacherName}" cho đề thi ${examId}`);
+        } else {
+          alert(`❌ Lỗi: ${result.error}`);
+        }
+      } catch(err) {
+        console.error(err);
+        alert("❌ Lỗi khi lưu dữ liệu!");
+      }
+    }
+
+    // Load dữ liệu từ server
+    async function loadExams() {
+      try {
+        const res = await fetch("/exams");
+        const exams = await res.json(); // trả về mảng
+        const tbody = document.querySelector("#examTable tbody");
+        tbody.innerHTML = "";
+
+        if (exams.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="6">Không có đề thi</td></tr>`;
+          return;
+        }
+
+        exams.forEach(exam => {
+          const tr = document.createElement("tr");
           tr.innerHTML = `
             <td>${exam.id}</td>
-            <td>${exam.title}</td>
-            <td>${exam.subject}</td>
-            <td>${exam.grade}</td>
+            <td>${exam.title || ""}</td>
+            <td>${exam.subject || ""}</td>
+            <td>${exam.grade || ""}</td>
             <td>
-              <button class="btn-download" onclick="downloadFile('${exam.file}')">📄 Tải xuống</button>
+              <button class="btn-download" onclick="downloadFile('${exam.file || ''}')">📄 Tải xuống</button>
             </td>
             <td>
-              <input type="text" placeholder="Nhập tên giáo viên" id="teacher-${exam.id}" value="${exam.teacher || ''}" />
+              <input type="text" id="teacher-${exam.id}" placeholder="Nhập tên giáo viên" value="${exam.teacher || ''}" />
               <button class="btn-assign" onclick="assignTeacher('${exam.id}')">Gán</button>
             </td>
           `;
           tbody.appendChild(tr);
         });
-      })
-      .catch(err => {
-        alert("❌ Lỗi khi tải dữ liệu: " + err.message);
-      });
-
-    // Hàm tải file
-    function downloadFile(fileName){
-      // Giả sử fileName là đường dẫn hoặc tên file
-      alert("Đang tải file: " + fileName);
-      // Thực tế: window.location.href = `/files/${fileName}`;
-    }
-
-    // Hàm gán giáo viên
-    function assignTeacher(examId) {
-      const teacherName = document.getElementById(`teacher-${examId}`).value;
-      if (!teacherName) {
-        alert("⚠️ Vui lòng nhập tên giáo viên!");
-        return;
+      } catch(err) {
+        console.error(err);
+        alert("❌ Lỗi khi tải dữ liệu từ server");
       }
-      // Cập nhật ngay trong bảng
-      alert(`✅ Đã gán giáo viên "${teacherName}" cho đề thi ${examId}`);
-
-      // Thực tế: gửi POST/PUT tới server Node để lưu
-      /*
-      fetch("http://localhost:3000/assign", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({examId, teacherName})
-      })
-      .then(res => res.json())
-      .then(result => {
-        alert("Đã lưu thành công!");
-      })
-      .catch(err => alert("Lỗi khi lưu: " + err.message));
-      */
     }
+
+    // Load khi mở trang
+    window.onload = loadExams;
   </script>
 </body>
 </html>
-
