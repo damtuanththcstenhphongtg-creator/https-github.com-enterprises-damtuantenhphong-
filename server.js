@@ -1,77 +1,44 @@
-/ index.js
-const express = require("express");
-const fs = require("fs");
-const path = require("path");
+import express from "express";
+import multer from "multer";
+import fs from "fs";
+import path from "path";
+import cors from "cors";
+import Tesseract from "tesseract.js";
 
 const app = express();
-const PORT = 3000;
-
-// Middleware để parse JSON từ body request (nếu cần POST/PUT)
+app.use(cors());
 app.use(express.json());
 
-// Đọc dữ liệu exams từ file
-function getExams() {
-  const filePath = path.join(__dirname, "exams.json");
-  const data = fs.readFileSync(filePath, "utf8");
-  return JSON.parse(data);
-}
-
-// API: Lấy toàn bộ danh sách exams
-app.get("/exams", (req, res) => {
-  const exams = getExams();
-  res.json(exams);
-});
-
-// API: Lấy chi tiết exam theo id
-app.get("/exams/:id", (req, res) => {
-  const exams = getExams();
-  const exam = exams.exams.find(e => e.id === req.params.id);
-  if (!exam) {
-    return res.status(404).json({ error: "Không tìm thấy exam" });
+// Cấu hình lưu file upload
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const dir = path.join(process.cwd(), "uploads");
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir);
+    cb(null, dir);
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
   }
-  res.json(exam);
 });
+const upload = multer({ storage });
 
-// API: Thêm exam mới
-app.post("/exams", (req, res) => {
-  const exams = getExams();
-  const newExam = req.body;
-  exams.exams.push(newExam);
+// Route nhận ảnh và OCR
+app.post("/upload", upload.single("photo"), async (req, res) => {
+  if (!req.file) return res.status(400).json({ error: "Không có file" });
 
-  fs.writeFileSync(
-    path.join(__dirname, "exams.json"),
-    JSON.stringify(exams, null, 2),
-    "utf8"
-  );
+  try {
+    const result = await Tesseract.recognize(req.file.path, "vie+eng");
+    const text = result.data.text.trim();
 
-  res.status(201).json(newExam);
-});
+    // Ví dụ chấm điểm đơn giản: đếm số từ
+    const wordCount = text.split(/\s+/).length;
+    const score = Math.min(10, Math.round(wordCount / 20)); // cứ 20 từ ~ 1 điểm
+    const feedback = score > 5 ? "Bài làm khá đầy đủ" : "Bài làm còn sơ sài";
 
-// API: Xóa exam theo id
-app.delete("/exams/:id", (req, res) => {
-  const exams = getExams();
-  const filtered = exams.exams.filter(e => e.id !== req.params.id);
-
-  if (filtered.length === exams.exams.length) {
-    return res.status(404).json({ error: "Không tìm thấy exam để xóa" });
+    res.json({ status: "ok", text, score, feedback });
+  } catch (err) {
+    res.status(500).json({ error: "OCR lỗi: " + err.message });
   }
-
-  fs.writeFileSync(
-    path.join(__dirname, "exams.json"),
-    JSON.stringify({ exams: filtered }, null, 2),
-    "utf8"
-  );
-
-  res.json({ message: "Đã xóa thành công" });
 });
 
-// Route mặc định
-app.get("/", (req, res) => {
-  res.send("Server Node.js đang chạy. Truy cập /exams để xem dữ liệu.");
-});
-
-app.listen(PORT, () => {
-  console.log(`Server chạy tại http://localhost:${PORT}`);
-});
-
-
+app.listen(3000, () => console.log("✅ Server chạy tại http://localhost:3000"));
