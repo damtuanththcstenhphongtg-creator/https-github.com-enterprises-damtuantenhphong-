@@ -1,0 +1,84 @@
+{
+  "exams": [
+    {
+      "id": "1",
+      "title": "Toán học – Kiểm tra giữa kỳ 6A",
+      "subject": "Toán",
+      "grade": "6A",
+      "file": "math_midterm_6A.pdf",
+      "teacher": ""
+    },
+    {
+      "id": "2",
+      "title": "Vật lý – Kiểm tra cuối kỳ 7B",
+      "subject": "Vật lý",
+      "grade": "7B",
+      "file": "physics_final_7B.pdf",
+      "teacher": ""
+    },
+    {
+      "id": "3",
+      "title": "Tin học – Kiểm tra học kỳ 8A",
+      "subject": "Tin học",
+      "grade": "8A",
+      "file": "it_exam_8A.pdf",
+      "teacher": ""
+    },
+    {
+      "id": "4",
+      "title": "Ngữ văn – Kiểm tra giữa kỳ 9A",
+      "subject": "Ngữ văn",
+      "grade": "9A",
+      "file": "literature_midterm_9A.pdf",
+      "teacher": ""
+    },
+    {
+      "id": "5",
+      "title": "Tiếng Anh – Kiểm tra cuối kỳ 6B",
+      "subject": "Tiếng Anh",
+      "grade": "6B",
+      "file": "english_final_6B.pdf",
+      "teacher": ""
+    },
+    {
+      "id": "6",
+      "title": "Hóa học – Kiểm tra giữa kỳ 8B",
+      "subject": "Hóa học",
+      "grade": "8B",
+      "file": "chem_midterm_8B.pdf",
+      "teacher": ""
+    },
+    {
+      "id": "7",
+      "title": "Sinh học – Kiểm tra cuối kỳ 7A",
+      "subject": "Sinh học",
+      "grade": "7A",
+      "file": "bio_final_7A.pdf",
+      "teacher": ""
+    },
+    {
+      "id": "8",
+      "title": "Lịch sử – Kiểm tra giữa kỳ 9B",
+      "subject": "Lịch sử",
+      "grade": "9B",
+      "file": "history_midterm_9B.pdf",
+      "teacher": ""
+    },
+    {
+      "id": "9",
+      "title": "Địa lý – Kiểm tra cuối kỳ 6A",
+      "subject": "Địa lý",
+      "grade": "6A",
+      "file": "geo_final_6A.pdf",
+      "teacher": ""
+    },
+    {
+      "id": "10",
+      "title": "Công nghệ – Kiểm tra giữa kỳ 8A",
+      "subject": "Công nghệ",
+      "grade": "8A",
+      "file": "tech_midterm_8A.pdf",
+      "teacher": ""
+    }
+  ]
+}
