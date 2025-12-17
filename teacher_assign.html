@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Phân công giáo viên</title>
+  <title>Bài học và bài tập</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; background:#f4f6f9; }
     h1 { text-align:center; color:#2c3e50; }
@@ -11,28 +11,23 @@
     th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
     th { background-color: #3498db; color:#fff; }
     tr:nth-child(even){background:#f9f9f9;}
-    input[type="text"] { width: 80%; padding: 5px; }
-    button { padding: 6px 12px; margin-top: 5px; border:none; border-radius:4px; cursor:pointer; }
-    .btn-assign { background:#2ecc71; color:#fff; }
-    .btn-download { background:#e67e22; color:#fff; }
+    .btn-download { padding:6px 12px; border:none; border-radius:4px; cursor:pointer; background:#e67e22; color:#fff; }
     @media (max-width: 768px){
       table, th, td { font-size: 14px; }
-      input[type="text"] { width: 70%; }
     }
   </style>
 </head>
 <body>
-  <h1>📋 Phân công giáo viên cho đề thi</h1>
+  <h1>📘 Danh sách bài học và bài tập</h1>
 
-  <table id="examTable">
+  <table id="lessonTable">
     <thead>
       <tr>
         <th>ID</th>
         <th>Tiêu đề</th>
         <th>Môn học</th>
         <th>Khối</th>
-        <th>File</th>
-        <th>Giáo viên phụ trách</th>
+        <th>Nội dung / File</th>
       </tr>
     </thead>
     <tbody>
@@ -47,64 +42,33 @@
         alert("Không có file để tải");
         return;
       }
-      // Giả sử file lưu trong thư mục public/files/ của server
       window.location.href = `/files/${fileName}`;
     }
 
-    // Hàm gán giáo viên
-    async function assignTeacher(examId) {
-      const input = document.getElementById(`teacher-${examId}`);
-      const teacherName = input.value.trim();
-      if (!teacherName) {
-        alert("⚠️ Vui lòng nhập tên giáo viên!");
-        return;
-      }
-
-      try {
-        const res = await fetch(`/assign/${examId}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ teacherName })
-        });
-        const result = await res.json();
-
-        if (res.ok) {
-          alert(`✅ Đã gán giáo viên "${teacherName}" cho đề thi ${examId}`);
-        } else {
-          alert(`❌ Lỗi: ${result.error}`);
-        }
-      } catch(err) {
-        console.error(err);
-        alert("❌ Lỗi khi lưu dữ liệu!");
-      }
-    }
-
     // Load dữ liệu từ server
-    async function loadExams() {
+    async function loadLessons() {
       try {
-        const res = await fetch("/exams");
-        const exams = await res.json(); // server trả về mảng
-        const tbody = document.querySelector("#examTable tbody");
+        const res = await fetch("/exams"); // server trả về mảng bài
+        const lessons = await res.json();
+        const tbody = document.querySelector("#lessonTable tbody");
         tbody.innerHTML = "";
 
-        if (!exams || exams.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="6">Không có đề thi</td></tr>`;
+        if (!lessons || lessons.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="5">Không có bài học nào</td></tr>`;
           return;
         }
 
-        exams.forEach(exam => {
+        lessons.forEach(lesson => {
           const tr = document.createElement("tr");
           tr.innerHTML = `
-            <td>${exam.id}</td>
-            <td>${exam.title || ""}</td>
-            <td>${exam.subject || ""}</td>
-            <td>${exam.grade || ""}</td>
+            <td>${lesson.id}</td>
+            <td>${lesson.title || ""}</td>
+            <td>${lesson.subject || ""}</td>
+            <td>${lesson.grade || ""}</td>
             <td>
-              <button class="btn-download" onclick="downloadFile('${exam.file || ''}')">📄 Tải xuống</button>
-            </td>
-            <td>
-              <input type="text" id="teacher-${exam.id}" placeholder="Nhập tên giáo viên" value="${exam.teacher || ''}" />
-              <button class="btn-assign" onclick="assignTeacher('${exam.id}')">Gán</button>
+              ${lesson.file 
+                ? `<button class="btn-download" onclick="downloadFile('${lesson.file}')">📄 Tải xuống</button>` 
+                : (lesson.content || "Chưa có nội dung")}
             </td>
           `;
           tbody.appendChild(tr);
@@ -115,8 +79,7 @@
       }
     }
 
-    // Load khi mở trang
-    window.onload = loadExams;
+    window.onload = loadLessons;
   </script>
 </body>
 </html>
