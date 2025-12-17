@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danh sách đề đã giao</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    button {
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    #examDetails {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #999;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Danh sách đề đã giao</h1>
+
+  <label for="teacherName">Tên giáo viên: </label>
+  <input type="text" id="teacherName" placeholder="Nhập tên giáo viên">
+  <button onclick="loadExams()">Tìm kiếm</button>
+
+  <table id="examsTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tên đề</th>
+        <th>Ngày giao</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Dữ liệu sẽ được chèn ở đây -->
+    </tbody>
+  </table>
+
+  <div id="examDetails">
+    <h2>Chi tiết đề</h2>
+    <pre id="examContent"></pre>
+  </div>
+
+  <script>
+    async function loadExams() {
+      const teacherName = document.getElementById("teacherName").value.trim();
+      if (!teacherName) {
+        alert("Vui lòng nhập tên giáo viên");
+        return;
+      }
+
+      try {
+        const res = await fetch(`/exams/teacher/${encodeURIComponent(teacherName)}`);
+        const exams = await res.json();
+
+        const tbody = document.querySelector("#examsTable tbody");
+        tbody.innerHTML = "";
+
+        if (exams.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="4">Không tìm thấy đề nào</td></tr>`;
+          return;
+        }
+
+        exams.forEach(exam => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${exam.id}</td>
+            <td>${exam.title || "Không có tên"}</td>
+            <td>${exam.assignedAt ? new Date(exam.assignedAt).toLocaleString() : ""}</td>
+            <td><button onclick="viewExam('${exam.id}')">Xem chi tiết</button></td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (err) {
+        console.error(err);
+        alert("Lỗi khi tải dữ liệu");
+      }
+    }
+
+    async function viewExam(id) {
+      try {
+        const res = await fetch(`/exams/${id}`);
+        const exam = await res.json();
+
+        const detailsDiv = document.getElementById("examDetails");
+        const contentPre = document.getElementById("examContent");
+        contentPre.textContent = JSON.stringify(exam, null, 2);
+        detailsDiv.style.display = "block";
+      } catch (err) {
+        console.error(err);
+        alert("Không thể xem chi tiết đề");
+      }
+    }
+  </script>
+</body>
+</html>
