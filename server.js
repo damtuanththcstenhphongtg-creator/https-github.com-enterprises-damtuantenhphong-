@@ -1,44 +1,97 @@
-import express from "express";
-import multer from "multer";
-import fs from "fs";
-import path from "path";
-import cors from "cors";
-import Tesseract from "tesseract.js";
+const express = require("express");
+const fs = require("fs");
+const path = require("path");
+const cors = require("cors");
 
 const app = express();
-app.use(cors());
+const PORT = 3000;
+
+// Middleware
 app.use(express.json());
+app.use(cors());
+app.use(express.static(path.join(__dirname, "public"))); // phục vụ file tĩnh
 
-// Cấu hình lưu file upload
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const dir = path.join(process.cwd(), "uploads");
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir);
-    cb(null, dir);
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  }
-});
-const upload = multer({ storage });
+// ----------------------------
+// Hàm đọc/ghi file JSON
+// ----------------------------
+function readJSON(file) {
+  const filePath = path.join(__dirname, file);
+  if (!fs.existsSync(filePath)) return [];
+  const data = fs.readFileSync(filePath, "utf8");
+  return JSON.parse(data);
+}
 
-// Route nhận ảnh và OCR
-app.post("/upload", upload.single("photo"), async (req, res) => {
-  if (!req.file) return res.status(400).json({ error: "Không có file" });
+function writeJSON(file, data) {
+  const filePath = path.join(__dirname, file);
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), "utf8");
+}
 
-  try {
-    const result = await Tesseract.recognize(req.file.path, "vie+eng");
-    const text = result.data.text.trim();
-
-    // Ví dụ chấm điểm đơn giản: đếm số từ
-    const wordCount = text.split(/\s+/).length;
-    const score = Math.min(10, Math.round(wordCount / 20)); // cứ 20 từ ~ 1 điểm
-    const feedback = score > 5 ? "Bài làm khá đầy đủ" : "Bài làm còn sơ sài";
-
-    res.json({ status: "ok", text, score, feedback });
-  } catch (err) {
-    res.status(500).json({ error: "OCR lỗi: " + err.message });
-  }
+// ----------------------------
+// API: Lấy danh sách đề
+// ----------------------------
+app.get("/exams", (req, res) => {
+  const exams = readJSON("exams.json");
+  res.json(exams.exams || []);
 });
 
-app.listen(3000, () => console.log("✅ Server chạy tại http://localhost:3000"));
+// ----------------------------
+// API: Lấy danh sách bài đã giao
+// ----------------------------
+app.get("/assignments", (req, res) => {
+  const assignments = readJSON("assignments.json");
+  res.json(assignments);
+});
+
+// ----------------------------
+// API: Giao bài (PUT)
+// ----------------------------
+app.put("/assign/:id", (req, res) => {
+  const examId = req.params.id;
+  const { teacherName, assignedClass, deadline } = req.body;
+
+  if (!teacherName || !assignedClass || !deadline) {
+    return res.status(400).json({ error: "Thiếu thông tin bắt buộc" });
+  }
+
+  const exams = readJSON("exams.json");
+  const exam = exams.exams.find(e => String(e.id) === String(examId));
+  if (!exam) return res.status(404).json({ error: "Không tìm thấy đề" });
+
+  // Lưu vào assignments.json
+  const assignments = readJSON("assignments.json");
+  const newAssignment = {
+    examId,
+    class: assignedClass,
+    teacher: teacherName,
+    deadline,
+    assignedAt: new Date().toISOString()
+  };
+  assignments.push(newAssignment);
+  writeJSON("assignments.json", assignments);
+
+  res.json({ message: "Đã giao bài thành công", assignment: newAssignment });
+});
+
+// ----------------------------
+// API: Lấy chi tiết exam
+// ----------------------------
+app.get("/exams/:id", (req, res) => {
+  const exams = readJSON("exams.json");
+  const exam = exams.exams.find(e => String(e.id) === req.params.id);
+  if (!exam) return res.status(404).json({ error: "Không tìm thấy đề" });
+  res.json(exam);
+});
+
+// ----------------------------
+// Serve file đề
+// ----------------------------
+app.use("/files", express.static(path.join(__dirname, "public/files")));
+
+// ----------------------------
+app.get("/", (req, res) => {
+  res.send("Server Node.js đang chạy. Truy cập /exams hoặc /assignments");
+});
+
+app.listen(PORT, () => {
+  console.log(`✅ Server chạy tại http://localhost:${PORT}`);
+});
