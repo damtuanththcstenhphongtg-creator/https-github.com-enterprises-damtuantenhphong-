@@ -1,0 +1,30 @@
+[
+  {
+    "examId": "1",
+    "class": "6A",
+    "teacher": "Nguyễn Văn A",
+    "deadline": "2025-12-20T23:59",
+    "assignedAt": "2025-12-17T15:00:00Z"
+  },
+  {
+    "examId": "2",
+    "class": "7B",
+    "teacher": "Trần Thị B",
+    "deadline": "2025-12-22T23:59",
+    "assignedAt": "2025-12-17T16:00:00Z"
+  },
+  {
+    "examId": "3",
+    "class": "8A",
+    "teacher": "Lê Minh C",
+    "deadline": "2025-12-23T23:59",
+    "assignedAt": "2025-12-17T16:30:00Z"
+  },
+  {
+    "examId": "5",
+    "class": "6B",
+    "teacher": "Phạm Thị D",
+    "deadline": "2025-12-24T23:59",
+    "assignedAt": "2025-12-17T17:00:00Z"
+  }
+]
