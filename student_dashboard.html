@@ -1,61 +1,158 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Học sinh | Danh sách đề kiểm tra</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- PDF + Word -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.143/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+
+<style>
+body { font-family:"Segoe UI",sans-serif; background:#eef3f7; padding:20px; }
+h1 { text-align:center; color:#0a4a8e; }
+
+.info {
+    background:#fff;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+table { width:100%; border-collapse:collapse; }
+th, td { border:1px solid #ccc; padding:8px; text-align:center; }
+th { background:#3498db; color:#fff; }
+tr:nth-child(even){ background:#f9f9f9; }
+
+button {
+    padding:6px 12px;
+    border:none;
+    border-radius:4px;
+    cursor:pointer;
+    background:#0b74d1;
+    color:#fff;
+}
+button:disabled {
+    background:#aaa;
+    cursor:not-allowed;
+}
+
+#viewerContainer {
+    margin-top:25px;
+    background:#fff;
+    padding:15px;
+    border-radius:8px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    max-height:500px;
+    overflow:auto;
+}
+</style>
+</head>
+
+<body>
+
+<h1>📚 BÀI KIỂM TRA ĐƯỢC GIAO</h1>
+
+<div class="info">
+    <b>Học sinh:</b> <span id="studentName"></span> |
+    <b>Lớp:</b> <span id="studentClass"></span>
+    <button style="float:right;background:#e53935" onclick="logout()">Đăng xuất</button>
+</div>
+
+<table>
+<thead>
+<tr>
+<th>Môn</th>
+<th>Tên đề</th>
+<th>Giáo viên</th>
+<th>Thời gian</th>
+<th>Hạn nộp</th>
+<th>Trạng thái</th>
+<th>Tải đề</th>
+<th>Xem</th>
+</tr>
+</thead>
+<tbody id="examBody">
+<tr><td colspan="8">Đang tải dữ liệu...</td></tr>
+</tbody>
+</table>
+
+<div id="viewerContainer">
+<h3>Nội dung đề</h3>
+<div id="examContent">Chưa chọn đề</div>
+</div>
+
 <script>
 /* ===============================
-   KIỂM TRA QUYỀN
+   CẤU HÌNH API
+================================ */
+const API_BASE = "http://localhost:5000/api";
+
+/* ===============================
+   KIỂM TRA ĐĂNG NHẬP
 ================================ */
 if (localStorage.getItem("role") !== "student") {
     alert("Bạn không có quyền truy cập!");
     location.href = "index.html";
 }
 
-/* ===============================
-   LẤY THÔNG TIN HỌC SINH
-================================ */
+const username = localStorage.getItem("username");
 const studentClass = localStorage.getItem("class");
 
-if (!studentClass) {
-    alert("Không xác định được lớp học sinh!\nVui lòng đăng nhập lại.");
+if (!username || !studentClass) {
+    alert("Phiên đăng nhập không hợp lệ!");
     localStorage.clear();
     location.href = "index.html";
 }
 
+document.getElementById("studentName").textContent = username;
+document.getElementById("studentClass").textContent = studentClass;
+
 /* ===============================
-   LOAD BÀI TỪ SERVER
+   LOAD BÀI KIỂM TRA
 ================================ */
 async function loadExams() {
     const tbody = document.getElementById("examBody");
-    if (!tbody) return;
 
     try {
         const res = await fetch(
             `${API_BASE}/student_exams?class=${encodeURIComponent(studentClass)}`
         );
 
-        if (!res.ok) throw new Error(res.status);
+        const exams = await res.json();
 
-        const assignments = await res.json();
-
-        if (!assignments.length) {
+        if (!exams.length) {
             tbody.innerHTML =
-                `<tr><td colspan="6">❌ Chưa có bài nào được giao</td></tr>`;
+                `<tr><td colspan="8">❌ Chưa có bài nào được giao</td></tr>`;
             return;
         }
 
         tbody.innerHTML = "";
 
-        assignments.forEach(a => {
+        const now = new Date();
+
+        exams.forEach(exam => {
+            const deadline = new Date(exam.deadline);
+            const expired = deadline < now;
+
             const tr = document.createElement("tr");
             tr.innerHTML = `
-                <td>${a.class}</td>
-                <td>${a.title}</td>
-                <td>${a.deadline}</td>
-                <td>${a.subject}</td>
+                <td>${exam.subject}</td>
+                <td>${exam.title}</td>
+                <td>${exam.teacher}</td>
+                <td>${exam.duration} phút</td>
+                <td>${deadline.toLocaleString()}</td>
+                <td>${expired ? "⛔ Hết hạn" : "🟢 Còn hạn"}</td>
                 <td>
-                    <a href="${a.file}" download>
-                        <button>📄 Tải</button>
+                    <a href="${exam.file}" download>
+                        <button ${expired ? "disabled" : ""}>📄 Tải</button>
                     </a>
                 </td>
                 <td>
-                    <button onclick="viewExam('${a.file}')">
+                    <button ${expired ? "disabled" : ""}
+                        onclick="viewExam('${exam.file}')">
                         👁️ Xem
                     </button>
                 </td>
@@ -63,24 +160,19 @@ async function loadExams() {
             tbody.appendChild(tr);
         });
 
-    } catch (err) {
-        console.error(err);
-        document.getElementById("errorMsg").style.display = "block";
-        document.getElementById("errorMsg").textContent =
-            "❌ Không kết nối được máy chủ!";
+    } catch (e) {
         tbody.innerHTML =
-            `<tr><td colspan="6">❌ Lỗi tải dữ liệu</td></tr>`;
+            `<tr><td colspan="8">❌ Không kết nối được máy chủ</td></tr>`;
     }
 }
 
 /* ===============================
-   XEM FILE ĐỀ
+   XEM ĐỀ
 ================================ */
 async function viewExam(filePath) {
     const contentDiv = document.getElementById("examContent");
-    if (!contentDiv) return;
-
     contentDiv.innerHTML = "";
+
     const ext = filePath.split(".").pop().toLowerCase();
 
     if (ext === "pdf") {
@@ -108,7 +200,18 @@ async function viewExam(filePath) {
 }
 
 /* ===============================
+   ĐĂNG XUẤT
+================================ */
+function logout() {
+    localStorage.clear();
+    location.href = "index.html";
+}
+
+/* ===============================
    INIT
 ================================ */
 document.addEventListener("DOMContentLoaded", loadExams);
 </script>
+
+</body>
+</html>
