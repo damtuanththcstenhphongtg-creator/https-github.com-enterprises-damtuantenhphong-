@@ -1,30 +1,58 @@
 [
   {
-    "examId": "1",
+    "examId": "EX001",
+    "title": "Kiểm tra Tin học – Chương 1",
+    "subject": "Tin học",
+    "grade": "6",
     "class": "6A",
     "teacher": "Nguyễn Văn A",
+    "file": "/uploads/de_tin_6A.pdf",
     "deadline": "2025-12-20T23:59",
-    "assignedAt": "2025-12-17T15:00:00Z"
+    "assignedAt": "2025-12-17T15:00:00Z",
+    "duration": 45,
+    "type": "OMR",
+    "status": "active"
   },
   {
-    "examId": "2",
+    "examId": "EX002",
+    "title": "Kiểm tra Toán – Giữa học kỳ I",
+    "subject": "Toán",
+    "grade": "7",
     "class": "7B",
     "teacher": "Trần Thị B",
+    "file": "/uploads/de_toan_7B.pdf",
     "deadline": "2025-12-22T23:59",
-    "assignedAt": "2025-12-17T16:00:00Z"
+    "assignedAt": "2025-12-17T16:00:00Z",
+    "duration": 60,
+    "type": "Tự luận",
+    "status": "active"
   },
   {
-    "examId": "3",
+    "examId": "EX003",
+    "title": "Kiểm tra Ngữ văn – Viết đoạn văn",
+    "subject": "Ngữ văn",
+    "grade": "8",
     "class": "8A",
     "teacher": "Lê Minh C",
+    "file": "/uploads/de_van_8A.pdf",
     "deadline": "2025-12-23T23:59",
-    "assignedAt": "2025-12-17T16:30:00Z"
+    "assignedAt": "2025-12-17T16:30:00Z",
+    "duration": 90,
+    "type": "Tự luận",
+    "status": "active"
   },
   {
-    "examId": "5",
+    "examId": "EX004",
+    "title": "Kiểm tra Tiếng Anh – Trắc nghiệm",
+    "subject": "Tiếng Anh",
+    "grade": "6",
     "class": "6B",
     "teacher": "Phạm Thị D",
+    "file": "/uploads/de_anh_6B.pdf",
     "deadline": "2025-12-24T23:59",
-    "assignedAt": "2025-12-17T17:00:00Z"
+    "assignedAt": "2025-12-17T17:00:00Z",
+    "duration": 45,
+    "type": "OMR",
+    "status": "active"
   }
 ]
