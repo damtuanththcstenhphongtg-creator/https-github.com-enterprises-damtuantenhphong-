@@ -4,15 +4,18 @@
 ================================ */
 if (localStorage.getItem("role") !== "student") {
     alert("Bạn không có quyền truy cập!");
-    window.location.href = "index.html";
+    location.href = "index.html";
 }
 
 /* ===============================
-   THÔNG TIN HỌC SINH (LẤY KHI ĐĂNG NHẬP)
+   LẤY THÔNG TIN HỌC SINH
 ================================ */
-const studentClass = localStorage.getItem("class"); // ví dụ: 7A1
+const studentClass = localStorage.getItem("class");
+
 if (!studentClass) {
-    alert("Không xác định được lớp học sinh!");
+    alert("Không xác định được lớp học sinh!\nVui lòng đăng nhập lại.");
+    localStorage.clear();
+    location.href = "index.html";
 }
 
 /* ===============================
@@ -20,17 +23,18 @@ if (!studentClass) {
 ================================ */
 async function loadExams() {
     const tbody = document.getElementById("examBody");
+    if (!tbody) return;
 
     try {
         const res = await fetch(
-            `http://localhost:5000/student_exams?class=${studentClass}`
+            `${API_BASE}/student_exams?class=${encodeURIComponent(studentClass)}`
         );
 
-        if (!res.ok) throw new Error("HTTP " + res.status);
+        if (!res.ok) throw new Error(res.status);
 
         const assignments = await res.json();
 
-        if (assignments.length === 0) {
+        if (!assignments.length) {
             tbody.innerHTML =
                 `<tr><td colspan="6">❌ Chưa có bài nào được giao</td></tr>`;
             return;
@@ -63,7 +67,7 @@ async function loadExams() {
         console.error(err);
         document.getElementById("errorMsg").style.display = "block";
         document.getElementById("errorMsg").textContent =
-            "❌ Không kết nối được server!";
+            "❌ Không kết nối được máy chủ!";
         tbody.innerHTML =
             `<tr><td colspan="6">❌ Lỗi tải dữ liệu</td></tr>`;
     }
@@ -74,9 +78,10 @@ async function loadExams() {
 ================================ */
 async function viewExam(filePath) {
     const contentDiv = document.getElementById("examContent");
-    contentDiv.innerHTML = "";
+    if (!contentDiv) return;
 
-    const ext = filePath.split('.').pop().toLowerCase();
+    contentDiv.innerHTML = "";
+    const ext = filePath.split(".").pop().toLowerCase();
 
     if (ext === "pdf") {
         const pdf = await pdfjsLib.getDocument(filePath).promise;
@@ -85,23 +90,25 @@ async function viewExam(filePath) {
             const viewport = page.getViewport({ scale: 1.2 });
             const canvas = document.createElement("canvas");
             const ctx = canvas.getContext("2d");
-            canvas.height = viewport.height;
             canvas.width = viewport.width;
+            canvas.height = viewport.height;
             await page.render({ canvasContext: ctx, viewport }).promise;
             contentDiv.appendChild(canvas);
         }
-    } else if (ext === "docx") {
+    }
+    else if (ext === "docx") {
         const res = await fetch(filePath);
         const buffer = await res.arrayBuffer();
         const result = await mammoth.extractRawText({ arrayBuffer: buffer });
         contentDiv.innerHTML = `<pre>${result.value}</pre>`;
-    } else {
-        contentDiv.innerHTML = "❌ Không hỗ trợ định dạng này";
+    }
+    else {
+        contentDiv.textContent = "❌ Không hỗ trợ định dạng này";
     }
 }
 
 /* ===============================
    INIT
 ================================ */
-loadExams();
+document.addEventListener("DOMContentLoaded", loadExams);
 </script>
