@@ -1,5 +1,5 @@
 {
-  "class": "9A1_9A2",
+  "class": "9A_9AB",
   "students": [
     {"username": "lau_a_cuong", "password": "123456"},
     {"username": "lau_a_da", "password": "123456"},
@@ -55,3 +55,4 @@
     {"username": "ly_thi_xinh", "password": "123456"}
   ]
 }
+
