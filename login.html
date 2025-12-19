@@ -115,6 +115,7 @@ let currentRole = "";
 ================================ */
 function setRole(role){
     currentRole = role;
+
     username.disabled = false;
     password.disabled = false;
 
@@ -126,8 +127,8 @@ function setRole(role){
 
     roleLabel.textContent =
         role==="teacher"
-        ? "🔑 Đăng nhập Giáo viên"
-        : "🎓 Đăng nhập Học sinh";
+        ? "🔑 Đăng nhập với tư cách Giáo viên"
+        : "🎓 Đăng nhập với tư cách Học sinh";
 }
 
 /* ===============================
@@ -138,40 +139,47 @@ async function login(){
     const pass = password.value.trim();
     errorMsg.textContent = "";
 
-    if(!currentRole) return errorMsg.textContent="❌ Chưa chọn vai trò";
-    if(!user || !pass) return errorMsg.textContent="❌ Nhập đủ tài khoản và mật khẩu";
+    if(!currentRole){
+        errorMsg.textContent = "❌ Vui lòng chọn vai trò";
+        return;
+    }
+    if(!user || !pass){
+        errorMsg.textContent = "❌ Nhập đầy đủ tài khoản và mật khẩu";
+        return;
+    }
 
-    const api = currentRole==="student"
-        ? "http://localhost:5000/api/login"
-        : "http://localhost:5000/api/teacher/login";
+    const api =
+        currentRole === "student"
+        ? "/api/login"
+        : "/api/teacher/login";
 
     try{
         const res = await fetch(api,{
             method:"POST",
             headers:{"Content-Type":"application/json"},
-            body:JSON.stringify({username:user,password:pass})
+            body:JSON.stringify({
+                username:user,
+                password:pass
+            })
         });
-
-        if(!res.ok){
-            const msg = await res.json();
-            throw new Error(msg.message || "Đăng nhập thất bại");
-        }
 
         const data = await res.json();
 
-        /* ===== LƯU ĐẦY ĐỦ THÔNG TIN ===== */
-        localStorage.clear();
-        localStorage.setItem("username", data.username);
-        localStorage.setItem("role", data.role);
-
-        if(data.class){
-            localStorage.setItem("class", data.class); // ⭐ CỰC KỲ QUAN TRỌNG
+        if(!res.ok || !data.success){
+            throw new Error(data.message || "Đăng nhập thất bại");
         }
 
-        location.href =
-            data.role==="student"
-            ? "student_dashboard.html"
-            : "teacher_dashboard.html";
+        /* ===== LƯU PHIÊN ĐĂNG NHẬP (BẮT BUỘC) ===== */
+        localStorage.clear();
+        localStorage.setItem("role", data.role);          // student | teacher
+        localStorage.setItem("username", data.username);
+
+        if(data.role === "student"){
+            localStorage.setItem("class", data.class);   // ⭐ CỰC KỲ QUAN TRỌNG
+            location.href = "student_dashboard.html";
+        }else{
+            location.href = "teacher_dashboard.html";
+        }
 
     }catch(err){
         errorMsg.textContent = "❌ " + err.message;
