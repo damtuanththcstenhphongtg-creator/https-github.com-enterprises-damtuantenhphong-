@@ -1,140 +1,102 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="UTF-8">
-<title>Trang học sinh – Danh sách đề kiểm tra</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- Thư viện đọc Word -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
-<!-- Thư viện đọc PDF -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.143/pdf.min.js"></script>
-
-<style>
-body { font-family:"Segoe UI",sans-serif; background:#eef3f7; margin:0; padding:20px; }
-h1 { text-align:center; color:#0a4a8e; }
-table { width:100%; border-collapse: collapse; margin-top:20px; }
-th, td { border:1px solid #ccc; padding:8px; text-align:center; }
-th { background:#3498db; color:#fff; }
-tr:nth-child(even){background:#f9f9f9;}
-button { padding:6px 12px; border:none; border-radius:4px; cursor:pointer; background:#0b74d1; color:#fff;}
-button:hover { background:#095ba8; }
-#viewerContainer { margin-top:30px; padding:15px; background:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1); max-height:500px; overflow:auto; }
-#viewerContainer h2 { margin-top:0; color:#0a4a8e; }
-#errorMsg { background:#ffe2e2; padding:12px; border-left:5px solid #e53935; border-radius:8px; margin-top:15px; display:none; }
-</style>
-</head>
-<body>
-
-<h1>📚 Danh sách đề kiểm tra</h1>
-
-<div id="errorMsg"></div>
-
-<table>
-<thead>
-<tr>
-<th>Lớp</th>
-<th>Đề</th>
-<th>Hạn nộp</th>
-<th>Giáo viên</th>
-<th>Tải về</th>
-<th>Xem nội dung</th>
-</tr>
-</thead>
-<tbody id="examBody">
-<tr><td colspan="6">Đang tải dữ liệu...</td></tr>
-</tbody>
-</table>
-
-<div id="viewerContainer">
-<h2>Nội dung đề kiểm tra</h2>
-<div id="examContent">Chưa có đề được chọn.</div>
-</div>
-
 <script>
 /* ===============================
-   CHẶN TRUY CẬP TRÁI PHÉP
+   KIỂM TRA QUYỀN
 ================================ */
-if(localStorage.getItem("role")!=="student"){
+if (localStorage.getItem("role") !== "student") {
     alert("Bạn không có quyền truy cập!");
-    window.location.href="index.html";
+    window.location.href = "index.html";
 }
 
 /* ===============================
-   LOAD DANH SÁCH BÀI ĐÃ GIAO TỪ SERVER
+   THÔNG TIN HỌC SINH (LẤY KHI ĐĂNG NHẬP)
 ================================ */
-let assignments = [];
+const studentClass = localStorage.getItem("class"); // ví dụ: 7A1
+if (!studentClass) {
+    alert("Không xác định được lớp học sinh!");
+}
 
-async function loadExams(){
+/* ===============================
+   LOAD BÀI TỪ SERVER
+================================ */
+async function loadExams() {
     const tbody = document.getElementById("examBody");
+
     try {
-        const res = await fetch("/assignments");
-        if(!res.ok) throw new Error("HTTP " + res.status);
-        assignments = await res.json();
-        if(assignments.length===0){
-            tbody.innerHTML = `<tr><td colspan="6">❌ Chưa có bài nào được giao!</td></tr>`;
+        const res = await fetch(
+            `http://localhost:5000/student_exams?class=${studentClass}`
+        );
+
+        if (!res.ok) throw new Error("HTTP " + res.status);
+
+        const assignments = await res.json();
+
+        if (assignments.length === 0) {
+            tbody.innerHTML =
+                `<tr><td colspan="6">❌ Chưa có bài nào được giao</td></tr>`;
             return;
         }
 
         tbody.innerHTML = "";
-        assignments.forEach(a=>{
-            const tr=document.createElement("tr");
-            tr.innerHTML=`
+
+        assignments.forEach(a => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
                 <td>${a.class}</td>
-                <td>${a.examTitle}</td>
+                <td>${a.title}</td>
                 <td>${a.deadline}</td>
-                <td>${a.teacher}</td>
-                <td><a href="/uploads/${a.file}" download><button>📄 Tải</button></a></td>
-                <td><button onclick='viewExam("/uploads/${a.file}")'>👁️ Xem</button></td>
+                <td>${a.subject}</td>
+                <td>
+                    <a href="${a.file}" download>
+                        <button>📄 Tải</button>
+                    </a>
+                </td>
+                <td>
+                    <button onclick="viewExam('${a.file}')">
+                        👁️ Xem
+                    </button>
+                </td>
             `;
             tbody.appendChild(tr);
         });
 
-    } catch(err){
+    } catch (err) {
         console.error(err);
-        const msg = document.getElementById("errorMsg");
-        msg.style.display = "block";
-        msg.textContent = "❌ Không thể tải danh sách đề kiểm tra!";
-        tbody.innerHTML = `<tr><td colspan="6">❌ Lỗi tải dữ liệu</td></tr>`;
+        document.getElementById("errorMsg").style.display = "block";
+        document.getElementById("errorMsg").textContent =
+            "❌ Không kết nối được server!";
+        tbody.innerHTML =
+            `<tr><td colspan="6">❌ Lỗi tải dữ liệu</td></tr>`;
     }
 }
 
 /* ===============================
-   XEM NỘI DUNG ĐỀ (PDF hoặc Word)
+   XEM FILE ĐỀ
 ================================ */
-async function viewExam(filePath){
+async function viewExam(filePath) {
     const contentDiv = document.getElementById("examContent");
     contentDiv.innerHTML = "";
 
     const ext = filePath.split('.').pop().toLowerCase();
 
-    if(ext==='pdf'){
-        // PDF.js
-        const loadingTask = pdfjsLib.getDocument(filePath);
-        const pdf = await loadingTask.promise;
-        contentDiv.innerHTML = '';
-        for(let i=1; i<=pdf.numPages; i++){
+    if (ext === "pdf") {
+        const pdf = await pdfjsLib.getDocument(filePath).promise;
+        for (let i = 1; i <= pdf.numPages; i++) {
             const page = await pdf.getPage(i);
-            const viewport = page.getViewport({scale:1.2});
+            const viewport = page.getViewport({ scale: 1.2 });
             const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext('2d');
+            const ctx = canvas.getContext("2d");
             canvas.height = viewport.height;
             canvas.width = viewport.width;
-            await page.render({canvasContext: ctx, viewport: viewport}).promise;
+            await page.render({ canvasContext: ctx, viewport }).promise;
             contentDiv.appendChild(canvas);
         }
-    } else if(ext==='docx'){
-        // Word
-        try {
-            const response = await fetch(filePath);
-            const arrayBuffer = await response.arrayBuffer();
-            const result = await mammoth.extractRawText({arrayBuffer});
-            contentDiv.innerHTML = `<pre>${result.value}</pre>`;
-        } catch(e){
-            contentDiv.innerHTML = `<div style="color:red;">❌ Không thể đọc file Word</div>`;
-        }
+    } else if (ext === "docx") {
+        const res = await fetch(filePath);
+        const buffer = await res.arrayBuffer();
+        const result = await mammoth.extractRawText({ arrayBuffer: buffer });
+        contentDiv.innerHTML = `<pre>${result.value}</pre>`;
     } else {
-        contentDiv.innerHTML = `<div style="color:red;">❌ Loại file không được hỗ trợ</div>`;
+        contentDiv.innerHTML = "❌ Không hỗ trợ định dạng này";
     }
 }
 
@@ -143,6 +105,3 @@ async function viewExam(filePath){
 ================================ */
 loadExams();
 </script>
-
-</body>
-</html>
