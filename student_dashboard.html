@@ -2,207 +2,220 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Học sinh | Danh sách đề kiểm tra</title>
+<title>Học sinh | Danh sách bài kiểm tra</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- PDF + Word -->
+<!-- PDF & Word -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.143/pdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
 
 <style>
-body { font-family:"Segoe UI",sans-serif; background:#eef3f7; padding:20px; }
-h1 { text-align:center; color:#0a4a8e; }
-
-.info {
-    background:#fff;
-    padding:15px;
-    border-radius:8px;
-    margin-bottom:20px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+body{
+    font-family:"Segoe UI",sans-serif;
+    background:#eef3f7;
+    margin:0;
+    padding:20px;
 }
-
-table { width:100%; border-collapse:collapse; }
-th, td { border:1px solid #ccc; padding:8px; text-align:center; }
-th { background:#3498db; color:#fff; }
-tr:nth-child(even){ background:#f9f9f9; }
-
-button {
-    padding:6px 12px;
-    border:none;
-    border-radius:4px;
-    cursor:pointer;
-    background:#0b74d1;
+h1{
+    text-align:center;
+    color:#0a4a8e;
+}
+.info{
+    text-align:center;
+    margin-bottom:15px;
+    font-weight:bold;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:#fff;
+}
+th,td{
+    border:1px solid #ccc;
+    padding:8px;
+    text-align:center;
+}
+th{
+    background:#3498db;
     color:#fff;
 }
-button:disabled {
-    background:#aaa;
-    cursor:not-allowed;
+tr:nth-child(even){
+    background:#f9f9f9;
 }
-
-#viewerContainer {
+button{
+    padding:6px 12px;
+    border:none;
+    border-radius:5px;
+    background:#0b74d1;
+    color:#fff;
+    cursor:pointer;
+}
+button:hover{
+    background:#095ba8;
+}
+#errorMsg{
+    display:none;
+    background:#ffe2e2;
+    border-left:5px solid #e53935;
+    padding:12px;
+    margin:15px 0;
+    border-radius:6px;
+}
+#viewer{
     margin-top:25px;
     background:#fff;
     padding:15px;
     border-radius:8px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
-    max-height:500px;
+    max-height:550px;
     overflow:auto;
+}
+.logout{
+    float:right;
+    background:#e53935;
+}
+.logout:hover{
+    background:#c62828;
 }
 </style>
 </head>
 
 <body>
 
-<h1>📚 BÀI KIỂM TRA ĐƯỢC GIAO</h1>
+<h1>📚 BÀI KIỂM TRA CỦA HỌC SINH</h1>
 
-<div class="info">
-    <b>Học sinh:</b> <span id="studentName"></span> |
-    <b>Lớp:</b> <span id="studentClass"></span>
-    <button style="float:right;background:#e53935" onclick="logout()">Đăng xuất</button>
-</div>
+<div class="info" id="studentInfo"></div>
+
+<button class="logout" onclick="logout()">Đăng xuất</button>
+
+<div id="errorMsg"></div>
 
 <table>
 <thead>
 <tr>
-<th>Môn</th>
-<th>Tên đề</th>
-<th>Giáo viên</th>
-<th>Thời gian</th>
-<th>Hạn nộp</th>
-<th>Trạng thái</th>
-<th>Tải đề</th>
-<th>Xem</th>
+    <th>Lớp</th>
+    <th>Đề</th>
+    <th>Giáo viên</th>
+    <th>Hạn nộp</th>
+    <th>Tải</th>
+    <th>Xem</th>
 </tr>
 </thead>
 <tbody id="examBody">
-<tr><td colspan="8">Đang tải dữ liệu...</td></tr>
+<tr><td colspan="6">Đang tải dữ liệu...</td></tr>
 </tbody>
 </table>
 
-<div id="viewerContainer">
-<h3>Nội dung đề</h3>
-<div id="examContent">Chưa chọn đề</div>
+<div id="viewer">
+    <h3>Nội dung đề</h3>
+    <div id="examContent">Chưa chọn đề.</div>
 </div>
 
 <script>
 /* ===============================
-   CẤU HÌNH API
+   KIỂM TRA PHIÊN ĐĂNG NHẬP
 ================================ */
-const API_BASE = "http://localhost:5000/api";
-
-/* ===============================
-   KIỂM TRA ĐĂNG NHẬP
-================================ */
-if (localStorage.getItem("role") !== "student") {
-    alert("Bạn không có quyền truy cập!");
-    location.href = "index.html";
-}
-
+const role = localStorage.getItem("role");
 const username = localStorage.getItem("username");
 const studentClass = localStorage.getItem("class");
 
-if (!username || !studentClass) {
-    alert("Phiên đăng nhập không hợp lệ!");
+if (!role || !username || !studentClass || role !== "student") {
+    alert("Phiên đăng nhập không hợp lệ hoặc đã hết hạn!");
     localStorage.clear();
     location.href = "index.html";
 }
 
-document.getElementById("studentName").textContent = username;
-document.getElementById("studentClass").textContent = studentClass;
+/* ===============================
+   HIỂN THỊ THÔNG TIN HS
+================================ */
+document.getElementById("studentInfo").textContent =
+    `👤 Học sinh: ${username} | 🏫 Lớp: ${studentClass}`;
 
 /* ===============================
-   LOAD BÀI KIỂM TRA
+   LOAD BÀI KIỂM TRA THEO LỚP
 ================================ */
-async function loadExams() {
+async function loadExams(){
     const tbody = document.getElementById("examBody");
-
-    try {
-        const res = await fetch(
-            `${API_BASE}/student_exams?class=${encodeURIComponent(studentClass)}`
-        );
+    try{
+        const res = await fetch(`/student_exams?class=${studentClass}`);
+        if(!res.ok) throw new Error("HTTP " + res.status);
 
         const exams = await res.json();
 
-        if (!exams.length) {
+        if(exams.length === 0){
             tbody.innerHTML =
-                `<tr><td colspan="8">❌ Chưa có bài nào được giao</td></tr>`;
+              `<tr><td colspan="6">❌ Chưa có bài được giao</td></tr>`;
             return;
         }
 
         tbody.innerHTML = "";
-
-        const now = new Date();
-
-        exams.forEach(exam => {
-            const deadline = new Date(exam.deadline);
-            const expired = deadline < now;
-
+        exams.forEach(e=>{
             const tr = document.createElement("tr");
             tr.innerHTML = `
-                <td>${exam.subject}</td>
-                <td>${exam.title}</td>
-                <td>${exam.teacher}</td>
-                <td>${exam.duration} phút</td>
-                <td>${deadline.toLocaleString()}</td>
-                <td>${expired ? "⛔ Hết hạn" : "🟢 Còn hạn"}</td>
+                <td>${e.class}</td>
+                <td>${e.title || "Đề kiểm tra"}</td>
+                <td>${e.teacher}</td>
+                <td>${new Date(e.deadline).toLocaleString()}</td>
                 <td>
-                    <a href="${exam.file}" download>
-                        <button ${expired ? "disabled" : ""}>📄 Tải</button>
+                    <a href="${e.file}" download>
+                        <button>📄 Tải</button>
                     </a>
                 </td>
                 <td>
-                    <button ${expired ? "disabled" : ""}
-                        onclick="viewExam('${exam.file}')">
-                        👁️ Xem
-                    </button>
+                    <button onclick="viewExam('${e.file}')">👁️ Xem</button>
                 </td>
             `;
             tbody.appendChild(tr);
         });
 
-    } catch (e) {
+    }catch(err){
+        console.error(err);
+        const msg = document.getElementById("errorMsg");
+        msg.style.display = "block";
+        msg.textContent = "❌ Không kết nối được máy chủ!";
         tbody.innerHTML =
-            `<tr><td colspan="8">❌ Không kết nối được máy chủ</td></tr>`;
+          `<tr><td colspan="6">❌ Lỗi tải dữ liệu</td></tr>`;
     }
 }
 
 /* ===============================
-   XEM ĐỀ
+   XEM FILE ĐỀ
 ================================ */
-async function viewExam(filePath) {
-    const contentDiv = document.getElementById("examContent");
-    contentDiv.innerHTML = "";
+async function viewExam(file){
+    const content = document.getElementById("examContent");
+    content.innerHTML = "";
 
-    const ext = filePath.split(".").pop().toLowerCase();
+    const ext = file.split(".").pop().toLowerCase();
 
-    if (ext === "pdf") {
-        const pdf = await pdfjsLib.getDocument(filePath).promise;
-        for (let i = 1; i <= pdf.numPages; i++) {
+    if(ext === "pdf"){
+        const pdf = await pdfjsLib.getDocument(file).promise;
+        for(let i=1;i<=pdf.numPages;i++){
             const page = await pdf.getPage(i);
-            const viewport = page.getViewport({ scale: 1.2 });
+            const viewport = page.getViewport({scale:1.2});
             const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
-            canvas.width = viewport.width;
             canvas.height = viewport.height;
-            await page.render({ canvasContext: ctx, viewport }).promise;
-            contentDiv.appendChild(canvas);
+            canvas.width = viewport.width;
+            await page.render({
+                canvasContext: canvas.getContext("2d"),
+                viewport
+            }).promise;
+            content.appendChild(canvas);
         }
     }
-    else if (ext === "docx") {
-        const res = await fetch(filePath);
+    else if(ext === "docx"){
+        const res = await fetch(file);
         const buffer = await res.arrayBuffer();
-        const result = await mammoth.extractRawText({ arrayBuffer: buffer });
-        contentDiv.innerHTML = `<pre>${result.value}</pre>`;
+        const result = await mammoth.extractRawText({arrayBuffer:buffer});
+        content.innerHTML = `<pre>${result.value}</pre>`;
     }
-    else {
-        contentDiv.textContent = "❌ Không hỗ trợ định dạng này";
+    else{
+        content.textContent = "❌ Không hỗ trợ định dạng này";
     }
 }
 
 /* ===============================
    ĐĂNG XUẤT
 ================================ */
-function logout() {
+function logout(){
     localStorage.clear();
     location.href = "index.html";
 }
@@ -210,7 +223,7 @@ function logout() {
 /* ===============================
    INIT
 ================================ */
-document.addEventListener("DOMContentLoaded", loadExams);
+loadExams();
 </script>
 
 </body>
