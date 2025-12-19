@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Hệ thống học trực tuyến | Đăng nhập</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    font-family:"Segoe UI",sans-serif;
+    background:linear-gradient(135deg,#74ebd5,#ACB6E5);
+    margin:0;
+}
+.top-banner{
+    text-align:center;
+    font-size:32px;
+    font-weight:900;
+    padding:22px;
+    background:rgba(255,255,255,0.25);
+    color:#003366;
+}
+.brand{color:#ffeb3b;}
+.login-box{
+    width:380px;
+    margin:40px auto;
+    background:#fff;
+    padding:30px;
+    border-radius:14px;
+    box-shadow:0 0 12px rgba(0,0,0,0.25);
+}
+.role-select{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:15px;
+}
+.role-select button{
+    width:48%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+    background:#ff9800;
+    color:#fff;
+}
+.role-select button.active{
+    background:#e65100;
+}
+input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border-radius:8px;
+    border:1px solid #bbb;
+}
+button.main{
+    width:100%;
+    padding:12px;
+    background:#4a90e2;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+}
+.error{
+    color:red;
+    text-align:center;
+    font-weight:bold;
+    min-height:22px;
+}
+footer{
+    text-align:center;
+    color:#fff;
+    margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<header class="top-banner">
+HỌC TRỰC TUYẾN <span class="brand">TÊNH PHÔNG</span>
+</header>
+
+<div class="login-box">
+    <h2 style="text-align:center">Đăng nhập hệ thống</h2>
+
+    <div class="role-select">
+        <button id="btnTeacher" onclick="setRole('teacher')">Giáo viên</button>
+        <button id="btnStudent" onclick="setRole('student')">Học sinh</button>
+    </div>
+
+    <div id="roleLabel" style="text-align:center;font-weight:bold;color:#003366">
+        👉 Chọn loại tài khoản
+    </div>
+
+    <div class="error" id="errorMsg"></div>
+
+    <input id="username" placeholder="Tên đăng nhập" disabled>
+    <input id="password" type="password" placeholder="Mật khẩu" disabled>
+
+    <button class="main" onclick="login()">Đăng nhập</button>
+</div>
+
+<footer>
+Tác giả: <b>Đàm Anh Tuấn – Nguyễn Đức Thương</b>
+</footer>
+
+<script>
+let currentRole = "";
+
+/* ===============================
+   CHỌN VAI TRÒ
+================================ */
+function setRole(role){
+    currentRole = role;
+    username.disabled = false;
+    password.disabled = false;
+
+    btnTeacher.classList.remove("active");
+    btnStudent.classList.remove("active");
+
+    if(role==="teacher") btnTeacher.classList.add("active");
+    else btnStudent.classList.add("active");
+
+    roleLabel.textContent =
+        role==="teacher"
+        ? "🔑 Đăng nhập Giáo viên"
+        : "🎓 Đăng nhập Học sinh";
+}
+
+/* ===============================
+   ĐĂNG NHẬP
+================================ */
+async function login(){
+    const user = username.value.trim();
+    const pass = password.value.trim();
+    errorMsg.textContent = "";
+
+    if(!currentRole) return errorMsg.textContent="❌ Chưa chọn vai trò";
+    if(!user || !pass) return errorMsg.textContent="❌ Nhập đủ tài khoản và mật khẩu";
+
+    const api = currentRole==="student"
+        ? "http://localhost:5000/api/login"
+        : "http://localhost:5000/api/teacher/login";
+
+    try{
+        const res = await fetch(api,{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({username:user,password:pass})
+        });
+
+        if(!res.ok){
+            const msg = await res.json();
+            throw new Error(msg.message || "Đăng nhập thất bại");
+        }
+
+        const data = await res.json();
+
+        /* ===== LƯU ĐẦY ĐỦ THÔNG TIN ===== */
+        localStorage.clear();
+        localStorage.setItem("username", data.username);
+        localStorage.setItem("role", data.role);
+
+        if(data.class){
+            localStorage.setItem("class", data.class); // ⭐ CỰC KỲ QUAN TRỌNG
+        }
+
+        location.href =
+            data.role==="student"
+            ? "student_dashboard.html"
+            : "teacher_dashboard.html";
+
+    }catch(err){
+        errorMsg.textContent = "❌ " + err.message;
+    }
+}
+</script>
+
+</body>
+</html>
